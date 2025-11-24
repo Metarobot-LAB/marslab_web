@@ -41,66 +41,66 @@ toc_label: "CONTENTS"
   2025년도 METAROBOT이 걸어온 끊임없는 도전의 기록입니다.
 </div>
 
-<div style="width: 100%; overflow-x: auto;">
-  <table style="width: 100%; border-collapse: collapse; font-size: 1.1em; text-align: center;">
+<div style="max-width: 850px; margin: 0 auto; overflow-x: auto;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 1.05em; text-align: center;">
     <thead>
       <tr style="background-color: #f2f2f2; border-bottom: 2px solid #333;">
-        <th style="padding: 15px; width: 70%;">Activity / Project</th>
-        <th style="padding: 15px; width: 30%;">Department</th>
+        <th style="padding: 12px; width: 70%;">Activity / Project</th>
+        <th style="padding: 12px; width: 30%;">Department</th>
       </tr>
     </thead>
     <tbody>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>RED SHOW</strong><br><span style="font-size: 0.85em; color: #666;">Two Wheel Balance Robot</span></td>
-        <td style="padding: 15px;">AI / CTRL / HW</td>
-      </tr>
-      <tr style="border-bottom: 1px solid #ddd; background-color: #fffbe6;">
-        <td style="padding: 15px;"><strong>Zeus Zero Robot Challenge</strong> 🥇<br><span style="font-size: 0.85em; color: #d35400; font-weight: bold;">Presidential Award (대통령상)</span></td>
-        <td style="padding: 15px;">**ALL**</td>
+        <td style="padding: 12px;"><strong>RED SHOW</strong><br><span style="font-size: 0.85em; color: #666;">Two Wheel Balance Robot</span></td>
+        <td style="padding: 12px;">AI / CTRL / HW</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Genesis Study</strong></td>
-        <td style="padding: 15px;">AI</td>
+        <td style="padding: 12px;"><strong>Zeus Zero Robot Challenge</strong><br><span style="font-size: 0.85em; color: #666;">Presidential Award (대통령상)</span></td>
+        <td style="padding: 12px;">ALL</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Sim2Real Study</strong> (Isaac Sim)</td>
-        <td style="padding: 15px;">AI / CTRL</td>
+        <td style="padding: 12px;"><strong>Genesis Study</strong></td>
+        <td style="padding: 12px;">AI</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Xenomai & Raspberry Pi Study</strong></td>
-        <td style="padding: 15px;">CONTROL</td>
+        <td style="padding: 12px;"><strong>Sim2Real Study</strong> (Isaac Sim)</td>
+        <td style="padding: 12px;">AI / CTRL</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Master Device Project</strong> (with NEUROMECHA)</td>
-        <td style="padding: 15px;">ALL</td>
+        <td style="padding: 12px;"><strong>Xenomai & Raspberry Pi Study</strong></td>
+        <td style="padding: 12px;">CONTROL</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Indy Hand Project</strong> (with NEUROMECHA)</td>
-        <td style="padding: 15px;">ALL</td>
+        <td style="padding: 12px;"><strong>Master Device Project</strong> (with NEUROMECHA)</td>
+        <td style="padding: 12px;">ALL</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Slave Robot Project</strong></td>
-        <td style="padding: 15px;">CTRL / HW</td>
+        <td style="padding: 12px;"><strong>Indy Hand Project</strong> (with NEUROMECHA)</td>
+        <td style="padding: 12px;">ALL</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Metarobot Competition</strong></td>
-        <td style="padding: 15px;">CTRL / HW</td>
+        <td style="padding: 12px;"><strong>Slave Robot Project</strong></td>
+        <td style="padding: 12px;">CTRL / HW</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;"><strong>Koreatech Start-up Contest</strong></td>
-        <td style="padding: 15px;">ALL</td>
+        <td style="padding: 12px;"><strong>Metarobot Competition</strong></td>
+        <td style="padding: 12px;">CTRL / HW</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;">Robo World Expo</td>
-        <td style="padding: 15px;">-</td>
+        <td style="padding: 12px;"><strong>Koreatech Start-up Contest</strong></td>
+        <td style="padding: 12px;">ALL</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
-        <td style="padding: 15px;">Metarobot Workshop</td>
-        <td style="padding: 15px;">-</td>
+        <td style="padding: 12px;">Robo World Expo</td>
+        <td style="padding: 12px;">-</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #ddd;">
+        <td style="padding: 12px;">Metarobot Workshop</td>
+        <td style="padding: 12px;">-</td>
       </tr>
       <tr>
-        <td style="padding: 15px;">New Member Training</td>
-        <td style="padding: 15px;">-</td>
+        <td style="padding: 12px;">New Member Training</td>
+        <td style="padding: 12px;">-</td>
       </tr>
     </tbody>
   </table>
