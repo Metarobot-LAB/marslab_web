@@ -6,7 +6,10 @@ baseurl: "/mars.github.io" # 저장소 이름이 mars.github.io 라면 이게 �
 # 테마 설정 (Minimal Mistakes 원격 적용)
 remote_theme: mmistakes/minimal-mistakes
 plugins:
+  - jekyll-feed
+  - jekyll-sitemap
   - jekyll-remote-theme
+  - jekyll-include-cache  # <- 이 줄이 반드시 있어야 합니다!
 
 # 작성자(연구회) 정보
 author:
