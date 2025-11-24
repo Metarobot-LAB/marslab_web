@@ -18,7 +18,7 @@ last_modified_at: 2025-11-24
 * **코드 작성:** PWM 신호로 0~180도 제어 코드 작성
 
 ## 3. 테스트 결과 (사진/영상)
-![테스트 사진](/mars.github.io/assets/images/logo.jpg)
+![테스트 사진](/assets/images/logo.jpg)
 S
 생각보다 악력이 약해서 모터 전압을 5V에서 7.4V로 올려야 할 것 같습니다.
 
