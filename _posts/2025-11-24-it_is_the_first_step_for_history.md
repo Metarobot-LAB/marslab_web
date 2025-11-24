@@ -38,7 +38,7 @@ toc_label: "CONTENTS"
 
 <h2 style="font-size: 2.0em; text-align: center; font-weight: 900; margin-bottom: 10px;">🏆 METAROBOT'S 2025</h2>
 
-<div style="max-width: 850px; margin: 0 auto; text-align: center; position: relative; left: 40px;">
+<div style="max-width: 850px; margin: 0 auto; text-align: center; position: relative; left: 80px;">
   <p style="margin-bottom: 25px; font-size: 1.1em; color: #666;">
     2025년도 METAROBOT이 걸어온 끊임없는 도전의 기록입니다.
   </p>
