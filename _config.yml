@@ -33,4 +33,4 @@ search_provider: lunr # 별도 설치 필요 없는 가벼운 검색 엔진
 favicon: "/mars.github.io/assets/images/logo.jpg"
 
 # 모양 설정
-minimal_mistakes_skin: "default" # 취향에 따라 air, contrast, sunrise 등으로 변경 가능
+minimal_mistakes_skin: "air" # 취향에 따라 air, contrast, sunrise 등으로 변경 가능

@@ -1,11 +1,9 @@
 ---
-title: "홈페이지 테스트"
-excerpt: "인스타 그리드 처럼 만들기"
+title: "WELCOME TO METAROBOT"
+excerpt: "메타로봇 소개"
 categories:
   - Project
 tags:
-  - RobotArm
-  - 3DPrint
   - test
 
 header:
@@ -14,19 +12,49 @@ header:
 last_modified_at: 2025-11-24
 ---
 
-## 1. 프로젝트 개요
-오늘은 홈페이지가 제대로 동작하는지 테스트했습니다.
+## WE ARE METAROBOT
 
-## 2. 작업 내용
-* **3D 프린팅:** PLA 필라멘트를 사용하여 부품 출력 (4시간 소요)
-* **회로 연결:** 아두이노와 서보모터(MG996R) 연결
-* **코드 작성:** PWM 신호로 0~180도 제어 코드 작성
+## WHAT IS THE METAROBOT
+ Degree Of Freedom 
 
-## 3. 테스트 결과 (사진/영상)
-![테스트 사진](/mars.github.io/assets/images/logo.jpg)
+ 메타버스와 로봇 융합 기술 연구를 목적으로 창립된 KOREATECH 소속 메타로봇연구회 MarsLab입니다.
+ AI부서 CONTROL부서 HARDWARE부서로 나뉘어져 전문성을 기르고 공부하고 나누는 데 그치지 않고 직접 로봇을 제작하고 제어해보며 로봇에 대한 꿈을 키워갑니다.
 
-생각보다 악력이 약해서 모터 전압을 5V에서 7.4V로 올려야 할 것 같습니다.
+## METAROBOT'S 2025
 
-## 4. 다음 계획
-* [ ] 외부 전원 공급 장치 제작
-* [ ] 그리퍼 고무 패드 부착
+2025년도 METAROBOT이 진행한 활동은 아래와 같습니다.
+
+* RED SHOW | TWO REG WHEEL BALANCE ROBOT [ AI / CONTROL / HARDWARE ]
+* ZEUS ZERO ROBOT MISSION CHALLENGE | Presidential Award [ AI / CONTROL / HARDWARE ]
+* GENESIS STUDY [ AI ] 
+* ISAACSIM SIM2REAL STUDY(SUMMER VACATION) | TWO WHEEL BALANCE ROBOT [ AI / CONTROL ]
+* Xenomai&Raspberry Pi STUDY(SUMMER VACATION ~) [ CONTROL ]
+* Industry-Academic PROJECT | MASTER DEVICE with NEUROMECHA [ AI / CONTROL / HARDWARE ] 
+* Industry-Academic PROJECT | INDY HAND with NEUROMECHA [ AI / CONTROL / HARDWARE ] 
+* SLAVE ROBOT PROJECT [CONTROL / HARDWARE]
+* METAROBOT COMPETITION [CONTROL / HARDWARE]
+* KOREATECH START-UP CONTEST [ AI / CONTROL / HARDWARE ]
+* ROBO WORLD EXPO
+* METAROBOT WORKSHOP
+* NEW MEMBER TRAINING
+
+## METAROBOT RESOURCE
+METAROBOT은 여러 단체의 지원을 받아 풍부하고 쉽게 접하기 힘든 자원들을 소유하고 있습니다.
+
+* NVIDIA Jetson AGX Thor Developer Kit
+* NVIDIA® Jetson AGX Orin™ 64GB Developer Kit
+* NVIDIA Jetson Orin Nano Super Developer Kit 
+* INDY7
+* UR MANIPULATOR
+* RTX 4060 SUPER
+* Bambu Lab H2D
+* SYNOLOGY NAS 2BAY
+* VARIOUS DYNAMIXEL
+* REALSENSE D435I
+* LIDAR 
+* RASPBERRY PI 5
+ETC 
+
+이 밖에도 최신 POWER SUPPLY, 다량의 아두이노, DAQ, MOTOR 등 모자람 없는 자원을 구비하여 역량을 아낌없이 펼칠 수 있게하고 있습니다.
+
+## ROBOT에 가슴이 뛰는 여러분을 기다리고 있겠습니다.
