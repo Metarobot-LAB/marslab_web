@@ -1,0 +1,13 @@
+# 상단(또는 사이드) 메뉴 설정
+main:
+  - title: "Home"
+    url: /
+  
+  - title: "카테고리"
+    url: /categories/
+  
+  - title: "태그 모음"
+    url: /tags/
+    
+  - title: "GitHub"
+    url: https://github.com/textnecklee/mars.github.io
