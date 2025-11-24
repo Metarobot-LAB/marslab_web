@@ -1,0 +1,17 @@
+title: "Metarobot 연구회"
+description: "로봇 제작 과정 및 포트폴리오 아카이브"
+url: "https://textnecklee.github.io"
+baseurl: "/mars.github.io" # 저장소 이름이 mars.github.io 라면 이게 필요합니다.
+
+# 테마 설정 (Minimal Mistakes 원격 적용)
+remote_theme: mmistakes/minimal-mistakes
+plugins:
+  - jekyll-remote-theme
+
+# 작성자(연구회) 정보
+author:
+  name: "Metarobot Team"
+  bio: "자율주행 및 로봇 제어 연구"
+
+# 모양 설정
+minimal_mistakes_skin: "default" # 취향에 따라 air, contrast, sunrise 등으로 변경 가능
