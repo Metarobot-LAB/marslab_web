@@ -1,11 +1,12 @@
 ---
-title: "로봇 팔 그리퍼 1차 테스트"
-excerpt: "서보모터 제어 테스트 및 3D 프린팅 결과물 확인"
+title: "홈페이지 테스트"
+excerpt: "인스타 그리드 처럼 만들기"
 categories:
   - Project
 tags:
   - RobotArm
   - 3DPrint
+  - test
 
 header:
   teaser: /assets/images/logo.jpg  # 대표 사진 경로 (전체 경로 추천)
@@ -14,7 +15,7 @@ last_modified_at: 2025-11-24
 ---
 
 ## 1. 프로젝트 개요
-오늘은 로봇 팔의 끝단 그리퍼(Gripper) 부분이 제대로 동작하는지 테스트했습니다.
+오늘은 홈페이지가 제대로 동작하는지 테스트했습니다.
 
 ## 2. 작업 내용
 * **3D 프린팅:** PLA 필라멘트를 사용하여 부품 출력 (4시간 소요)
