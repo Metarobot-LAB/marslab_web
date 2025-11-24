@@ -36,11 +36,10 @@ toc_label: "CONTENTS"
 
 <br>
 
-## 🏆 METAROBOT'S 2025
+<h2 style="font-size: 2.0em; text-align: center; font-weight: 900; margin-bottom: 10px;">🏆 METAROBOT'S 2025</h2>
 
 <div style="max-width: 850px; margin: 0 auto; text-align: center;">
-  
-  <p style="margin-bottom: 22px; font-size: 1.1em; color: #666;">
+  <p style="margin-bottom: 25px; font-size: 1.1em; color: #666;">
     2025년도 METAROBOT이 걸어온 끊임없는 도전의 기록입니다.
   </p>
 
@@ -54,7 +53,7 @@ toc_label: "CONTENTS"
       </thead>
       <tbody>
         <tr style="border-bottom: 1px solid #ddd;">
-          <td style="padding: 12px;"><strong>RED SHOW</strong><br><span style="font-size: 0.85em; color: #666;">Two Reg Wheel Balance Robot</span></td>
+          <td style="padding: 12px;"><strong>RED SHOW</strong><br><span style="font-size: 0.85em; color: #666;">Two Wheel Balance Robot</span></td>
           <td style="padding: 12px;">AI / CTRL / HW</td>
         </tr>
         <tr style="border-bottom: 1px solid #ddd;">
@@ -66,7 +65,7 @@ toc_label: "CONTENTS"
           <td style="padding: 12px;">AI</td>
         </tr>
         <tr style="border-bottom: 1px solid #ddd;">
-          <td style="padding: 12px;"><strong>Sim2Real Study</strong> (Isaacsim) <br><span style="font-size: 0.85em; color: #666;">Two Reg Wheel Balance Robot</span></td>
+          <td style="padding: 12px;"><strong>Sim2Real Study</strong> (Isaac Sim)</td>
           <td style="padding: 12px;">AI / CTRL</td>
         </tr>
         <tr style="border-bottom: 1px solid #ddd;">
@@ -109,10 +108,12 @@ toc_label: "CONTENTS"
     </table>
   </div>
 </div>
+
 <br>
 
-## ⚙️ METAROBOT RESOURCES
-<div style="text-align: center; margin-bottom: 20px;">
+<h2 style="font-size: 2.5em; text-align: center; font-weight: 900; margin-bottom: 10px;">⚙️ METAROBOT RESOURCES</h2>
+
+<div style="text-align: center; margin-bottom: 30px;">
   학교와 기업의 지원을 통해 <strong>현업 수준의 High-End Resource</strong>를 보유하고 있습니다.<br>
 </div>
 
