@@ -43,7 +43,7 @@ toc_label: "CONTENTS"
     2025년도 METAROBOT이 걸어온 끊임없는 도전의 기록입니다.
   </p>
 
-  <div style="width: 100%; overflow-x: auto;position: relative; left: 100px;">
+  <div style="width: 100%; overflow-x: auto;position: relative; left: 85px;">
     <table style="width: 100%; border-collapse: collapse; font-size: 1.05em; text-align: center;">
       <thead>
         <tr style="background-color: #f2f2f2; border-bottom: 2px solid #333;">
