@@ -1,47 +1,19 @@
 ---
 title: "WELCOME TO METAROBOT"
-excerpt: "메타로봇 연구회 공식 홈페이지"
-layout: single
-author_profile: true
-read_time: false
-comments: false
-share: false
-related: false
-toc: true
-toc_sticky: true
-toc_label: "CONTENTS"
+excerpt: "메타로봇 연구회 소개 및 활동 내역"
+categories:
+  - Project
+tags:
+  - Intro
+  - Portfolio
 
-# 1. 압도적인 대문 (배경 이미지 + 버튼)
 header:
-  overlay_image: /assets/images/logo.jpg
-  overlay_filter: 0.5
-  caption: "Engineering the Future with **METAROBOT**"
-  actions:
-    - label: "View Projects"
-      url: "/categories/"
-    - label: "Contact Us"
-      url: "mailto:your-email@example.com"
+  teaser: /assets/images/logo.jpg
+  overlay_filter: 0.5 # 배경이 어둡게 깔리면서 글자가 선명해짐
 
-# 2. 부서 소개를 '카드' 형태로 시각화 (여백 채우기)
-intro_departments:
-  - title: "AI & Vision"
-    excerpt: "Computer Vision, SLAM, Isaac Sim<br>객체 인식 및 자율주행 알고리즘 연구"
-    icon: "fas fa-eye"
-  - title: "Robot Control"
-    excerpt: "Dynamics, MPC, Firmware<br>정밀 모터 제어 및 보행 로봇 제어"
-    icon: "fas fa-microchip"
-  - title: "Hardware Design"
-    excerpt: "Mechanism, PCB, 3D Printing<br>로봇 기구학 설계 및 회로 제작"
-    icon: "fas fa-cogs"
-
-# 3. 보유 장비 요약 (2열 배치)
-resource_summary:
-  - image_path: /assets/images/logo.jpg # 장비 사진이 있다면 교체, 없으면 로고
-    title: "High-Performance Computing"
-    excerpt: "Jetson AGX Thor, Orin, RTX 4060 Super 등 고성능 연산 장비 보유"
-  - image_path: /assets/images/logo.jpg
-    title: "Robot Manipulators"
-    excerpt: "Indy7, UR 협동로봇 및 다수의 Dynamixel 액추에이터 구비"
+last_modified_at: 2025-11-24
+toc: true             # 우측 목차 생성
+toc_sticky: true      # 목차 따라오기
 ---
 
 ## 1. WE ARE METAROBOT
@@ -49,59 +21,62 @@ resource_summary:
 > **"Degree Of Freedom"**
 
 메타버스와 로봇 융합 기술 연구를 목적으로 창립된 **KOREATECH 소속 메타로봇연구회 MarsLab**입니다.  
-단순한 스터디를 넘어, **설계(HW)부터 제어(Control), 인공지능(AI)**까지 로봇 공학의 전 과정을 직접 수행하며 엔지니어의 꿈을 현실로 만듭니다.
+**AI, CONTROL, HARDWARE** 세 부서가 협력하여 전문 지식을 나누는 것에 그치지 않고, 직접 로봇을 설계·제작·제어하며 로봇 엔지니어로서의 꿈을 실현해 나갑니다.
 
 ---
 
-## 2. OUR DEPARTMENTS
-연구회는 3개의 전문 부서로 나뉘어 체계적으로 운영됩니다.
+## 2. METAROBOT'S 2025
 
-{% include feature_row id="intro_departments" type="center" %}
+2025년도 METAROBOT이 수행한 주요 프로젝트와 연구 활동입니다.
 
----
-
-## 3. 2025 ACTIVITY LOG
-올해 메타로봇이 걸어온 길입니다. 끊임없는 도전으로 수많은 성과를 달성했습니다.
-
-| **Project & Activity** | **Category** | **Dept.** |
-|:--- |:---:|:---:|
-| **RED SHOW** (Two Wheel Balance Robot) | Exhibition | ALL |
-| **Zeus Zero Robot Challenge** 🏆 *(Presidential Award)* | Contest | ALL |
-| **Genesis Study** | Study | AI |
-| **Sim2Real Study** (Isaac Sim) | Study | AI/Ctrl |
-| **Xenomai & R-Pi Study** | Study | Ctrl |
-| **Neuromecha Master Device** (산학) | Project | ALL |
-| **Neuromecha Indy Hand** (산학) | Project | ALL |
-| **Slave Robot Project** | Project | Ctrl/HW |
-| **Koreatech Start-up Contest** | Startup | ALL |
+| **Activity / Project** | **Department** |
+|:--- |:---:|
+| **RED SHOW** <br> Two Reg Wheel Balance Robot | AI / CTRL / HW |
+| **Zeus Zero Robot Mission Challenge** <br> *Presidential Award (대통령상)* 🏆 | AI / CTRL / HW |
+| **Genesis Study** | AI |
+| **Isaac Sim Sim2Real Study** (Summer) <br> Two Wheel Balance Robot | AI / CTRL |
+| **Xenomai & Raspberry Pi Study** | CONTROL |
+| **Industry-Academic Project** <br> Master Device with NEUROMECHA | AI / CTRL / HW |
+| **Industry-Academic Project** <br> Indy Hand with NEUROMECHA | AI / CTRL / HW |
+| **Slave Robot Project** | CTRL / HW |
+| **Metarobot Competition** | CTRL / HW |
+| **Koreatech Start-up Contest** | AI / CTRL / HW |
+| **Robo World Expo** | - |
+| **Metarobot Workshop** | - |
+| **New Member Training** | - |
 
 ---
 
-## 4. METAROBOT RESOURCES
-학교와 기업의 지원을 통해 **현업 수준의 개발 환경**을 갖추고 있습니다.
+## 3. METAROBOT RESOURCE
 
-{% include feature_row id="resource_summary" type="left" %}
+**METAROBOT**은 학교와 여러 단체의 지원을 받아 연구에 필요한 **High-End Resource**를 보유하고 있습니다.
 
-**Notice:** 위 장비들은 연구회원이라면 누구나 프로젝트에 활용할 수 있습니다.
+**Notice:** 아래 장비들은 연구회원이라면 누구나 프로젝트에 활용할 수 있습니다.
 {: .notice--info}
 
-<div style="margin-top: 20px;">
-  <details>
-    <summary style="cursor: pointer; font-weight: bold; color: #555;">📋 상세 장비 목록 열기 (Click)</summary>
-    <div markdown="1">
-    
-    * **Computing:** NVIDIA Jetson Thor/Orin/Nano, Raspberry Pi 5, Synology NAS
-    * **Actuators:** Neuromecha Indy7, UR Manipulator, Dynamixel Motors
-    * **Manufacturing:** Bambu Lab H2D, High-end Power Supply, DAQ
-    * **Sensors:** RealSense D435i, LiDAR
-    
-    </div>
-  </details>
-</div>
+### ⚡ Computing & Controller
+* **NVIDIA Jetson AGX Thor** Developer Kit
+* **NVIDIA Jetson AGX Orin** 64GB Developer Kit
+* **NVIDIA Jetson Orin Nano** Super Developer Kit
+* **Raspberry Pi 5** (Multiple Units)
+* **Synology NAS** 2Bay (Data Server)
+* **RTX 4060 SUPER** Workstation
+
+### 🦾 Robotics & Actuator
+* **Indy7** (Neuromecha Cobot)
+* **UR Manipulator**
+* **Dynamixel** (Various Models)
+* Various DC/BLDC Motors & Drivers
+
+### 🛠️ Manufacturing & Sensors
+* **Bambu Lab H2D** (High-speed 3D Printer)
+* **RealSense D435i** (Depth Camera)
+* **LiDAR** Sensors
+* DAQ (Data Acquisition) & High-End Power Supply
 
 ---
 
-<div style="text-align: center; margin: 50px 0;">
+<div style="text-align: center; margin-top: 50px;">
   <h3>🔥 ROBOT에 가슴이 뛰는 여러분을 기다립니다.</h3>
-  <a href="https://github.com/textnecklee" class="btn btn--primary btn--large">Join Metarobot</a>
+  <p>Make your imagination a reality with METAROBOT.</p>
 </div>
