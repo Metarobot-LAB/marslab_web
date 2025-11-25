@@ -1,6 +1,6 @@
 ---
 title: "WELCOME TO METAROBOT"
-excerpt: "메타로봇 연구회 공식 포트폴리오"
+excerpt: "메타로봇 연구회"
 categories:
   - Project
 tags:
