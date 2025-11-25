@@ -70,7 +70,7 @@ toc_label: "CONTENTS"
         </tr>
         <tr style="border-bottom: 1px solid #ddd;">
           <td style="padding: 12px;"><strong>Xenomai & Raspberry Pi Study</strong></td>
-          <td style="padding: 12px;">CONTROL</td>
+          <td style="padding: 12px;">CTRL</td>
         </tr>
         <tr style="border-bottom: 1px solid #ddd;">
           <td style="padding: 12px;"><strong>Master Device Project</strong> (with NEUROMECHA)</td>
