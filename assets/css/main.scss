@@ -8,8 +8,8 @@
 /* ▼ 아바타 크기 강제 조절 코드 ▼ */
 .author__avatar img {
     max-width: none !important; /* 크기 제한 해제 */
-    width: 250px !important;    /* 너비 (원하는 만큼 숫자를 키우세요) */
-    height: 220px !important;   /* 높이 (너비랑 똑같이 맞춰주세요) */
+    width: 245px !important;    /* 너비 (원하는 만큼 숫자를 키우세요) */
+    height: 160px !important;   /* 높이 (너비랑 똑같이 맞춰주세요) */
     object-fit: cover;          /* 사진이 찌그러지지 않게 꽉 채움 */
 }
 
