@@ -13,12 +13,24 @@
     object-fit: cover;          /* 사진이 찌그러지지 않게 꽉 채움 */
 }
 
-/* (선택사항) 왼쪽 사이드바 자체를 조금 더 넓히고 싶다면 아래 주석을 푸세요 */
-/*
+/* 사이드바 너비 증가 - 슬라이드 바 제거 */
 .sidebar {
-    width: 300px !important;
+    width: 320px !important;
+    min-width: 320px !important;
 }
-*/
+
+.author__urls-wrapper {
+    width: 100% !important;
+}
+
+.author__urls {
+    width: 100% !important;
+}
+
+.author__links {
+    width: 100% !important;
+    word-wrap: break-word;
+}
 
 /* ▼ 헤더 이미지 영역 확대 및 이미지 전체 표시 설정 ▼ */
 .page__hero {
