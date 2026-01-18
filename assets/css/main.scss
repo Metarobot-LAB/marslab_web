@@ -50,20 +50,6 @@
     line-height: 1.4 !important;
 }
 
-/* 메인 콘텐츠 영역이 사이드바와 겹치지 않도록 조정 */
-.page__content {
-    margin-left: 0 !important;
-}
-
-.page {
-    margin-left: 0 !important;
-}
-
-/* 레이아웃이 깨지지 않도록 전체 컨테이너 조정 */
-.wrapper {
-    max-width: 100% !important;
-}
-
 /* 사이드바 스크롤 완전 제거 */
 .sidebar,
 .sidebar__right,
@@ -73,6 +59,27 @@
     overflow: visible !important;
     overflow-x: visible !important;
     overflow-y: visible !important;
+}
+
+/* 사이드바가 제대로 표시되도록 보장 */
+.sidebar {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* 메인 콘텐츠 영역이 사이드바와 제대로 배치되도록 조정 */
+/* Minimal Mistakes 테마가 자동으로 레이아웃을 계산하도록 함 */
+.page__inner {
+    /* 테마의 기본 레이아웃 유지 */
+}
+
+.page__content {
+    /* 테마의 기본 레이아웃 유지 */
+}
+
+/* 레이아웃이 깨지지 않도록 전체 컨테이너 조정 */
+.wrapper {
+    /* 테마의 기본 레이아웃 유지 */
 }
 
 /* ▼ 헤더 이미지 영역 확대 및 이미지 전체 표시 설정 ▼ */
