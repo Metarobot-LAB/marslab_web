@@ -129,13 +129,13 @@ show_tags: false
 <div class="award-item">
   <div class="award-year">2025</div>
   <div class="award-event">창업 아이디어 경진 대회</div>
-  <div class="award-prize">2등</div>
+  <div class="award-prize">은상 수상</div>
 </div>
 
 <div class="award-item">
   <div class="award-year">2025</div>
   <div class="award-event">메타로봇 경진대회</div>
-  <div class="award-prize">입상</div>
+  <div class="award-prize">입상 수상</div>
 </div>
 
 <div class="award-item">
