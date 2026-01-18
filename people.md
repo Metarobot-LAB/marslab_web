@@ -8,57 +8,138 @@ classes: wide
 
 <style>
 .people-container {
-  max-width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
-}
-
-.people-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 40px;
-  font-size: 1.3em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.people-table thead {
-  background-color: #2c3e50;
-  color: white;
-}
-
-.people-table th {
-  padding: 20px 25px;
-  text-align: left;
-  font-weight: bold;
-  font-size: 1.2em;
-  border-bottom: 3px solid #34495e;
-}
-
-.people-table td {
-  padding: 18px 25px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.people-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.people-table tbody tr:last-child td {
-  border-bottom: none;
+  padding: 20px;
 }
 
 .section-title {
-  font-size: 2.2em;
-  font-weight: bold;
-  margin-top: 50px;
-  margin-bottom: 25px;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-top: 60px;
+  margin-bottom: 40px;
   color: #2c3e50;
-  border-bottom: 3px solid #3498db;
-  padding-bottom: 10px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 15px;
 }
 
 .section-title:first-of-type {
   margin-top: 20px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  border-radius: 2px;
+}
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 50px;
+}
+
+.person-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid #3498db;
+  position: relative;
+  overflow: hidden;
+}
+
+.person-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #3498db;
+  transition: width 0.3s ease;
+}
+
+.person-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.person-card:hover::before {
+  width: 100%;
+  opacity: 0.05;
+}
+
+.person-name {
+  font-size: 1.4em;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.person-group {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.group-ai {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.group-hardware {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.group-control {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.person-major {
+  font-size: 1em;
+  color: #7f8c8d;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.person-card:hover .person-name {
+  color: #3498db;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .people-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  
+  .section-title {
+    font-size: 2em;
+  }
+  
+  .person-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .people-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 
@@ -66,194 +147,194 @@ classes: wide
 
 <h2 class="section-title">Undergraduate Students</h2>
 
-<table class="people-table">
-  <thead>
-    <tr>
-      <th style="width: 30%;">Name</th>
-      <th style="width: 35%;">Group</th>
-      <th style="width: 35%;">Major</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>변호진</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>권혁조</td>
-      <td>AI Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>정윤호</td>
-      <td>Hardware Group</td>
-      <td>기계공학</td>
-    </tr>
-    <tr>
-      <td>성무건</td>
-      <td>Hardware Group</td>
-      <td>기계공학</td>
-    </tr>
-    <tr>
-      <td>임상수</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>강민창</td>
-      <td>AI Group</td>
-      <td>기계공학</td>
-    </tr>
-    <tr>
-      <td>서동욱</td>
-      <td>Control Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>서희찬</td>
-      <td>Control Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>이강현</td>
-      <td>AI Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>오수민</td>
-      <td>Hardware Group</td>
-      <td>기계공학</td>
-    </tr>
-    <tr>
-      <td>김윤기</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>최성열</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>김호영</td>
-      <td>Control Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>유성우</td>
-      <td>AI Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>강동호</td>
-      <td>Control Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>강정우</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>이은석</td>
-      <td>Control Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>고다영</td>
-      <td>Hardware Group</td>
-      <td>기계공학</td>
-    </tr>
-    <tr>
-      <td>임희수</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>남채은</td>
-      <td>AI Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>남윤아</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-  </tbody>
-</table>
+<div class="people-grid">
+  <div class="person-card">
+    <div class="person-name">변호진</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">권혁조</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">정윤호</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">기계공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">성무건</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">기계공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">임상수</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">강민창</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">기계공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">서동욱</div>
+    <span class="person-group group-control">Control Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">서희찬</div>
+    <span class="person-group group-control">Control Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">이강현</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">오수민</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">기계공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">김윤기</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">최성열</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">김호영</div>
+    <span class="person-group group-control">Control Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">유성우</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">강동호</div>
+    <span class="person-group group-control">Control Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">강정우</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">이은석</div>
+    <span class="person-group group-control">Control Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">고다영</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">기계공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">임희수</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">남채은</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">남윤아</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+</div>
 
 <h2 class="section-title">Graduate Students</h2>
 
-<table class="people-table">
-  <thead>
-    <tr>
-      <th style="width: 30%;">Name</th>
-      <th style="width: 35%;">Group</th>
-      <th style="width: 35%;">Major</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>이승호</td>
-      <td>AI Group</td>
-      <td>기계공학</td>
-    </tr>
-    <tr>
-      <td>정성조</td>
-      <td>Hardware Group</td>
-      <td>기계공학</td>
-    </tr>
-    <tr>
-      <td>김중길</td>
-      <td>AI Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>문준서</td>
-      <td>AI Group</td>
-      <td>전자공학</td>
-    </tr>
-    <tr>
-      <td>박한솔</td>
-      <td>AI Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>배성우</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-  </tbody>
-</table>
+<div class="people-grid">
+  <div class="person-card">
+    <div class="person-name">이승호</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">기계공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">정성조</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">기계공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">김중길</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">문준서</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">전자공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">박한솔</div>
+    <span class="person-group group-ai">AI Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">배성우</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+</div>
 
 <h2 class="section-title">Alumni</h2>
 
-<table class="people-table">
-  <thead>
-    <tr>
-      <th style="width: 30%;">Name</th>
-      <th style="width: 35%;">Group</th>
-      <th style="width: 35%;">Major</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>김우진</td>
-      <td>Control Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-    <tr>
-      <td>박시우</td>
-      <td>Control Group</td>
-      <td>전자공학</td>
-    </tr>
-    <tr>
-      <td>추성권</td>
-      <td>Hardware Group</td>
-      <td>메카트로닉스공학</td>
-    </tr>
-  </tbody>
-</table>
+<div class="people-grid">
+  <div class="person-card">
+    <div class="person-name">김우진</div>
+    <span class="person-group group-control">Control Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">박시우</div>
+    <span class="person-group group-control">Control Group</span>
+    <div class="person-major">전자공학</div>
+  </div>
+  
+  <div class="person-card">
+    <div class="person-name">추성권</div>
+    <span class="person-group group-hardware">Hardware Group</span>
+    <div class="person-major">메카트로닉스공학</div>
+  </div>
+</div>
 
 </div>
