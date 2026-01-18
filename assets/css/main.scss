@@ -65,3 +65,29 @@
     align-items: center !important;
     justify-content: center !important;
 }
+
+/* 태그 완전히 숨기기 */
+.page__taxonomy,
+.taxonomy__index,
+.taxonomy__title,
+.archive__item-tags,
+.page__taxonomy-item,
+.taxonomy__section,
+.tag__list,
+.tag__item {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* 카테고리 페이지에서 태그 숨기기 */
+.archive .page__taxonomy,
+.archive .taxonomy__index,
+.archive .archive__item-tags {
+    display: none !important;
+}
+
+/* 포스트에서 태그 숨기기 */
+.page__taxonomy-wrapper,
+.page__taxonomy-item {
+    display: none !important;
+}
