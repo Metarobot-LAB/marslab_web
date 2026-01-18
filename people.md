@@ -56,6 +56,16 @@ classes: wide
   border-left: 4px solid #3498db;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+.person-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .person-card::before {
@@ -196,11 +206,13 @@ classes: wide
     <div class="person-major">메카트로닉스공학</div>
   </div>
   
-  <div class="person-card">
-    <div class="person-name">이강현</div>
-    <span class="person-group group-ai">AI Group</span>
-    <div class="person-major">메카트로닉스공학</div>
-  </div>
+  <a href="/?person=이강현" class="person-card-link">
+    <div class="person-card">
+      <div class="person-name">이강현</div>
+      <span class="person-group group-ai">AI Group</span>
+      <div class="person-major">메카트로닉스공학</div>
+    </div>
+  </a>
   
   <div class="person-card">
     <div class="person-name">오수민</div>
@@ -336,5 +348,27 @@ classes: wide
     <div class="person-major">메카트로닉스공학</div>
   </div>
 </div>
+
+<script>
+// 모든 person-card를 클릭 가능한 링크로 변환
+document.addEventListener('DOMContentLoaded', function() {
+  const personCards = document.querySelectorAll('.person-card:not(.person-card-link .person-card)');
+  
+  personCards.forEach(function(card) {
+    const personName = card.querySelector('.person-name');
+    if (personName) {
+      const name = personName.textContent.trim();
+      const link = document.createElement('a');
+      link.href = '/?person=' + encodeURIComponent(name);
+      link.className = 'person-card-link';
+      link.style.cssText = 'text-decoration: none; color: inherit; display: block;';
+      
+      // 카드를 링크로 감싸기
+      card.parentNode.insertBefore(link, card);
+      link.appendChild(card);
+    }
+  });
+});
+</script>
 
 </div>
