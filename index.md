@@ -63,12 +63,8 @@ header:
     if (visibleCount > 0) {
       const personTitle = document.getElementById('person-title');
       const personName = decodeURIComponent(filterPerson);
-      personTitle.innerHTML = '<div style="text-align: center; margin: 40px 0 50px 0; padding: 30px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);">' +
-                            '<h1 style="color: white; font-size: 2.2em; font-weight: 700; margin: 0; line-height: 1.3;">' +
-                            '<span style="font-size: 1.2em; margin-right: 8px;">👤</span>' +
-                            personName + '이(가) 참여한 프로젝트' +
-                            '</h1>' +
-                            '<p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1em; margin: 15px 0 0 0; font-weight: 300;">총 ' + visibleCount + '개의 프로젝트</p>' +
+      personTitle.innerHTML = '<div style="border: 1px solid #ddd; padding: 20px; margin: 30px 0; background: #fff;">' +
+                            '<div style="font-size: 1.2em; color: #333;">' + personName + '이(가) 참여한 프로젝트</div>' +
                             '</div>';
       personTitle.style.display = 'block';
       

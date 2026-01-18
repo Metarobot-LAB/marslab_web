@@ -38,48 +38,30 @@ show_tags: false
 }
 
 .section-title {
-  font-size: 2.5em;
-  font-weight: 700;
-  margin-top: 60px;
-  margin-bottom: 40px;
-  color: #2c3e50;
-  text-align: center;
-  position: relative;
-  padding-bottom: 15px;
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: left;
+  padding: 0;
 }
 
 .section-title:first-of-type {
   margin-top: 20px;
 }
 
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #3498db, #2980b9);
-  border-radius: 2px;
-}
-
 .people-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
-  margin-bottom: 50px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 40px;
 }
 
 .person-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  border-left: 4px solid #3498db;
-  position: relative;
-  overflow: hidden;
+  border: 1px solid #ddd;
+  padding: 15px;
   cursor: pointer;
   text-decoration: none;
   display: block;
@@ -92,81 +74,50 @@ show_tags: false
   display: block;
 }
 
-.person-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: #3498db;
-  transition: width 0.3s ease;
-}
-
 .person-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.person-card:hover::before {
-  width: 100%;
-  opacity: 0.05;
+  border-color: #999;
+  background-color: #f9f9f9;
 }
 
 .person-name {
-  font-size: 1.4em;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 12px;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
   line-height: 1.3;
 }
 
 .person-group {
   display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.9em;
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: white;
-}
-
-.group-ai {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.group-hardware {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.group-control {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  padding: 4px 10px;
+  font-size: 0.85em;
+  font-weight: 400;
+  margin-bottom: 6px;
+  color: #666;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
 }
 
 .person-major {
-  font-size: 1em;
-  color: #7f8c8d;
-  margin-top: 8px;
-  line-height: 1.5;
-}
-
-.person-card:hover .person-name {
-  color: #3498db;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 6px;
+  line-height: 1.4;
 }
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .people-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
   }
   
   .section-title {
-    font-size: 2em;
+    font-size: 1.5em;
   }
   
   .person-card {
-    padding: 20px;
+    padding: 12px;
   }
 }
 
