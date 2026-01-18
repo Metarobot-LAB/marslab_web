@@ -19,11 +19,7 @@ show_tags: false
 .tag__item,
 .taxonomy__tag,
 .archive__item-tag,
-.page__taxonomy-wrapper,
-[class*="tag"],
-[class*="Tag"],
-[class*="taxonomy"],
-[class*="Taxonomy"] {
+.page__taxonomy-wrapper {
     display: none !important;
     visibility: hidden !important;
     height: 0 !important;

@@ -21,9 +21,7 @@ header:
 .archive__item-tags,
 .page__taxonomy-item,
 .tag__list,
-.tag__item,
-[class*="tag"],
-[class*="taxonomy"] {
+.tag__item {
     display: none !important;
     visibility: hidden !important;
 }
