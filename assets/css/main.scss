@@ -22,23 +22,46 @@
 
 /* ▼ 헤더 이미지 영역 확대 및 이미지 전체 표시 설정 ▼ */
 .page__hero {
-    height: 500px !important; /* 헤더 영역 높이 증가 (기본값보다 크게) */
-    min-height: 500px !important;
+    height: 700px !important; /* 헤더 영역 높이 대폭 증가 */
+    min-height: 700px !important;
+    max-height: none !important;
 }
 
 .page__hero-image {
-    height: 500px !important;
-    min-height: 500px !important;
+    height: 700px !important;
+    min-height: 700px !important;
+    max-height: none !important;
 }
 
 .page__hero-image img {
     object-fit: contain !important; /* 이미지가 잘리지 않고 전체가 보이도록 */
-    object-position: center !important; /* 중앙 정렬 */
+    object-position: center center !important; /* 중앙 정렬 */
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important; /* 높이 자동 조절로 비율 유지 */
+    max-height: 700px !important;
+    max-width: 100% !important;
 }
 
 .page__hero-overlay {
-    height: 500px !important;
-    min-height: 500px !important;
+    height: 700px !important;
+    min-height: 700px !important;
+    max-height: none !important;
+}
+
+/* 추가: 모든 헤더 관련 요소에 높이 적용 */
+.page__hero--overlay,
+.page__hero--overlay .page__hero-image,
+.page__hero--overlay .page__hero-image-wrapper {
+    height: 700px !important;
+    min-height: 700px !important;
+    max-height: none !important;
+}
+
+/* 이미지 래퍼도 높이 조정 */
+.page__hero-image-wrapper {
+    height: 700px !important;
+    min-height: 700px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
