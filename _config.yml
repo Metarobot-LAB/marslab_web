@@ -21,9 +21,9 @@ author:
     - label: "Email :  metarobot0710@gmail.com"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:metarobot0710@gmail.com" # 동아리 대표 메일
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/textnecklee"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://www.instagram.com/metarobot_mars/"
 # 검색 기능 설정
 search: true
 search_full_content: true # 글 내용까지 전부 검색할지 여부
