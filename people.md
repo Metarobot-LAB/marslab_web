@@ -206,7 +206,7 @@ classes: wide
     <div class="person-major">메카트로닉스공학</div>
   </div>
   
-  <a href="/?person=이강현" class="person-card-link">
+  <a href="{{ site.baseurl }}/?person=이강현&group=ai" class="person-card-link">
     <div class="person-card">
       <div class="person-name">이강현</div>
       <span class="person-group group-ai">AI Group</span>
@@ -353,13 +353,29 @@ classes: wide
 // 모든 person-card를 클릭 가능한 링크로 변환
 document.addEventListener('DOMContentLoaded', function() {
   const personCards = document.querySelectorAll('.person-card:not(.person-card-link .person-card)');
+  const baseurl = '{{ site.baseurl }}' || '';
   
   personCards.forEach(function(card) {
     const personName = card.querySelector('.person-name');
+    const personGroup = card.querySelector('.person-group');
+    
     if (personName) {
       const name = personName.textContent.trim();
+      let group = '';
+      
+      if (personGroup) {
+        const groupText = personGroup.textContent.trim();
+        if (groupText.includes('Hardware')) {
+          group = 'hardware';
+        } else if (groupText.includes('Control')) {
+          group = 'control';
+        } else if (groupText.includes('AI')) {
+          group = 'ai';
+        }
+      }
+      
       const link = document.createElement('a');
-      link.href = '/?person=' + encodeURIComponent(name);
+      link.href = baseurl + '/?person=' + encodeURIComponent(name) + (group ? '&group=' + group : '');
       link.className = 'person-card-link';
       link.style.cssText = 'text-decoration: none; color: inherit; display: block;';
       

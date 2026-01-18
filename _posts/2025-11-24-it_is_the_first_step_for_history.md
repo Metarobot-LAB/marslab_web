@@ -26,7 +26,7 @@ toc_label: "CONTENTS"
   <strong style="color: #2c3e50; font-size: 1.1em;">참여 인원:</strong>
   <div style="margin-top: 10px;">
     {% for participant in page.participants %}
-      <a href="/?person={{ participant }}" style="display: inline-block; margin: 5px 10px 5px 0; padding: 6px 14px; background-color: #3498db; color: white; border-radius: 20px; text-decoration: none; font-size: 0.95em; transition: background-color 0.3s;">
+      <a href="{{ site.baseurl }}/?person={{ participant }}" style="display: inline-block; margin: 5px 10px 5px 0; padding: 6px 14px; background-color: #3498db; color: white; border-radius: 20px; text-decoration: none; font-size: 0.95em; transition: background-color 0.3s;">
         {{ participant }}
       </a>
     {% endfor %}
