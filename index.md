@@ -63,8 +63,8 @@ header:
     if (visibleCount > 0) {
       const personTitle = document.getElementById('person-title');
       const personName = decodeURIComponent(filterPerson);
-      personTitle.innerHTML = '<div style="border: 1px solid #ddd; padding: 20px; margin: 30px 0; background: #fff;">' +
-                            '<div style="font-size: 1.2em; color: #333;">' + personName + '이(가) 참여한 프로젝트</div>' +
+      personTitle.innerHTML = '<div style="border: 1px solid #ddd; padding: 12px 15px; margin: 20px 0; background: #fff;">' +
+                            '<div style="font-size: 1em; color: #333;">' + personName + '이(가) 참여한 프로젝트</div>' +
                             '</div>';
       personTitle.style.display = 'block';
       
