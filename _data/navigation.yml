@@ -3,6 +3,9 @@ main:
   - title: "Home"
     url: /
   
+  - title: "People"
+    url: /people/
+  
   - title: "카테고리"
     url: /categories/
   
