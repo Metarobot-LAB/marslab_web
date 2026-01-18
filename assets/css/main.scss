@@ -66,7 +66,10 @@
     justify-content: center !important;
 }
 
-/* 태그 완전히 숨기기 */
+/* ============================================
+   태그 완전히 숨기기 - 모든 페이지에 적용
+   ============================================ */
+/* 태그 관련 모든 요소 숨기기 */
 .page__taxonomy,
 .taxonomy__index,
 .taxonomy__title,
@@ -74,20 +77,59 @@
 .page__taxonomy-item,
 .taxonomy__section,
 .tag__list,
-.tag__item {
+.tag__item,
+.taxonomy__tag,
+.archive__item-tag,
+.page__taxonomy-wrapper,
+.page__taxonomy-item,
+.taxonomy__tags,
+.taxonomy__tag-list,
+.tag__icon,
+.tag__link,
+[class*="tag"],
+[class*="Tag"],
+[class*="taxonomy"],
+[class*="Taxonomy"],
+.archive__item-tag-link,
+.page__taxonomy-item-link,
+.taxonomy__tag-link {
     display: none !important;
     visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
 }
 
 /* 카테고리 페이지에서 태그 숨기기 */
 .archive .page__taxonomy,
 .archive .taxonomy__index,
-.archive .archive__item-tags {
+.archive .archive__item-tags,
+.archive .taxonomy__section,
+.archive .tag__list {
     display: none !important;
 }
 
 /* 포스트에서 태그 숨기기 */
 .page__taxonomy-wrapper,
-.page__taxonomy-item {
+.page__taxonomy-item,
+.single .page__taxonomy,
+.single .taxonomy__index {
+    display: none !important;
+}
+
+/* People 페이지에서 태그 숨기기 */
+.people-container .page__taxonomy,
+.people-container .taxonomy__index {
+    display: none !important;
+}
+
+/* 모든 페이지에서 태그 관련 섹션 숨기기 */
+.page__taxonomy-section,
+.taxonomy__section-title {
     display: none !important;
 }

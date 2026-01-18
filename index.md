@@ -4,6 +4,7 @@ title: "Metarobot Projects"
 author_profile: true
 entries_layout: grid
 classes: wide
+show_tags: false
 
 header:
   image: /main_picture.jpg
@@ -12,6 +13,21 @@ header:
   caption: "METAROBOT LABORATORY | MARS"
   image_description: "METAROBOT LABORATORY 단체 사진"
 ---
+
+<style>
+/* 메인 페이지에서 태그 완전히 숨기기 */
+.page__taxonomy,
+.taxonomy__index,
+.archive__item-tags,
+.page__taxonomy-item,
+.tag__list,
+.tag__item,
+[class*="tag"],
+[class*="taxonomy"] {
+    display: none !important;
+    visibility: hidden !important;
+}
+</style>
 
 <div id="person-title" style="display: none;"></div>
 

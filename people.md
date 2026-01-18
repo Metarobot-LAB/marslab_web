@@ -4,9 +4,33 @@ title: "People"
 permalink: /people/
 author_profile: true
 classes: wide
+show_tags: false
 ---
 
 <style>
+/* People 페이지에서 태그 완전히 숨기기 */
+.page__taxonomy,
+.taxonomy__index,
+.taxonomy__title,
+.archive__item-tags,
+.page__taxonomy-item,
+.taxonomy__section,
+.tag__list,
+.tag__item,
+.taxonomy__tag,
+.archive__item-tag,
+.page__taxonomy-wrapper,
+[class*="tag"],
+[class*="Tag"],
+[class*="taxonomy"],
+[class*="Taxonomy"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .people-container {
   max-width: 1400px;
   margin: 0 auto;
