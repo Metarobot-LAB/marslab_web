@@ -3,9 +3,6 @@ title: "WELCOME TO METAROBOT"
 excerpt: "메타로봇 연구회"
 categories:
   - Project
-tags:
-  - Intro
-  - Portfolio
 participants:
   - 이강현
 
