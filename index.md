@@ -13,11 +13,6 @@ header:
   image_description: "METAROBOT LABORATORY 단체 사진"
 ---
 
-<div id="filter-message" style="display: none; margin: 20px 0; padding: 15px; background-color: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 4px;">
-  <strong>필터링:</strong> <span id="filter-person-name"></span>이(가) 참여한 프로젝트만 표시됩니다. 
-  <a href="{{ site.baseurl }}/" style="color: #2196f3; text-decoration: underline;">모든 프로젝트 보기</a>
-</div>
-
 {% for post in site.posts %}
   <div class="project-item" data-participants="{% if post.participants %}{{ post.participants | join: ',' }}{% endif %}">
     {% include archive-single.html type="grid" %}
@@ -32,14 +27,6 @@ header:
   const filterGroup = urlParams.get('group');
   
   if (filterPerson) {
-    // 필터 메시지 표시
-    const filterMessage = document.getElementById('filter-message');
-    const filterPersonName = document.getElementById('filter-person-name');
-    if (filterMessage && filterPersonName) {
-      filterPersonName.textContent = decodeURIComponent(filterPerson);
-      filterMessage.style.display = 'block';
-    }
-    
     // 프로젝트 필터링
     const projectItems = document.querySelectorAll('.project-item');
     let visibleCount = 0;
