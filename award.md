@@ -28,7 +28,7 @@ show_tags: false
 }
 
 .award-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -38,68 +38,60 @@ show_tags: false
 }
 
 .award-title {
-  font-size: 2em;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 30px;
-  text-align: center;
-  border-bottom: 3px solid #3498db;
-  padding-bottom: 15px;
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: left;
+  padding: 0;
+}
+
+.award-title:first-of-type {
+  margin-top: 20px;
 }
 
 .award-item {
   background: #ffffff;
-  border-left: 5px solid #3498db;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border-radius: 5px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.award-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
 }
 
 .award-year {
-  font-size: 1.3em;
-  font-weight: 600;
-  color: #3498db;
-  margin-bottom: 15px;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .award-event {
   font-size: 1.1em;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 10px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .award-prize {
-  font-size: 1em;
-  color: #27ae60;
-  font-weight: 500;
-  margin-top: 8px;
-  padding-left: 20px;
-  position: relative;
-}
-
-.award-prize::before {
-  content: "🏆";
-  position: absolute;
-  left: 0;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 6px;
+  line-height: 1.4;
 }
 
 .award-prize-list {
   margin-top: 10px;
-  padding-left: 20px;
+  padding-left: 0;
+  list-style: none;
 }
 
 .award-prize-list li {
-  margin-bottom: 8px;
-  color: #555;
-  line-height: 1.6;
+  margin-bottom: 6px;
+  color: #666;
+  line-height: 1.4;
+  font-size: 0.9em;
 }
 
 /* 반응형 디자인 */
@@ -109,11 +101,11 @@ show_tags: false
   }
   
   .award-item {
-    padding: 20px;
+    padding: 12px;
   }
   
   .award-year {
-    font-size: 1.1em;
+    font-size: 1em;
   }
   
   .award-event {
@@ -142,7 +134,7 @@ show_tags: false
 
 <div class="award-item">
   <div class="award-year">2025</div>
-  <div class="award-event">메타로봇대회</div>
+  <div class="award-event">메타로봇 경진대회</div>
   <div class="award-prize">입상</div>
 </div>
 
