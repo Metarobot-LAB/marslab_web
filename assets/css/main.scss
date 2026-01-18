@@ -19,3 +19,26 @@
     width: 300px !important;
 }
 */
+
+/* ▼ 헤더 이미지 영역 확대 및 이미지 전체 표시 설정 ▼ */
+.page__hero {
+    height: 500px !important; /* 헤더 영역 높이 증가 (기본값보다 크게) */
+    min-height: 500px !important;
+}
+
+.page__hero-image {
+    height: 500px !important;
+    min-height: 500px !important;
+}
+
+.page__hero-image img {
+    object-fit: contain !important; /* 이미지가 잘리지 않고 전체가 보이도록 */
+    object-position: center !important; /* 중앙 정렬 */
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.page__hero-overlay {
+    height: 500px !important;
+    min-height: 500px !important;
+}
