@@ -13,6 +13,12 @@ sidebar:
 /* 기본 설정 */
 .page__taxonomy, .taxonomy__index { display: none !important; }
 
+/* 글씨체 설정 */
+.org-chart-container,
+.org-chart-container * {
+  font-family: 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
 /* 전체 컨테이너 */
 .org-chart-container {
   width: 100%;
@@ -152,6 +158,7 @@ sidebar:
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .grad-table {
@@ -162,6 +169,9 @@ sidebar:
   background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   font-size: 1.1em;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .grad-table th, .grad-table td {
