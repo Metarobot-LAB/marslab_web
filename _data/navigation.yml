@@ -4,7 +4,6 @@ main:
     url: /
   
   - title: "People"
-    url: "#"
     children:
       - title: "Professor"
         url: /professor/

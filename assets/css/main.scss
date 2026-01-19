@@ -243,3 +243,54 @@ body, html {
 .taxonomy__section-title {
     display: none !important;
 }
+
+/* ============================================
+   People 드롭다운 메뉴 설정
+   ============================================ */
+/* People 메뉴 항목이 children을 가질 때 상대 위치 설정 */
+.nav__list .nav__item {
+    position: relative;
+}
+
+/* People 링크 클릭 방지 (JavaScript로도 처리하지만 CSS로도 방지) */
+.nav__list .nav__item .nav__link[href="#"] {
+    cursor: default;
+}
+
+/* 드롭다운 메뉴 기본 스타일 */
+.nav__children {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-width: 150px;
+    z-index: 1000;
+    padding: 8px 0;
+    margin-top: 4px;
+    transition: opacity 0.2s ease;
+}
+
+/* 드롭다운 메뉴 표시 상태 (JavaScript로 제어) */
+.nav__children.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.nav__children .nav__link {
+    display: block;
+    padding: 8px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.nav__children .nav__link:hover {
+    background-color: #f5f5f5;
+}
