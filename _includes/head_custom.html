@@ -180,36 +180,13 @@
     return true;
   }
   
-  // 즉시 실행
-  if (setupPeopleDropdown()) {
-    console.log('Setup successful on first try');
-  } else {
-    // DOMContentLoaded에서 실행
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(setupPeopleDropdown, 100);
-        setTimeout(setupPeopleDropdown, 500);
-        setTimeout(setupPeopleDropdown, 1000);
-      });
-    } else {
-      setTimeout(setupPeopleDropdown, 100);
-      setTimeout(setupPeopleDropdown, 500);
-      setTimeout(setupPeopleDropdown, 1000);
-    }
-    
-    // 추가 지연 실행
-    setTimeout(setupPeopleDropdown, 2000);
-    setTimeout(setupPeopleDropdown, 3000);
-    
-    // MutationObserver로 DOM 변경 감지
-    const observer = new MutationObserver(function() {
+  // DOMContentLoaded에서 한 번만 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
       setupPeopleDropdown();
     });
-    
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+  } else {
+    setupPeopleDropdown();
   }
 })();
 </script>

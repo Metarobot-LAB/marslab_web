@@ -1,7 +1,12 @@
 // People 드롭다운 메뉴 - 별도 JS 파일
 (function() {
+  let initialized = false;
+  
   function setupPeopleDropdown() {
-    console.log('[People Dropdown] Setting up...');
+    // 이미 초기화되었으면 스킵
+    if (initialized) {
+      return true;
+    }
     
     const allLinks = document.querySelectorAll('a');
     let peopleLink = null;
@@ -16,11 +21,11 @@
     }
     
     if (!peopleLink || !peopleItem) {
-      console.log('[People Dropdown] Not found, retrying...');
       return false;
     }
     
     if (peopleItem.classList.contains('has-dropdown') && peopleItem.querySelector('.custom-dropdown-menu')) {
+      initialized = true;
       return true;
     }
     
@@ -68,33 +73,17 @@
       dropdown.addEventListener('mouseleave', hideDropdown);
     }
     
-    console.log('[People Dropdown] Setup complete');
+    initialized = true;
     return true;
   }
   
+  // DOMContentLoaded에서 한 번만 실행
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(setupPeopleDropdown, 100);
-      setTimeout(setupPeopleDropdown, 500);
-      setTimeout(setupPeopleDropdown, 1000);
+      setupPeopleDropdown();
     });
   } else {
     setupPeopleDropdown();
-    setTimeout(setupPeopleDropdown, 100);
-    setTimeout(setupPeopleDropdown, 500);
-    setTimeout(setupPeopleDropdown, 1000);
   }
-  
-  setTimeout(setupPeopleDropdown, 2000);
-  setTimeout(setupPeopleDropdown, 3000);
-  
-  const observer = new MutationObserver(function() {
-    setupPeopleDropdown();
-  });
-  
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
 })();
 
