@@ -38,7 +38,7 @@ sidebar:
 
 /* 회장 스타일 */
 .node-president {
-  background: #2c3e50;
+  background: #333;
   color: #fff;
   font-size: 1.3em;
   padding: 15px 40px;
@@ -47,7 +47,7 @@ sidebar:
 
 /* 임원/팀장 스타일 */
 .node-leader {
-  background: #34495e;
+  background: #555;
   color: #fff;
   font-size: 1.1em;
 }
@@ -68,10 +68,11 @@ sidebar:
   font-weight: 600;
   margin-bottom: 8px;
   color: #fff;
+  background-color: #555;
 }
-.badge-hw { background-color: #e67e22; }
-.badge-ctrl { background-color: #27ae60; }
-.badge-ai { background-color: #2980b9; }
+.badge-hw { background-color: #555; }
+.badge-ctrl { background-color: #555; }
+.badge-ai { background-color: #555; }
 
 /* 연결선 */
 .line-vertical {
@@ -148,6 +149,9 @@ sidebar:
   padding-top: 40px;
   border-top: 2px dashed #ccc;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .grad-table {
@@ -162,24 +166,25 @@ sidebar:
 
 .grad-table th, .grad-table td {
   padding: 18px 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ddd;
   text-align: center;
 }
 
 .grad-table th {
-  background-color: #f8f9fa;
+  background-color: #333;
   font-weight: bold;
-  color: #2c3e50;
-  border-top: 2px solid #2c3e50;
+  color: #fff;
+  border-top: 2px solid #333;
   font-size: 1.15em;
 }
 
 .grad-table td {
   font-size: 1.05em;
+  color: #333;
 }
 
 .grad-table tbody tr:hover {
-  background-color: #f8f9fa;
+  background-color: #f5f5f5;
 }
 
 /* 반응형 처리 */
@@ -322,7 +327,7 @@ sidebar:
   </div>
 
   <div class="grad-section">
-    <h2 style="color: #2c3e50; font-weight: bold; margin-bottom: 30px; font-size: 1.8em;">Graduate Students</h2>
+    <h2 style="color: #333; font-weight: bold; margin-bottom: 30px; font-size: 1.8em;">Graduate Students</h2>
     <table class="grad-table">
       <thead>
         <tr>
@@ -334,32 +339,32 @@ sidebar:
       <tbody>
         <tr>
           <td>이승호</td>
-          <td><span style="color: #2980b9; font-weight:bold;">AI Group</span></td>
+          <td><span style="font-weight:bold;">AI Group</span></td>
           <td>기계공학</td>
         </tr>
         <tr>
           <td>김중길</td>
-          <td><span style="color: #2980b9; font-weight:bold;">AI Group</span></td>
+          <td><span style="font-weight:bold;">AI Group</span></td>
           <td>메카트로닉스공학</td>
         </tr>
         <tr>
           <td>문준서</td>
-          <td><span style="color: #2980b9; font-weight:bold;">AI Group</span></td>
+          <td><span style="font-weight:bold;">AI Group</span></td>
           <td>전자공학</td>
         </tr>
         <tr>
           <td>박한솔</td>
-          <td><span style="color: #2980b9; font-weight:bold;">AI Group</span></td>
+          <td><span style="font-weight:bold;">AI Group</span></td>
           <td>메카트로닉스공학</td>
         </tr>
         <tr>
           <td>정성조</td>
-          <td><span style="color: #e67e22; font-weight:bold;">Hardware Group</span></td>
+          <td><span style="font-weight:bold;">Hardware Group</span></td>
           <td>기계공학</td>
         </tr>
         <tr>
           <td>배성우</td>
-          <td><span style="color: #e67e22; font-weight:bold;">Hardware Group</span></td>
+          <td><span style="font-weight:bold;">Hardware Group</span></td>
           <td>메카트로닉스공학</td>
         </tr>
       </tbody>
