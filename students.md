@@ -225,8 +225,8 @@ show_tags: false
 
 <!-- 왼쪽 사이드바 메뉴 -->
 <div class="students-sidebar-menu">
-  <a href="javascript:void(0);" class="sidebar-link active" data-section="students" onclick="return false;">Students</a>
-  <a href="javascript:void(0);" class="sidebar-link" data-section="alumni" onclick="return false;">Alumni</a>
+  <a href="#" class="sidebar-link active" data-section="students">Students</a>
+  <a href="#" class="sidebar-link" data-section="alumni">Alumni</a>
 </div>
 
 <div class="org-container">
