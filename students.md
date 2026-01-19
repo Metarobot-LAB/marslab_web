@@ -432,8 +432,11 @@ show_tags: false
 </div>
 
 <script>
-// 사이드바 메뉴 전환 기능 - 매우 강화 버전
+// 사이드바 메뉴 전환 기능 - 무한 루프 방지 버전
 (function() {
+  let isInitialized = false; // 초기화 플래그
+  let observer = null; // MutationObserver 참조
+  
   function switchSection(sectionId) {
     console.log('Switching to section:', sectionId);
     
@@ -474,12 +477,15 @@ show_tags: false
   window.switchToSection = switchSection;
   
   function initSidebarMenu() {
+    // 이미 초기화되었으면 스킵
+    if (isInitialized) {
+      console.log('Already initialized, skipping...');
+      return;
+    }
+    
     console.log('Initializing sidebar menu...');
     
     const sidebarLinks = document.querySelectorAll('.sidebar-link');
-    const sections = document.querySelectorAll('.students-section');
-    
-    console.log('Found links:', sidebarLinks.length, 'Found sections:', sections.length);
     
     if (sidebarLinks.length === 0) {
       console.log('Sidebar links not found, retrying...');
@@ -487,21 +493,28 @@ show_tags: false
       return;
     }
     
+    // 이미 이벤트가 등록된 링크 확인
+    const firstLink = sidebarLinks[0];
+    if (firstLink.hasAttribute('data-initialized')) {
+      console.log('Links already initialized');
+      isInitialized = true;
+      return;
+    }
+    
     // 모든 링크에 이벤트 리스너 추가
     sidebarLinks.forEach(function(link, index) {
       const sectionId = link.getAttribute('data-section');
       
-      // 기존 이벤트 모두 제거하고 새로 생성
-      const newLink = link.cloneNode(true);
-      link.parentNode.replaceChild(newLink, link);
+      // 초기화 마커 추가
+      link.setAttribute('data-initialized', 'true');
       
-      // 새 링크에 스타일 및 속성 설정
-      newLink.style.cursor = 'pointer';
-      newLink.style.pointerEvents = 'auto';
-      newLink.href = '#';
+      // 스타일 및 속성 설정
+      link.style.cursor = 'pointer';
+      link.style.pointerEvents = 'auto';
+      link.href = '#';
       
-      // click 이벤트 (capture phase) - 가장 먼저 실행
-      newLink.addEventListener('click', function(e) {
+      // click 이벤트 (capture phase)
+      link.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
@@ -511,7 +524,7 @@ show_tags: false
       }, true);
       
       // click 이벤트 (bubble phase)
-      newLink.addEventListener('click', function(e) {
+      link.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
         console.log('Click (bubble) - section:', sectionId);
@@ -519,8 +532,8 @@ show_tags: false
         return false;
       }, false);
       
-      // mousedown 이벤트 - 클릭보다 먼저 실행
-      newLink.addEventListener('mousedown', function(e) {
+      // mousedown 이벤트
+      link.addEventListener('mousedown', function(e) {
         e.preventDefault();
         e.stopPropagation();
         console.log('Mousedown - section:', sectionId);
@@ -529,7 +542,7 @@ show_tags: false
       }, true);
       
       // onclick 속성
-      newLink.onclick = function(e) {
+      link.onclick = function(e) {
         e = e || window.event;
         if (e) {
           e.preventDefault();
@@ -541,38 +554,28 @@ show_tags: false
         return false;
       };
       
-      // HTML onclick 속성도 추가 (가장 확실한 방법)
-      newLink.setAttribute('onclick', 'window.switchToSection("' + sectionId + '"); return false;');
+      // HTML onclick 속성도 추가
+      link.setAttribute('onclick', 'window.switchToSection("' + sectionId + '"); return false;');
     });
     
+    isInitialized = true;
     console.log('Sidebar menu initialized with', sidebarLinks.length, 'links');
+    
+    // MutationObserver 중지
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
   }
   
-  // 즉시 실행
-  initSidebarMenu();
-  
-  // 여러 시점에서 실행
+  // DOMContentLoaded에서 한 번만 실행
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(initSidebarMenu, 100);
-      setTimeout(initSidebarMenu, 500);
-      setTimeout(initSidebarMenu, 1000);
     });
   } else {
     setTimeout(initSidebarMenu, 100);
-    setTimeout(initSidebarMenu, 500);
-    setTimeout(initSidebarMenu, 1000);
   }
-  
-  // MutationObserver로 DOM 변경 감지
-  const observer = new MutationObserver(function() {
-    initSidebarMenu();
-  });
-  
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
   
   // URL 파라미터로 섹션 선택
   const urlParams = new URLSearchParams(window.location.search);
