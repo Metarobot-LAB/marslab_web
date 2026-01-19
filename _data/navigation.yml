@@ -13,3 +13,12 @@ main:
     
   - title: "Awards"
     url: /awards/
+
+# Students 페이지 전용 사이드바
+students_sidebar:
+  - title: "Students"
+    children:
+      - title: "Students"
+        url: "/students/#students-top"
+      - title: "Alumni"
+        url: "/students/#alumni"
