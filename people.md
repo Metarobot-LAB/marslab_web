@@ -7,7 +7,82 @@ classes: wide
 show_tags: false
 ---
 
-<script src="{{ site.baseurl }}/assets/js/people-dropdown.js"></script>
+<style>
+/* People 드롭다운 메뉴 스타일 */
+.custom-dropdown-menu {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: #fff !important;
+  min-width: 160px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+  border: 1px solid #eee !important;
+  border-radius: 8px !important;
+  z-index: 99999 !important;
+  padding: 8px 0 !important;
+  list-style: none !important;
+  margin-top: 10px !important;
+  transition: opacity 0.2s ease-in-out !important;
+}
+
+.custom-dropdown-menu::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -6px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border-left: 6px solid transparent !important;
+  border-right: 6px solid transparent !important;
+  border-bottom: 6px solid #fff !important;
+}
+
+.custom-dropdown-menu li {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  text-align: center !important;
+}
+
+.custom-dropdown-menu a {
+  display: block !important;
+  padding: 10px 20px !important;
+  color: #333 !important;
+  text-decoration: none !important;
+  font-size: 0.95em !important;
+  font-weight: 500 !important;
+  transition: background 0.2s !important;
+}
+
+.custom-dropdown-menu a:hover {
+  background-color: #f5f7fa !important;
+  color: #000 !important;
+}
+
+.has-dropdown {
+  position: relative !important;
+}
+
+.has-dropdown:hover .custom-dropdown-menu {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: fadeIn 0.2s ease-in-out !important;
+}
+
+.has-dropdown:not(:hover) .custom-dropdown-menu {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
 
 <style>
 /* People 페이지에서 태그 완전히 숨기기 */
@@ -359,5 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<script src="{{ site.baseurl }}/assets/js/people-dropdown.js"></script>
 
 </div>
