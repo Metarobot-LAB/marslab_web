@@ -16,9 +16,9 @@ sidebar:
 /* 전체 컨테이너 */
 .org-chart-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 10px;
+  padding: 40px 20px;
   text-align: center;
 }
 
@@ -30,7 +30,7 @@ sidebar:
   background: #fff;
   border: 2px solid #333;
   font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: relative;
   z-index: 2;
   min-width: 140px;
@@ -50,6 +50,13 @@ sidebar:
   background: #34495e;
   color: #fff;
   font-size: 1.1em;
+}
+
+.node-leader-major {
+  font-size: 0.7em;
+  font-weight: normal;
+  opacity: 0.9;
+  margin-top: 5px;
 }
 
 /* 그룹 뱃지 스타일 */
@@ -74,20 +81,13 @@ sidebar:
   margin: 0 auto;
 }
 
-.line-horizontal {
-  height: 2px;
-  background: #ccc;
-  margin: 0 auto;
-  width: 100%;
-}
-
 /* 레이아웃 그리드 */
 .leaders-grid {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 30px;
   margin-top: 0;
-  flex-wrap: nowrap; /* 줄바꿈 방지 */
+  flex-wrap: nowrap;
 }
 
 .column-group {
@@ -95,7 +95,7 @@ sidebar:
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 250px; /* 최소 너비 확보 */
+  min-width: 250px;
 }
 
 /* 학생 리스트 스타일 */
@@ -103,7 +103,7 @@ sidebar:
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
   align-items: center;
 }
@@ -130,9 +130,17 @@ sidebar:
   border-color: #333;
 }
 
-.st-name { font-weight: bold; font-size: 1.05em; color: #333; }
-.st-info { font-size: 0.85em; color: #666; margin-top: 2px; }
-.st-role { font-size: 0.8em; color: #e74c3c; font-weight: bold; margin-top: 2px; }
+.st-name { 
+  font-weight: bold; 
+  font-size: 1.05em; 
+  color: #333; 
+}
+
+.st-info { 
+  font-size: 0.9em; 
+  color: #666; 
+  margin-top: 4px; 
+}
 
 /* 대학원생 테이블 스타일 */
 .grad-section {
@@ -144,15 +152,16 @@ sidebar:
 
 .grad-table {
   width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 1000px;
+  margin: 30px auto;
   border-collapse: collapse;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-size: 1.1em;
 }
 
 .grad-table th, .grad-table td {
-  padding: 12px 15px;
+  padding: 18px 20px;
   border-bottom: 1px solid #eee;
   text-align: center;
 }
@@ -162,6 +171,15 @@ sidebar:
   font-weight: bold;
   color: #2c3e50;
   border-top: 2px solid #2c3e50;
+  font-size: 1.15em;
+}
+
+.grad-table td {
+  font-size: 1.05em;
+}
+
+.grad-table tbody tr:hover {
+  background-color: #f8f9fa;
 }
 
 /* 반응형 처리 */
@@ -170,8 +188,13 @@ sidebar:
     flex-direction: column;
     gap: 50px;
   }
-  .line-horizontal { display: none; } /* 모바일에서 가로선 숨김 */
   .line-vertical-connector { display: none; }
+  .grad-table {
+    font-size: 0.9em;
+  }
+  .grad-table th, .grad-table td {
+    padding: 12px 10px;
+  }
 }
 </style>
 
@@ -179,9 +202,9 @@ sidebar:
 
   <div style="margin-bottom: 20px;">
     <span class="group-badge" style="background: #333;">President</span><br>
-    <a href="{{ site.baseurl }}/?person=성무건&group=hardware" class="node-box node-president" style="text-decoration: none;">
+    <a href="{{ site.baseurl }}/?person=성무건&group=hardware" class="node-box node-president" style="text-decoration: none; color: #fff;">
       성무건
-      <div style="font-size: 0.6em; margin-top: 5px; font-weight: normal; opacity: 0.9;">기계공학 (3학년)</div>
+      <div style="font-size: 0.6em; margin-top: 5px; font-weight: normal; opacity: 0.9;">기계공학</div>
     </a>
     <div class="line-vertical" style="height: 30px;"></div>
   </div>
@@ -197,106 +220,101 @@ sidebar:
 
     <div class="column-group">
       <span class="group-badge badge-hw">Hardware Leader</span>
-      <div class="node-box node-leader">임상수</div>
+      <div class="node-box node-leader">임상수
+        <div class="node-leader-major">메카트로닉스공학</div>
+      </div>
       <div class="line-vertical"></div>
       
       <div class="members-list">
         <a href="{{ site.baseurl }}/?person=변호진&group=hardware" class="student-row">
           <span class="st-name">변호진</span>
-          <span class="st-info">메카트로닉스 (4학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
         <a href="{{ site.baseurl }}/?person=정윤호&group=hardware" class="student-row">
           <span class="st-name">정윤호</span>
-          <span class="st-info">기계공학 (4학년)</span>
-          <span class="st-role">임원</span>
+          <span class="st-info">기계공학</span>
         </a>
-        
         <a href="{{ site.baseurl }}/?person=오수민&group=hardware" class="student-row">
           <span class="st-name">오수민</span>
-          <span class="st-info">기계공학 (3학년)</span>
+          <span class="st-info">기계공학</span>
         </a>
         <a href="{{ site.baseurl }}/?person=김윤기&group=hardware" class="student-row">
           <span class="st-name">김윤기</span>
-          <span class="st-info">메카트로닉스 (3학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
-
         <a href="{{ site.baseurl }}/?person=최성열&group=hardware" class="student-row">
           <span class="st-name">최성열</span>
-          <span class="st-info">메카트로닉스 (2학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
         <a href="{{ site.baseurl }}/?person=강정우&group=hardware" class="student-row">
           <span class="st-name">강정우</span>
-          <span class="st-info">메카트로닉스 (2학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
         <a href="{{ site.baseurl }}/?person=고다영&group=hardware" class="student-row">
           <span class="st-name">고다영</span>
-          <span class="st-info">기계공학 (2학년)</span>
+          <span class="st-info">기계공학</span>
         </a>
         <a href="{{ site.baseurl }}/?person=임희수&group=hardware" class="student-row">
           <span class="st-name">임희수</span>
-          <span class="st-info">메카트로닉스 (2학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
-
         <a href="{{ site.baseurl }}/?person=남윤아&group=hardware" class="student-row">
           <span class="st-name">남윤아</span>
-          <span class="st-info">메카트로닉스 (1학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
       </div>
     </div>
 
     <div class="column-group">
       <span class="group-badge badge-ctrl">Control Leader</span>
-      <div class="node-box node-leader">서희찬</div>
-      <div class="st-role" style="font-size:0.8em; margin-top:4px;">(총무)</div>
+      <div class="node-box node-leader">서희찬
+        <div class="node-leader-major">메카트로닉스공학</div>
+      </div>
       <div class="line-vertical"></div>
       
       <div class="members-list">
         <a href="{{ site.baseurl }}/?person=서동욱&group=control" class="student-row">
           <span class="st-name">서동욱</span>
-          <span class="st-info">메카트로닉스 (3학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
         <a href="{{ site.baseurl }}/?person=김호영&group=control" class="student-row">
           <span class="st-name">김호영</span>
-          <span class="st-info">메카트로닉스 (3학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
-        
         <a href="{{ site.baseurl }}/?person=이은석&group=control" class="student-row">
           <span class="st-name">이은석</span>
-          <span class="st-info">메카트로닉스 (2학년)</span>
-          <span class="st-role">총무</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
         <a href="{{ site.baseurl }}/?person=강동호&group=control" class="student-row">
           <span class="st-name">강동호</span>
-          <span class="st-info">메카트로닉스 (2학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
       </div>
     </div>
 
     <div class="column-group">
       <span class="group-badge badge-ai">AI Leader</span>
-      <div class="node-box node-leader">강민창</div>
-      <div class="st-role" style="font-size:0.8em; margin-top:4px;">(부회장)</div>
+      <div class="node-box node-leader">강민창
+        <div class="node-leader-major">기계공학</div>
+      </div>
       <div class="line-vertical"></div>
       
       <div class="members-list">
         <a href="{{ site.baseurl }}/?person=권혁조&group=ai" class="student-row">
           <span class="st-name">권혁조</span>
-          <span class="st-info">메카트로닉스 (4학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
-
         <a href="{{ site.baseurl }}/?person=이강현&group=ai" class="student-row">
           <span class="st-name">이강현</span>
-          <span class="st-info">메카트로닉스 (3학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
-
         <a href="{{ site.baseurl }}/?person=유성우&group=ai" class="student-row">
           <span class="st-name">유성우</span>
-          <span class="st-info">메카트로닉스 (2학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
-
         <a href="{{ site.baseurl }}/?person=남채은&group=ai" class="student-row">
           <span class="st-name">남채은</span>
-          <span class="st-info">메카트로닉스 (1학년)</span>
+          <span class="st-info">메카트로닉스공학</span>
         </a>
       </div>
     </div>
@@ -304,7 +322,7 @@ sidebar:
   </div>
 
   <div class="grad-section">
-    <h2 style="color: #2c3e50; font-weight: bold; margin-bottom: 20px;">Graduate Students</h2>
+    <h2 style="color: #2c3e50; font-weight: bold; margin-bottom: 30px; font-size: 1.8em;">Graduate Students</h2>
     <table class="grad-table">
       <thead>
         <tr>
