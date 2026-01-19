@@ -41,6 +41,11 @@ show_tags: false
   border: 1px solid transparent !important;
   cursor: pointer !important;
   pointer-events: auto !important;
+  position: relative !important;
+  z-index: 10001 !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
 }
 
 .students-sidebar-menu a:hover {
@@ -427,8 +432,44 @@ show_tags: false
 </div>
 
 <script>
-// 사이드바 메뉴 전환 기능 - 강화 버전
+// 사이드바 메뉴 전환 기능 - 매우 강화 버전
 (function() {
+  function switchSection(sectionId) {
+    console.log('Switching to section:', sectionId);
+    
+    // 모든 링크와 섹션에서 active 제거
+    const allLinks = document.querySelectorAll('.sidebar-link');
+    const allSections = document.querySelectorAll('.students-section');
+    
+    allLinks.forEach(function(link) {
+      link.classList.remove('active');
+    });
+    
+    allSections.forEach(function(section) {
+      section.classList.remove('active');
+      section.style.display = 'none';
+      section.style.visibility = 'hidden';
+    });
+    
+    // 선택한 섹션 활성화
+    const targetLink = document.querySelector('.sidebar-link[data-section="' + sectionId + '"]');
+    const targetSection = document.getElementById(sectionId + '-section');
+    
+    if (targetLink) {
+      targetLink.classList.add('active');
+      console.log('Link activated:', sectionId);
+    }
+    
+    if (targetSection) {
+      targetSection.classList.add('active');
+      targetSection.style.display = 'block';
+      targetSection.style.visibility = 'visible';
+      console.log('Section activated:', sectionId);
+    } else {
+      console.error('Section not found:', sectionId + '-section');
+    }
+  }
+  
   function initSidebarMenu() {
     console.log('Initializing sidebar menu...');
     
@@ -437,69 +478,91 @@ show_tags: false
     
     console.log('Found links:', sidebarLinks.length, 'Found sections:', sections.length);
     
-    if (sidebarLinks.length === 0 || sections.length === 0) {
-      console.log('Sidebar elements not found, retrying...');
+    if (sidebarLinks.length === 0) {
+      console.log('Sidebar links not found, retrying...');
       setTimeout(initSidebarMenu, 300);
       return;
     }
     
-    sidebarLinks.forEach(function(link) {
-      // 기존 이벤트 리스너 제거 후 새로 추가
-      const newLink = link.cloneNode(true);
-      link.parentNode.replaceChild(newLink, link);
+    // 모든 링크에 이벤트 리스너 추가
+    sidebarLinks.forEach(function(link, index) {
+      // 기존 이벤트 제거를 위해 새로 생성
+      link.onclick = null;
+      link.removeEventListener('click', arguments.callee);
       
-      newLink.addEventListener('click', function(e) {
+      // 여러 방법으로 이벤트 추가
+      link.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         
-        console.log('Link clicked:', this.getAttribute('data-section'));
-        
-        // 모든 링크와 섹션에서 active 제거
-        document.querySelectorAll('.sidebar-link').forEach(function(l) {
-          l.classList.remove('active');
-        });
-        document.querySelectorAll('.students-section').forEach(function(s) {
-          s.classList.remove('active');
-          s.style.display = 'none';
-        });
-        
-        // 클릭한 링크와 해당 섹션에 active 추가
         const sectionId = this.getAttribute('data-section');
-        const targetSection = document.getElementById(sectionId + '-section');
-        
-        if (targetSection) {
-          this.classList.add('active');
-          targetSection.classList.add('active');
-          targetSection.style.display = 'block';
-          console.log('Section activated:', sectionId);
-        } else {
-          console.error('Section not found:', sectionId + '-section');
+        console.log('Link clicked (index ' + index + '):', sectionId);
+        switchSection(sectionId);
+        return false;
+      }, true);
+      
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const sectionId = this.getAttribute('data-section');
+        switchSection(sectionId);
+        return false;
+      }, false);
+      
+      // onclick도 추가
+      link.onclick = function(e) {
+        e = e || window.event;
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
         }
-      });
+        const sectionId = this.getAttribute('data-section');
+        console.log('onclick triggered:', sectionId);
+        switchSection(sectionId);
+        return false;
+      };
+      
+      // 직접 함수 할당
+      link.style.cursor = 'pointer';
+      link.style.pointerEvents = 'auto';
     });
     
-    console.log('Sidebar menu initialized');
+    console.log('Sidebar menu initialized with', sidebarLinks.length, 'links');
   }
+  
+  // 즉시 실행
+  initSidebarMenu();
   
   // 여러 시점에서 실행
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSidebarMenu);
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(initSidebarMenu, 100);
+      setTimeout(initSidebarMenu, 500);
+      setTimeout(initSidebarMenu, 1000);
+    });
   } else {
-    initSidebarMenu();
+    setTimeout(initSidebarMenu, 100);
+    setTimeout(initSidebarMenu, 500);
+    setTimeout(initSidebarMenu, 1000);
   }
   
-  setTimeout(initSidebarMenu, 500);
-  setTimeout(initSidebarMenu, 1000);
+  // MutationObserver로 DOM 변경 감지
+  const observer = new MutationObserver(function() {
+    initSidebarMenu();
+  });
+  
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
   
   // URL 파라미터로 섹션 선택
   const urlParams = new URLSearchParams(window.location.search);
   const section = urlParams.get('section');
   if (section === 'alumni') {
     setTimeout(function() {
-      const alumniLink = document.querySelector('.sidebar-link[data-section="alumni"]');
-      if (alumniLink) {
-        alumniLink.click();
-      }
+      switchSection('alumni');
     }, 1500);
   }
 })();
