@@ -1,60 +1,63 @@
 <style>
-  /* 드롭다운 메뉴 스타일 */
+  /* 드롭다운 메뉴 스타일 - 강화 버전 */
   .custom-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    min-width: 160px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    border: 1px solid #eee;
-    border-radius: 8px;
-    z-index: 9999;
-    padding: 8px 0;
-    list-style: none;
-    margin-top: 10px;
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: #fff !important;
+    min-width: 160px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+    border: 1px solid #eee !important;
+    border-radius: 8px !important;
+    z-index: 99999 !important;
+    padding: 8px 0 !important;
+    list-style: none !important;
+    margin-top: 10px !important;
+    margin-left: 0 !important;
   }
 
-  /* 말풍선 꼬리 (선택사항) */
   .custom-dropdown-menu::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 6px solid #fff;
+    content: '' !important;
+    position: absolute !important;
+    top: -6px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+    border-bottom: 6px solid #fff !important;
   }
 
   .custom-dropdown-menu li {
-    margin: 0;
-    padding: 0;
-    display: block;
-    text-align: center;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    text-align: center !important;
   }
 
   .custom-dropdown-menu a {
-    display: block;
-    padding: 10px 20px;
-    color: #333;
-    text-decoration: none;
-    font-size: 0.95em;
-    font-weight: 500;
-    transition: background 0.2s;
+    display: block !important;
+    padding: 10px 20px !important;
+    color: #333 !important;
+    text-decoration: none !important;
+    font-size: 0.95em !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
   }
 
   .custom-dropdown-menu a:hover {
-    background-color: #f5f7fa;
-    color: #000;
+    background-color: #f5f7fa !important;
+    color: #000 !important;
   }
 
-  /* 부모 요소가 hover 되었을 때 드롭다운 표시 */
+  .has-dropdown {
+    position: relative !important;
+  }
+
   .has-dropdown:hover .custom-dropdown-menu {
-    display: block;
-    animation: fadeIn 0.2s ease-in-out;
+    display: block !important;
+    animation: fadeIn 0.2s ease-in-out !important;
   }
 
   @keyframes fadeIn {
@@ -64,45 +67,112 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // 네비게이션의 모든 링크를 확인
-  const navLinks = document.querySelectorAll('a');
-  
-  navLinks.forEach(function(link) {
-    // 1. "People" 텍스트를 가진 링크 찾기
-    if (link.textContent.trim() === 'People') {
-      
-      // 2. 부모 li 요소 찾기 (테마에 따라 nav__item 등 클래스가 다를 수 있음)
-      const parentLi = link.closest('li');
-      
-      if (parentLi) {
-        // 부모에 클래스 추가 (CSS 호버 용)
-        parentLi.classList.add('has-dropdown');
-        parentLi.style.position = 'relative'; // 위치 기준점 설정
-        
-        // 3. 클릭 이벤트 차단 (완전 무력화)
-        link.href = 'javascript:void(0);';
-        link.style.cursor = 'default';
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          return false;
-        });
-
-        // 4. 드롭다운 메뉴 HTML 생성 및 주입
-        // 기존에 생성된게 없는지 확인 후 생성
-        if (!parentLi.querySelector('.custom-dropdown-menu')) {
-          const dropdownUl = document.createElement('ul');
-          dropdownUl.className = 'custom-dropdown-menu';
-          
-          dropdownUl.innerHTML = `
-            <li><a href="/mars.github.io/professor/">Professor</a></li>
-            <li><a href="/mars.github.io/students/">Students</a></li>
-          `;
-          
-          parentLi.appendChild(dropdownUl);
-        }
+(function() {
+  function setupPeopleDropdown() {
+    console.log('Setting up People dropdown...');
+    
+    // 모든 링크를 확인
+    const allLinks = document.querySelectorAll('a');
+    let peopleLink = null;
+    let peopleItem = null;
+    
+    for (let link of allLinks) {
+      const text = link.textContent.trim();
+      if (text === 'People') {
+        peopleLink = link;
+        peopleItem = link.closest('li') || link.parentElement || link.parentNode;
+        console.log('Found People link:', link, 'Parent:', peopleItem);
+        break;
       }
     }
-  });
-});
+    
+    if (!peopleLink) {
+      console.log('People link not found, will retry...');
+      return false;
+    }
+    
+    if (!peopleItem) {
+      console.log('People parent item not found');
+      return false;
+    }
+    
+    // 이미 설정되어 있으면 스킵
+    if (peopleItem.classList.contains('has-dropdown') && peopleItem.querySelector('.custom-dropdown-menu')) {
+      console.log('Already set up');
+      return true;
+    }
+    
+    // 클래스 추가
+    peopleItem.classList.add('has-dropdown');
+    peopleItem.style.position = 'relative';
+    
+    // 클릭 완전 차단
+    peopleLink.href = 'javascript:void(0);';
+    peopleLink.style.cursor = 'default';
+    peopleLink.style.pointerEvents = 'none';
+    
+    // 여러 방법으로 클릭 차단
+    peopleLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    }, true);
+    
+    peopleLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }, false);
+    
+    peopleLink.onclick = function(e) {
+      e.preventDefault();
+      return false;
+    };
+    
+    // 드롭다운 생성
+    if (!peopleItem.querySelector('.custom-dropdown-menu')) {
+      const dropdownUl = document.createElement('ul');
+      dropdownUl.className = 'custom-dropdown-menu';
+      dropdownUl.innerHTML = '<li><a href="/mars.github.io/professor/">Professor</a></li><li><a href="/mars.github.io/students/">Students</a></li>';
+      peopleItem.appendChild(dropdownUl);
+      console.log('Dropdown menu created');
+    }
+    
+    console.log('People dropdown setup complete');
+    return true;
+  }
+  
+  // 즉시 실행
+  if (setupPeopleDropdown()) {
+    console.log('Setup successful on first try');
+  } else {
+    // DOMContentLoaded에서 실행
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(setupPeopleDropdown, 100);
+        setTimeout(setupPeopleDropdown, 500);
+        setTimeout(setupPeopleDropdown, 1000);
+      });
+    } else {
+      setTimeout(setupPeopleDropdown, 100);
+      setTimeout(setupPeopleDropdown, 500);
+      setTimeout(setupPeopleDropdown, 1000);
+    }
+    
+    // 추가 지연 실행
+    setTimeout(setupPeopleDropdown, 2000);
+    setTimeout(setupPeopleDropdown, 3000);
+    
+    // MutationObserver로 DOM 변경 감지
+    const observer = new MutationObserver(function() {
+      setupPeopleDropdown();
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+})();
 </script>

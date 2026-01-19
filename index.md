@@ -14,6 +14,8 @@ header:
   image_description: "METAROBOT LABORATORY 단체 사진"
 ---
 
+<script src="{{ site.baseurl }}/assets/js/people-dropdown.js"></script>
+
 <style>
 /* 메인 페이지에서 태그 완전히 숨기기 */
 .page__taxonomy,
