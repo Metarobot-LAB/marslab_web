@@ -415,7 +415,7 @@ header:
 **좋은 커밋 메시지 예시:**
 - "Add new project: robot arm system"
 - "Update People page: add new member"
-- "Fix typo in award page"
+- "Fix typo in awards page"
 - "Update project description"
 
 **나쁜 커밋 메시지 예시:**
