@@ -59,20 +59,20 @@ sidebar:
   min-width: 150px;
 }
 
+/* Alumni 박스 */
+.node-alumni {
+  background: #95a5a6;
+  color: #fff;
+  font-size: 1.4em;
+  min-width: 200px;
+}
+
 /* 연결선 스타일 */
 .line-vertical {
   width: 2px;
   background: #ccc;
   height: 30px;
   margin: 0 auto;
-}
-
-.line-horizontal-bar {
-  height: 2px;
-  background: #ccc;
-  margin: 0 auto;
-  position: relative;
-  top: -2px;
 }
 
 /* 학생 카드 그리드 */
@@ -135,16 +135,16 @@ sidebar:
   align-items: center;
 }
 
-/* 앵커 링크 스크롤 오프셋 */
-#students-top,
-#alumni {
+/* 섹션 스크롤 오프셋 */
+#students-section,
+#alumni-section {
   scroll-margin-top: 100px;
 }
 </style>
 
-<div class="org-container">
-
-  <div id="students-top" class="level-section">
+<!-- Students 섹션 -->
+<div id="students-section" class="org-container">
+  <div class="level-section">
     <div class="node-box node-professor">Professor</div>
     <div class="line-vertical"></div>
   </div>
@@ -312,9 +312,12 @@ sidebar:
       </div>
     </div>
   </div>
+</div>
 
-  <div id="alumni" style="margin-top: 60px; border-top: 2px dashed #ccc; padding-top: 40px;">
-    <div class="node-box" style="background: #95a5a6; color: white; font-size: 1.4em; min-width: 200px;">Alumni</div>
+<!-- Alumni 섹션 -->
+<div id="alumni-section" class="org-container" style="margin-top: 60px; border-top: 2px dashed #ccc; padding-top: 40px;">
+  <div class="level-section">
+    <div class="node-box node-alumni">Alumni</div>
     <div class="line-vertical"></div>
     <div class="student-grid" style="margin-top: 40px;">
       <a href="{{ site.baseurl }}/?person=김우진&group=control" class="student-card">
@@ -331,5 +334,4 @@ sidebar:
       </a>
     </div>
   </div>
-
 </div>
