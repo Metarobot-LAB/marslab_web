@@ -41,6 +41,9 @@
     if (!peopleItem.querySelector('.custom-dropdown-menu')) {
       const dropdownUl = document.createElement('ul');
       dropdownUl.className = 'custom-dropdown-menu';
+      dropdownUl.style.display = 'none';
+      dropdownUl.style.visibility = 'hidden';
+      dropdownUl.style.opacity = '0';
       dropdownUl.innerHTML = '<li><a href="/mars.github.io/professor/">Professor</a></li><li><a href="/mars.github.io/students/">Students</a></li>';
       peopleItem.appendChild(dropdownUl);
     }

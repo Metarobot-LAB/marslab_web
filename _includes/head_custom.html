@@ -1,7 +1,9 @@
 <style>
-  /* 드롭다운 메뉴 스타일 - 강화 버전 */
+  /* 드롭다운 메뉴 스타일 - 기본적으로 숨김 */
   .custom-dropdown-menu {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
     position: absolute !important;
     top: 100% !important;
     left: 50% !important;
@@ -16,6 +18,7 @@
     list-style: none !important;
     margin-top: 10px !important;
     margin-left: 0 !important;
+    transition: opacity 0.2s ease-in-out !important;
   }
 
   .custom-dropdown-menu::before {
@@ -55,9 +58,19 @@
     position: relative !important;
   }
 
+  /* 호버 시에만 드롭다운 표시 */
   .has-dropdown:hover .custom-dropdown-menu {
     display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     animation: fadeIn 0.2s ease-in-out !important;
+  }
+
+  /* 호버가 아닐 때는 확실히 숨김 */
+  .has-dropdown:not(:hover) .custom-dropdown-menu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   @keyframes fadeIn {
@@ -130,13 +143,16 @@
       return false;
     };
     
-    // 드롭다운 생성
+    // 드롭다운 생성 (기본적으로 숨김 상태)
     if (!peopleItem.querySelector('.custom-dropdown-menu')) {
       const dropdownUl = document.createElement('ul');
       dropdownUl.className = 'custom-dropdown-menu';
+      dropdownUl.style.display = 'none';
+      dropdownUl.style.visibility = 'hidden';
+      dropdownUl.style.opacity = '0';
       dropdownUl.innerHTML = '<li><a href="/mars.github.io/professor/">Professor</a></li><li><a href="/mars.github.io/students/">Students</a></li>';
       peopleItem.appendChild(dropdownUl);
-      console.log('Dropdown menu created');
+      console.log('Dropdown menu created (hidden by default)');
     }
     
     console.log('People dropdown setup complete');
