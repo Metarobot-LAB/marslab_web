@@ -29,7 +29,6 @@
     
     peopleLink.href = 'javascript:void(0);';
     peopleLink.style.cursor = 'default';
-    peopleLink.style.pointerEvents = 'none';
     
     peopleLink.addEventListener('click', function(e) {
       e.preventDefault();
@@ -46,6 +45,27 @@
       dropdownUl.style.opacity = '0';
       dropdownUl.innerHTML = '<li><a href="/mars.github.io/professor/">Professor</a></li><li><a href="/mars.github.io/students/">Students</a></li>';
       peopleItem.appendChild(dropdownUl);
+    }
+
+    const dropdown = peopleItem.querySelector('.custom-dropdown-menu');
+    function showDropdown() {
+      if (!dropdown) return;
+      dropdown.style.display = 'block';
+      dropdown.style.visibility = 'visible';
+      dropdown.style.opacity = '1';
+    }
+    function hideDropdown() {
+      if (!dropdown) return;
+      dropdown.style.display = 'none';
+      dropdown.style.visibility = 'hidden';
+      dropdown.style.opacity = '0';
+    }
+    peopleItem.addEventListener('mouseenter', showDropdown);
+    peopleItem.addEventListener('mouseleave', hideDropdown);
+    peopleLink.addEventListener('mouseenter', showDropdown);
+    if (dropdown) {
+      dropdown.addEventListener('mouseenter', showDropdown);
+      dropdown.addEventListener('mouseleave', hideDropdown);
     }
     
     console.log('[People Dropdown] Setup complete');
