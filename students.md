@@ -470,6 +470,9 @@ show_tags: false
     }
   }
   
+  // 전역 함수로 등록 (HTML onclick에서 사용)
+  window.switchToSection = switchSection;
+  
   function initSidebarMenu() {
     console.log('Initializing sidebar menu...');
     
