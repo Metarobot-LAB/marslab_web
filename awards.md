@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Award"
-permalink: /award/
+title: "Awards"
+permalink: /awards/
 author_profile: true
 classes: wide
 show_tags: false

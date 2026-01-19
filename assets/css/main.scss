@@ -72,23 +72,45 @@
     opacity: 1 !important;
 }
 
-/* 메인 콘텐츠 영역이 사이드바와 제대로 배치되도록 조정 */
-/* Minimal Mistakes 테마의 기본 레이아웃 시스템을 존중하면서 조정 */
-.page {
-    /* 테마가 자동으로 계산하도록 함 */
+/* ============================================
+   classes: wide일 때도 사이드바 표시 및 레이아웃 수정
+   ============================================ */
+/* classes: wide는 기본적으로 사이드바를 숨기지만, 
+   author_profile: true일 때는 사이드바를 표시하도록 강제 */
+.wide .sidebar,
+.wide .sidebar__left {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
 }
 
-.page__inner {
-    /* 테마가 자동으로 계산하도록 함 */
+/* classes: wide일 때 메인 콘텐츠가 사이드바 옆에 배치되도록 */
+.wide .page {
+    margin-left: 320px !important; /* 사이드바 너비(300px) + 여유 공간(20px) */
+    width: calc(100% - 320px) !important;
+    max-width: none !important;
 }
 
-.page__content {
-    /* 테마가 자동으로 계산하도록 함 */
+.wide .page__inner {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
 }
 
-/* 레이아웃이 깨지지 않도록 전체 컨테이너 조정 */
-.wrapper {
-    /* 테마의 기본 레이아웃 유지 */
+.wide .page__content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+
+/* author_profile이 true일 때 사이드바가 표시되도록 보장 */
+.author__avatar,
+.author__content {
+    display: block !important;
+    visibility: visible !important;
 }
 
 /* 사이드바와 메인 콘텐츠가 나란히 배치되도록 보장 */
@@ -99,11 +121,17 @@
     visibility: visible !important;
 }
 
-/* author_profile이 true일 때 사이드바가 표시되도록 보장 */
-.author__avatar,
-.author__content {
-    display: block !important;
-    visibility: visible !important;
+/* 레이아웃이 깨지지 않도록 전체 컨테이너 조정 */
+.wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+/* body와 html도 가로 스크롤 방지 */
+body, html {
+    width: 100% !important;
+    overflow-x: hidden !important;
 }
 
 /* ▼ 헤더 이미지 영역 확대 및 이미지 전체 표시 설정 ▼ */
