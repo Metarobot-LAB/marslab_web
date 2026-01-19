@@ -44,6 +44,9 @@ show_tags: false
   user-select: none !important;
   -webkit-user-select: none !important;
   -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
 }
 
 .students-sidebar-menu a:hover {
