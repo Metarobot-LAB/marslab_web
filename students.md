@@ -489,46 +489,60 @@ show_tags: false
     
     // 모든 링크에 이벤트 리스너 추가
     sidebarLinks.forEach(function(link, index) {
-      // 기존 이벤트 제거를 위해 새로 생성
-      link.onclick = null;
-      link.removeEventListener('click', arguments.callee);
+      const sectionId = link.getAttribute('data-section');
       
-      // 여러 방법으로 이벤트 추가
-      link.addEventListener('click', function(e) {
+      // 기존 이벤트 모두 제거하고 새로 생성
+      const newLink = link.cloneNode(true);
+      link.parentNode.replaceChild(newLink, link);
+      
+      // 새 링크에 스타일 및 속성 설정
+      newLink.style.cursor = 'pointer';
+      newLink.style.pointerEvents = 'auto';
+      newLink.href = '#';
+      
+      // click 이벤트 (capture phase) - 가장 먼저 실행
+      newLink.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        
-        const sectionId = this.getAttribute('data-section');
-        console.log('Link clicked (index ' + index + '):', sectionId);
+        console.log('Click (capture) - section:', sectionId);
         switchSection(sectionId);
         return false;
       }, true);
       
-      link.addEventListener('click', function(e) {
+      // click 이벤트 (bubble phase)
+      newLink.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        const sectionId = this.getAttribute('data-section');
+        console.log('Click (bubble) - section:', sectionId);
         switchSection(sectionId);
         return false;
       }, false);
       
-      // onclick도 추가
-      link.onclick = function(e) {
+      // mousedown 이벤트 - 클릭보다 먼저 실행
+      newLink.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Mousedown - section:', sectionId);
+        switchSection(sectionId);
+        return false;
+      }, true);
+      
+      // onclick 속성
+      newLink.onclick = function(e) {
         e = e || window.event;
         if (e) {
           e.preventDefault();
           e.stopPropagation();
+          e.stopImmediatePropagation();
         }
-        const sectionId = this.getAttribute('data-section');
-        console.log('onclick triggered:', sectionId);
+        console.log('onclick - section:', sectionId);
         switchSection(sectionId);
         return false;
       };
       
-      // 직접 함수 할당
-      link.style.cursor = 'pointer';
-      link.style.pointerEvents = 'auto';
+      // HTML onclick 속성도 추가 (가장 확실한 방법)
+      newLink.setAttribute('onclick', 'window.switchToSection("' + sectionId + '"); return false;');
     });
     
     console.log('Sidebar menu initialized with', sidebarLinks.length, 'links');
