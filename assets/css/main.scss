@@ -247,82 +247,63 @@ body, html {
 /* ============================================
    People 드롭다운 메뉴 설정
    ============================================ */
-/* People 메뉴 항목이 children을 가질 때 상대 위치 설정 */
-.nav__list .nav__item,
-.masthead__menu-item,
+/* 모든 네비게이션 항목에 상대 위치 설정 */
 .greedy-nav__item,
+.masthead__menu-item,
+.nav__item,
 li[class*="nav"],
 li[class*="menu"] {
-    position: relative;
+    position: relative !important;
 }
 
-/* People 링크 클릭 방지 */
-a[href=""],
-a[href="#"],
-a[href="javascript:void(0);"] {
+/* People 링크 클릭 방지 - 모든 가능한 경우 */
+a[href=""]:not(.people-dropdown a),
+a[href="#"]:not(.people-dropdown a),
+a[href="javascript:void(0);"]:not(.people-dropdown a) {
     pointer-events: none !important;
     cursor: default !important;
 }
 
-/* People 메뉴 항목 내의 빈 링크 찾기 */
-.nav__list .nav__item:has(ul) > a[href=""],
-.nav__list .nav__item:has(ul) > a[href="#"],
-.masthead__menu-item:has(ul) > a[href=""],
-.masthead__menu-item:has(ul) > a[href="#"],
-.greedy-nav__item:has(ul) > a[href=""],
-.greedy-nav__item:has(ul) > a[href="#"] {
-    pointer-events: none !important;
-    cursor: default !important;
-}
-
-/* 드롭다운 메뉴 기본 스타일 */
-.nav__children,
-.people-dropdown,
-ul[class*="children"],
-.submenu {
+/* People 드롭다운 메뉴 스타일 */
+.people-dropdown {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    min-width: 150px;
-    z-index: 1000;
-    padding: 8px 0;
-    margin-top: 4px;
-    transition: opacity 0.2s ease;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    min-width: 150px !important;
+    z-index: 9999 !important;
+    padding: 8px 0 !important;
+    margin-top: 4px !important;
+    transition: opacity 0.2s ease !important;
 }
 
-/* 호버 시 드롭다운 표시 */
-.nav__list .nav__item:hover .nav__children,
-.nav__list .nav__item:hover .people-dropdown,
-.masthead__menu-item:hover ul,
-.greedy-nav__item:hover ul,
-li[class*="nav"]:hover ul,
-li[class*="menu"]:hover ul {
+/* 드롭다운 내부 링크 스타일 */
+.people-dropdown a {
+    display: block !important;
+    padding: 8px 16px !important;
+    color: #333 !important;
+    text-decoration: none !important;
+    transition: background-color 0.2s !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.people-dropdown a:hover {
+    background-color: #f5f5f5 !important;
+}
+
+/* 호버 시 드롭다운 표시 - 다양한 선택자 */
+.greedy-nav__item:hover .people-dropdown,
+.masthead__menu-item:hover .people-dropdown,
+.nav__item:hover .people-dropdown,
+li:hover .people-dropdown {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-}
-
-.nav__children a,
-.people-dropdown a,
-ul[class*="children"] a,
-.submenu a {
-    display: block;
-    padding: 8px 16px;
-    color: #333;
-    text-decoration: none;
-    transition: background-color 0.2s;
-}
-
-.nav__children a:hover,
-.people-dropdown a:hover,
-ul[class*="children"] a:hover,
-.submenu a:hover {
-    background-color: #f5f5f5;
 }

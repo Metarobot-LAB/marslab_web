@@ -1,91 +1,105 @@
 <!-- People 드롭다운 메뉴 제어 스크립트 -->
 <script>
-// People 드롭다운 메뉴 제어
+// People 드롭다운 메뉴 제어 - 강화 버전
 (function() {
-  function initPeopleDropdown() {
-    // 다양한 가능한 선택자 시도
-    const selectors = [
-      '.nav__item',
-      '.masthead__menu-item',
-      '.greedy-nav__item',
-      'li[class*="nav"]',
-      'li[class*="menu"]'
-    ];
-    
-    let peopleItem = null;
+  function findPeopleMenu() {
+    // 모든 링크를 순회하며 "People" 텍스트 찾기
+    const allLinks = document.querySelectorAll('a');
     let peopleLink = null;
+    let peopleItem = null;
     let peopleChildren = null;
     
-    // People 메뉴 항목 찾기
-    for (let selector of selectors) {
-      const items = document.querySelectorAll(selector);
-      for (let item of items) {
-        const link = item.querySelector('a');
-        if (link && link.textContent.trim() === 'People') {
-          peopleItem = item;
-          peopleLink = link;
-          // children 찾기 (다양한 가능한 구조)
-          peopleChildren = item.querySelector('ul') || 
-                          item.querySelector('.nav__children') ||
-                          item.querySelector('.submenu') ||
-                          item.querySelector('[class*="children"]');
-          break;
+    for (let link of allLinks) {
+      const text = link.textContent.trim();
+      if (text === 'People') {
+        peopleLink = link;
+        peopleItem = link.closest('li') || link.parentElement;
+        
+        // 부모 요소에서 children 찾기
+        if (peopleItem) {
+          // 다양한 방법으로 children 찾기
+          peopleChildren = peopleItem.querySelector('ul') ||
+                          peopleItem.querySelector('.nav__children') ||
+                          peopleItem.querySelector('.submenu') ||
+                          peopleItem.querySelector('[class*="children"]') ||
+                          peopleItem.querySelector('[class*="dropdown"]');
+          
+          // 형제 요소로 있을 수도 있음
+          if (!peopleChildren) {
+            const nextSibling = peopleItem.nextElementSibling;
+            if (nextSibling && (nextSibling.tagName === 'UL' || nextSibling.classList.contains('nav__children'))) {
+              peopleChildren = nextSibling;
+            }
+          }
         }
+        break;
       }
-      if (peopleItem) break;
     }
     
-    if (!peopleItem || !peopleLink) {
-      console.log('People menu not found, retrying...');
-      setTimeout(initPeopleDropdown, 500);
+    return { peopleLink, peopleItem, peopleChildren };
+  }
+  
+  function initPeopleDropdown() {
+    const { peopleLink, peopleItem, peopleChildren } = findPeopleMenu();
+    
+    if (!peopleLink) {
+      console.log('People link not found, retrying...');
+      setTimeout(initPeopleDropdown, 300);
       return;
     }
     
-    console.log('People menu found:', peopleItem, peopleLink, peopleChildren);
+    console.log('People menu found:', { peopleLink, peopleItem, peopleChildren });
     
-    // People 링크 클릭 완전 차단
-    peopleLink.addEventListener('click', function(e) {
+    // People 링크 클릭 완전 차단 (여러 방법 시도)
+    function blockClick(e) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
       return false;
-    }, true);
-    
-    // href 제거 또는 비활성화
-    if (peopleLink.getAttribute('href') === '' || 
-        peopleLink.getAttribute('href') === '#' ||
-        !peopleLink.getAttribute('href')) {
-      peopleLink.setAttribute('href', 'javascript:void(0);');
-      peopleLink.style.pointerEvents = 'none';
-      peopleLink.style.cursor = 'default';
     }
+    
+    peopleLink.addEventListener('click', blockClick, true);
+    peopleLink.addEventListener('click', blockClick, false);
+    peopleLink.onclick = blockClick;
+    
+    // href 비활성화
+    peopleLink.setAttribute('href', 'javascript:void(0);');
+    peopleLink.style.pointerEvents = 'none';
+    peopleLink.style.cursor = 'default';
+    peopleLink.style.textDecoration = 'none';
     
     // children이 있는 경우 드롭다운 제어
     if (peopleChildren) {
-      // 초기 상태: 숨김
+      // 초기 상태 설정
       peopleChildren.style.display = 'none';
       peopleChildren.style.visibility = 'hidden';
       peopleChildren.style.opacity = '0';
+      peopleChildren.style.position = 'absolute';
+      peopleChildren.style.zIndex = '9999';
+      peopleChildren.style.background = '#fff';
+      peopleChildren.style.border = '1px solid #ddd';
+      peopleChildren.style.borderRadius = '4px';
+      peopleChildren.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+      peopleChildren.style.padding = '8px 0';
+      peopleChildren.style.marginTop = '4px';
+      peopleChildren.style.minWidth = '150px';
+      peopleChildren.style.top = '100%';
+      peopleChildren.style.left = '0';
       peopleChildren.classList.add('people-dropdown');
       
-      // 호버 시 드롭다운 표시
-      peopleItem.addEventListener('mouseenter', function() {
+      // peopleItem에 상대 위치 설정
+      if (peopleItem) {
+        peopleItem.style.position = 'relative';
+      }
+      
+      // 호버 이벤트
+      function showDropdown() {
         peopleChildren.style.display = 'block';
         peopleChildren.style.visibility = 'visible';
         peopleChildren.style.opacity = '1';
-        peopleChildren.style.position = 'absolute';
-        peopleChildren.style.zIndex = '1000';
-        peopleChildren.style.background = '#fff';
-        peopleChildren.style.border = '1px solid #ddd';
-        peopleChildren.style.borderRadius = '4px';
-        peopleChildren.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-        peopleChildren.style.padding = '8px 0';
-        peopleChildren.style.marginTop = '4px';
-        peopleChildren.style.minWidth = '150px';
-      });
+      }
       
-      // 마우스가 떠날 때 드롭다운 숨기기
-      peopleItem.addEventListener('mouseleave', function(e) {
+      function hideDropdown() {
         setTimeout(function() {
           if (!peopleItem.matches(':hover') && !peopleChildren.matches(':hover')) {
             peopleChildren.style.display = 'none';
@@ -93,34 +107,59 @@
             peopleChildren.style.opacity = '0';
           }
         }, 200);
-      });
+      }
       
-      // 드롭다운 자체에 마우스가 있을 때도 유지
-      peopleChildren.addEventListener('mouseenter', function() {
-        this.style.display = 'block';
-        this.style.visibility = 'visible';
-        this.style.opacity = '1';
-      });
+      if (peopleItem) {
+        peopleItem.addEventListener('mouseenter', showDropdown);
+        peopleItem.addEventListener('mouseleave', hideDropdown);
+      }
       
-      peopleChildren.addEventListener('mouseleave', function() {
-        this.style.display = 'none';
-        this.style.visibility = 'hidden';
-        this.style.opacity = '0';
+      peopleChildren.addEventListener('mouseenter', showDropdown);
+      peopleChildren.addEventListener('mouseleave', hideDropdown);
+      
+      // children 내부 링크 스타일
+      const childLinks = peopleChildren.querySelectorAll('a');
+      childLinks.forEach(function(link) {
+        link.style.display = 'block';
+        link.style.padding = '8px 16px';
+        link.style.color = '#333';
+        link.style.textDecoration = 'none';
+        link.addEventListener('mouseenter', function() {
+          this.style.backgroundColor = '#f5f5f5';
+        });
+        link.addEventListener('mouseleave', function() {
+          this.style.backgroundColor = 'transparent';
+        });
       });
     } else {
       console.log('People children menu not found');
+      // children이 없으면 동적으로 생성 시도
+      if (peopleItem) {
+        peopleItem.style.position = 'relative';
+      }
     }
   }
   
-  // DOM 로드 후 실행
+  // 여러 시점에서 실행
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPeopleDropdown);
   } else {
     initPeopleDropdown();
   }
   
-  // 추가로 약간의 지연 후에도 시도 (동적 로딩 대응)
+  // 지연 실행 (동적 로딩 대응)
+  setTimeout(initPeopleDropdown, 500);
   setTimeout(initPeopleDropdown, 1000);
+  setTimeout(initPeopleDropdown, 2000);
+  
+  // MutationObserver로 DOM 변경 감지
+  const observer = new MutationObserver(function(mutations) {
+    initPeopleDropdown();
+  });
+  
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
 })();
 </script>
-
