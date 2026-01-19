@@ -7,6 +7,8 @@ classes: wide
 show_tags: false
 ---
 
+<script src="{{ site.baseurl }}/assets/js/people-dropdown.js"></script>
+
 <style>
 /* Students 페이지 태그 숨김 */
 .page__taxonomy, .taxonomy__index { display: none !important; }

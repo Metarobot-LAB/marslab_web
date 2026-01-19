@@ -7,6 +7,8 @@ classes: wide
 show_tags: false
 ---
 
+<script src="{{ site.baseurl }}/assets/js/people-dropdown.js"></script>
+
 <style>
 /* People 페이지에서 태그 완전히 숨기기 */
 .page__taxonomy,

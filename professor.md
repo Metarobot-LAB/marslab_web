@@ -7,6 +7,8 @@ classes: wide
 show_tags: false
 ---
 
+<script src="{{ site.baseurl }}/assets/js/people-dropdown.js"></script>
+
 <div style="padding: 100px 20px; text-align: center;">
   <h2 style="color: #2c3e50; font-weight: bold;">Professor Introduction</h2>
   <p style="color: #7f8c8d; font-size: 1.2em; margin-top: 20px;">
