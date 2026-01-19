@@ -14,9 +14,11 @@ main:
   - title: "Awards"
     url: /awards/
 
-# Students 페이지 전용 사이드바
+# Students와 Alumni 페이지에서 공통으로 사용할 사이드바
 students_sidebar:
-  - title: "Students"
-    url: "/students/#students-section"
-  - title: "Alumni"
-    url: "/students/#alumni-section"
+  - title: "People"
+    children:
+      - title: "Students"
+        url: /students/
+      - title: "Alumni"
+        url: /alumni/
