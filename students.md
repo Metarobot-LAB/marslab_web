@@ -435,6 +435,8 @@ show_tags: false
   let initialized = false;
   
   function switchSection(sectionId) {
+    console.log('switchSection called with:', sectionId);
+    
     // 모든 링크와 섹션에서 active 제거
     document.querySelectorAll('.sidebar-link').forEach(function(link) {
       link.classList.remove('active');
@@ -450,14 +452,23 @@ show_tags: false
     const targetLink = document.querySelector('.sidebar-link[data-section="' + sectionId + '"]');
     const targetSection = document.getElementById(sectionId + '-section');
     
+    console.log('Target link:', targetLink);
+    console.log('Target section:', targetSection);
+    
     if (targetLink) {
       targetLink.classList.add('active');
+      console.log('Link activated');
+    } else {
+      console.error('Target link not found for section:', sectionId);
     }
     
     if (targetSection) {
       targetSection.classList.add('active');
       targetSection.style.display = 'block';
       targetSection.style.visibility = 'visible';
+      console.log('Section activated');
+    } else {
+      console.error('Target section not found for section:', sectionId);
     }
   }
   
@@ -472,8 +483,11 @@ show_tags: false
     const sidebarLinks = document.querySelectorAll('.sidebar-link');
     
     if (sidebarLinks.length === 0) {
+      console.log('No sidebar links found');
       return;
     }
+    
+    console.log('Found', sidebarLinks.length, 'sidebar links');
     
     // 이미 초기화된 링크 확인
     if (sidebarLinks[0].hasAttribute('data-initialized')) {
@@ -482,30 +496,77 @@ show_tags: false
     }
     
     // 모든 링크에 이벤트 리스너 추가
-    sidebarLinks.forEach(function(link) {
+    sidebarLinks.forEach(function(link, index) {
       const sectionId = link.getAttribute('data-section');
+      
+      if (!sectionId) {
+        console.error('Link', index, 'has no data-section attribute');
+        return;
+      }
+      
+      console.log('Initializing link:', sectionId);
       
       link.setAttribute('data-initialized', 'true');
       link.style.cursor = 'pointer';
-      link.href = '#';
+      link.style.pointerEvents = 'auto';
+      link.style.zIndex = '10001';
+      link.href = 'javascript:void(0);';
       
-      // 단일 click 이벤트만 추가
-      link.addEventListener('click', function(e) {
+      // 기존 이벤트 제거
+      const newLink = link.cloneNode(true);
+      link.parentNode.replaceChild(newLink, link);
+      
+      // 새 링크에 이벤트 추가
+      newLink.setAttribute('data-initialized', 'true');
+      newLink.style.cursor = 'pointer';
+      newLink.style.pointerEvents = 'auto';
+      newLink.style.zIndex = '10001';
+      newLink.href = 'javascript:void(0);';
+      
+      // click 이벤트 (capture)
+      newLink.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
+        console.log('Click captured for:', sectionId);
         switchSection(sectionId);
         return false;
-      });
+      }, true);
       
-      // onclick도 추가
-      link.onclick = function(e) {
+      // click 이벤트 (bubble)
+      newLink.addEventListener('click', function(e) {
         e.preventDefault();
+        e.stopPropagation();
+        console.log('Click bubbled for:', sectionId);
+        switchSection(sectionId);
+        return false;
+      }, false);
+      
+      // mousedown 이벤트
+      newLink.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Mousedown for:', sectionId);
+        switchSection(sectionId);
+        return false;
+      }, true);
+      
+      // onclick 속성
+      newLink.onclick = function(e) {
+        e = e || window.event;
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        }
+        console.log('onclick for:', sectionId);
         switchSection(sectionId);
         return false;
       };
     });
     
     initialized = true;
+    console.log('Sidebar menu initialized');
   }
   
   // DOMContentLoaded에서 한 번만 실행
