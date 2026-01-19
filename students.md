@@ -8,480 +8,323 @@ show_tags: false
 ---
 
 <style>
-/* Students 페이지에서 태그 완전히 숨기기 */
-.page__taxonomy,
-.taxonomy__index,
-.taxonomy__title,
-.archive__item-tags,
-.page__taxonomy-item,
-.taxonomy__section,
-.tag__list,
-.tag__item,
-.taxonomy__tag,
-.archive__item-tag,
-.page__taxonomy-wrapper {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
+/* Students 페이지 태그 숨김 */
+.page__taxonomy, .taxonomy__index { display: none !important; }
 
-.students-container {
-  max-width: 1600px;
-  margin: 0 auto;
+/* 조직도 컨테이너 */
+.org-container {
+  max-width: 100%;
   padding: 40px 20px;
-  overflow-x: auto;
-}
-
-.org-chart {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 600px;
-}
-
-/* 최상위 노드 (Professor) */
-.top-node {
-  background: #2c3e50;
-  color: white;
-  padding: 20px 40px;
-  border-radius: 8px;
-  font-size: 1.3em;
-  font-weight: 600;
-  margin-bottom: 40px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  min-width: 200px;
   text-align: center;
+  overflow-x: auto; /* 모바일 대응 */
 }
 
-/* 중간 레벨 (Graduate/Undergraduate/Alumni) */
-.mid-level {
-  display: flex;
-  gap: 40px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.mid-node {
-  background: #34495e;
-  color: white;
+/* 박스 공통 스타일 */
+.node-box {
+  display: inline-block;
   padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 1.1em;
-  font-weight: 500;
-  box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-  min-width: 180px;
-  text-align: center;
+  border-radius: 12px;
+  background: #fff;
+  border: 2px solid #333;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   position: relative;
+  z-index: 2;
 }
 
-/* 그룹 레벨 */
-.group-level {
-  display: flex;
-  gap: 30px;
-  margin-top: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
+/* 최상위 Professor */
+.node-professor {
+  background: #2c3e50;
+  color: #fff;
+  font-size: 1.4em;
+  min-width: 200px;
 }
 
-.group-node {
+/* 학위 과정 (Graduate / Undergraduate) */
+.node-degree {
+  background: #34495e;
+  color: #fff;
+  font-size: 1.2em;
+  min-width: 180px;
+}
+
+/* 그룹 (AI, HW, Control) */
+.node-group {
   background: #ecf0f1;
-  border: 2px solid #bdc3c7;
-  padding: 12px 25px;
-  border-radius: 6px;
-  font-size: 1em;
-  font-weight: 500;
   color: #2c3e50;
+  border-color: #bdc3c7;
+  font-size: 1.1em;
   min-width: 150px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-/* 학생 카드 레벨 */
-.students-level {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.student-card {
-  background: #ffffff;
-  border: 1px solid #ddd;
-  padding: 12px 18px;
-  border-radius: 5px;
-  font-size: 0.95em;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-  min-width: 100px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.student-card:hover {
-  background-color: #f8f9fa;
-  border-color: #999;
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-}
-
-.student-name {
-  font-weight: 500;
-  margin-bottom: 4px;
-}
-
-.student-major {
-  font-size: 0.85em;
-  color: #666;
-  margin-top: 4px;
 }
 
 /* 연결선 스타일 */
-.connection-line {
+.line-vertical {
   width: 2px;
-  background: #bdc3c7;
+  background: #ccc;
+  height: 30px;
   margin: 0 auto;
 }
 
-.connection-line-vertical {
-  height: 30px;
-  width: 2px;
-  background: #bdc3c7;
-  margin: 0 auto 10px;
+.line-horizontal-bar {
+  height: 2px;
+  background: #ccc;
+  margin: 0 auto;
+  position: relative;
+  top: -2px; /* 라인 위치 조정 */
 }
 
-/* 섹션 컨테이너 */
-.section-container {
+/* 학생 카드 그리드 */
+.student-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  max-width: 800px; /* 그룹별 너비 제한 */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.student-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 140px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.student-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-color: #333;
+}
+
+.student-name {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.student-major {
+  font-size: 0.8em;
+  color: #666;
+}
+
+/* 레이아웃 섹션 */
+.level-section {
+  margin-bottom: 40px;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px; /* 박스 간 간격 */
+  flex-wrap: wrap;
+}
+
+.group-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 50px;
-}
-
-/* 그룹 컨테이너 */
-.group-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-/* 반응형 디자인 */
-@media (max-width: 1200px) {
-  .mid-level {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .group-level {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .students-container {
-    padding: 20px 10px;
-  }
-  
-  .top-node {
-    font-size: 1.1em;
-    padding: 15px 30px;
-  }
-  
-  .mid-node {
-    font-size: 1em;
-    padding: 12px 25px;
-  }
-  
-  .group-node {
-    font-size: 0.9em;
-    padding: 10px 20px;
-  }
-  
-  .student-card {
-    font-size: 0.85em;
-    padding: 10px 15px;
-  }
 }
 </style>
 
-<div class="students-container">
-  <div class="org-chart">
-    
-    <!-- 최상위: Professor -->
-    <div class="top-node">Professor</div>
-    <div class="connection-line-vertical"></div>
-    
-    <!-- 중간 레벨: Graduate Students, Undergraduate Students, Alumni -->
-    <div class="mid-level">
-      
-      <!-- Graduate Students 섹션 -->
-      <div class="section-container">
-        <div class="mid-node">Graduate Students</div>
-        <div class="connection-line-vertical"></div>
-        
-        <div class="group-level">
-          <!-- AI Group -->
-          <div class="group-container">
-            <div class="group-node">AI Group</div>
-            <div class="connection-line-vertical" style="height: 15px;"></div>
-            <div class="students-level">
-              <a href="{{ site.baseurl }}/?person=이승호&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">이승호</div>
-                  <div class="student-major">기계공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=김중길&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">김중길</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=문준서&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">문준서</div>
-                  <div class="student-major">전자공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=박한솔&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">박한솔</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-            </div>
-          </div>
-          
-          <!-- Hardware Group -->
-          <div class="group-container">
-            <div class="group-node">Hardware Group</div>
-            <div class="connection-line-vertical" style="height: 15px;"></div>
-            <div class="students-level">
-              <a href="{{ site.baseurl }}/?person=정성조&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">정성조</div>
-                  <div class="student-major">기계공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=배성우&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">배성우</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Undergraduate Students 섹션 -->
-      <div class="section-container">
-        <div class="mid-node">Undergraduate Students</div>
-        <div class="connection-line-vertical"></div>
-        
-        <div class="group-level">
-          <!-- AI Group -->
-          <div class="group-container">
-            <div class="group-node">AI Group</div>
-            <div class="connection-line-vertical" style="height: 15px;"></div>
-            <div class="students-level">
-              <a href="{{ site.baseurl }}/?person=권혁조&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">권혁조</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=강민창&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">강민창</div>
-                  <div class="student-major">기계공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=이강현&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">이강현</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=유성우&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">유성우</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=남채은&group=ai" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">남채은</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-            </div>
-          </div>
-          
-          <!-- Hardware Group -->
-          <div class="group-container">
-            <div class="group-node">Hardware Group</div>
-            <div class="connection-line-vertical" style="height: 15px;"></div>
-            <div class="students-level">
-              <a href="{{ site.baseurl }}/?person=변호진&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">변호진</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=정윤호&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">정윤호</div>
-                  <div class="student-major">기계공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=성무건&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">성무건</div>
-                  <div class="student-major">기계공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=임상수&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">임상수</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=오수민&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">오수민</div>
-                  <div class="student-major">기계공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=김윤기&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">김윤기</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=최성열&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">최성열</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=강정우&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">강정우</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=고다영&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">고다영</div>
-                  <div class="student-major">기계공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=임희수&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">임희수</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=남윤아&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">남윤아</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-            </div>
-          </div>
-          
-          <!-- Control Group -->
-          <div class="group-container">
-            <div class="group-node">Control Group</div>
-            <div class="connection-line-vertical" style="height: 15px;"></div>
-            <div class="students-level">
-              <a href="{{ site.baseurl }}/?person=서동욱&group=control" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">서동욱</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=서희찬&group=control" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">서희찬</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=김호영&group=control" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">김호영</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=강동호&group=control" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">강동호</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=이은석&group=control" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">이은석</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Alumni 섹션 -->
-      <div class="section-container">
-        <div class="mid-node">Alumni</div>
-        <div class="connection-line-vertical"></div>
-        
-        <div class="group-level">
-          <!-- Control Group -->
-          <div class="group-container">
-            <div class="group-node">Control Group</div>
-            <div class="connection-line-vertical" style="height: 15px;"></div>
-            <div class="students-level">
-              <a href="{{ site.baseurl }}/?person=김우진&group=control" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">김우진</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-              <a href="{{ site.baseurl }}/?person=박시우&group=control" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">박시우</div>
-                  <div class="student-major">전자공학</div>
-                </div>
-              </a>
-            </div>
-          </div>
-          
-          <!-- Hardware Group -->
-          <div class="group-container">
-            <div class="group-node">Hardware Group</div>
-            <div class="connection-line-vertical" style="height: 15px;"></div>
-            <div class="students-level">
-              <a href="{{ site.baseurl }}/?person=추성권&group=hardware" class="student-card-link" style="text-decoration: none; color: inherit;">
-                <div class="student-card">
-                  <div class="student-name">추성권</div>
-                  <div class="student-major">메카트로닉스공학</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-    
-  </div>
-</div>
+<div class="org-container">
 
+  <div class="level-section">
+    <div class="node-box node-professor">Professor</div>
+    <div class="line-vertical"></div>
+  </div>
+
+  <div class="level-section">
+    <div style="width: 50%; margin: 0 auto; border-top: 2px solid #ccc; height: 30px;"></div>
+    
+    <div class="flex-row">
+      
+      <div class="group-column">
+        <div class="node-box node-degree">Graduate Students</div>
+        <div class="line-vertical" style="height: 40px;"></div>
+        
+        <div class="flex-row" style="gap: 30px;">
+          
+          <div class="group-column">
+            <div class="node-box node-group">AI Group</div>
+            <div class="line-vertical"></div>
+            <div class="student-grid">
+              <a href="{{ site.baseurl }}/?person=이승호&group=ai" class="student-card">
+                <div class="student-name">이승호</div>
+                <div class="student-major">기계공학</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=김중길&group=ai" class="student-card">
+                <div class="student-name">김중길</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=문준서&group=ai" class="student-card">
+                <div class="student-name">문준서</div>
+                <div class="student-major">전자공학</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=박한솔&group=ai" class="student-card">
+                <div class="student-name">박한솔</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+            </div>
+          </div>
+
+          <div class="group-column">
+            <div class="node-box node-group">HW Group</div>
+            <div class="line-vertical"></div>
+            <div class="student-grid">
+              <a href="{{ site.baseurl }}/?person=정성조&group=hardware" class="student-card">
+                <div class="student-name">정성조</div>
+                <div class="student-major">기계공학</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=배성우&group=hardware" class="student-card">
+                <div class="student-name">배성우</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="group-column">
+        <div class="node-box node-degree">Undergraduates</div>
+        <div class="line-vertical" style="height: 40px;"></div>
+
+        <div class="flex-row" style="gap: 20px;">
+          
+          <div class="group-column">
+            <div class="node-box node-group">AI Group</div>
+            <div class="line-vertical"></div>
+            <div class="student-grid">
+              <a href="{{ site.baseurl }}/?person=권혁조&group=ai" class="student-card">
+                <div class="student-name">권혁조</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=강민창&group=ai" class="student-card">
+                <div class="student-name">강민창</div>
+                <div class="student-major">기계공학</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=이강현&group=ai" class="student-card">
+                <div class="student-name">이강현</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=유성우&group=ai" class="student-card">
+                <div class="student-name">유성우</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=남채은&group=ai" class="student-card">
+                <div class="student-name">남채은</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+            </div>
+          </div>
+
+          <div class="group-column">
+            <div class="node-box node-group">HW Group</div>
+            <div class="line-vertical"></div>
+            <div class="student-grid">
+              <a href="{{ site.baseurl }}/?person=변호진&group=hardware" class="student-card">
+                <div class="student-name">변호진</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=정윤호&group=hardware" class="student-card">
+                <div class="student-name">정윤호</div>
+                <div class="student-major">기계공학</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=성무건&group=hardware" class="student-card">
+                <div class="student-name">성무건</div>
+                <div class="student-major">기계공학</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=임상수&group=hardware" class="student-card">
+                <div class="student-name">임상수</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=오수민&group=hardware" class="student-card">
+                <div class="student-name">오수민</div>
+                <div class="student-major">기계공학</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=김윤기&group=hardware" class="student-card">
+                <div class="student-name">김윤기</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=최성열&group=hardware" class="student-card">
+                <div class="student-name">최성열</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=강정우&group=hardware" class="student-card">
+                <div class="student-name">강정우</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=고다영&group=hardware" class="student-card">
+                <div class="student-name">고다영</div>
+                <div class="student-major">기계공학</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=임희수&group=hardware" class="student-card">
+                <div class="student-name">임희수</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=남윤아&group=hardware" class="student-card">
+                <div class="student-name">남윤아</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+            </div>
+          </div>
+
+          <div class="group-column">
+            <div class="node-box node-group">Control Group</div>
+            <div class="line-vertical"></div>
+            <div class="student-grid">
+              <a href="{{ site.baseurl }}/?person=서동욱&group=control" class="student-card">
+                <div class="student-name">서동욱</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+              <a href="{{ site.baseurl }}/?person=서희찬&group=control" class="student-card">
+                <div class="student-name">서희찬</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=김호영&group=control" class="student-card">
+                <div class="student-name">김호영</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=강동호&group=control" class="student-card">
+                <div class="student-name">강동호</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+               <a href="{{ site.baseurl }}/?person=이은석&group=control" class="student-card">
+                <div class="student-name">이은석</div>
+                <div class="student-major">메카트로닉스</div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      </div>
+  </div>
+
+  <div style="margin-top: 60px; border-top: 2px dashed #ccc; padding-top: 40px;">
+    <div class="node-box" style="background: #95a5a6; color: white;">Alumni</div>
+    <div class="line-vertical"></div>
+    <div class="student-grid">
+      <a href="{{ site.baseurl }}/?person=김우진&group=control" class="student-card">
+        <div class="student-name">김우진</div>
+        <div class="student-major">메카트로닉스</div>
+      </a>
+      <a href="{{ site.baseurl }}/?person=박시우&group=control" class="student-card">
+        <div class="student-name">박시우</div>
+        <div class="student-major">전자공학</div>
+      </a>
+      <a href="{{ site.baseurl }}/?person=추성권&group=hardware" class="student-card">
+        <div class="student-name">추성권</div>
+        <div class="student-major">메카트로닉스</div>
+      </a>
+    </div>
+  </div>
+
+</div>

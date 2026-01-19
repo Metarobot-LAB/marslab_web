@@ -1,140 +1,108 @@
-<!-- People 드롭다운 메뉴 제어 스크립트 - 동적 생성 버전 -->
+<style>
+  /* 드롭다운 메뉴 스타일 */
+  .custom-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    min-width: 160px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    border: 1px solid #eee;
+    border-radius: 8px;
+    z-index: 9999;
+    padding: 8px 0;
+    list-style: none;
+    margin-top: 10px;
+  }
+
+  /* 말풍선 꼬리 (선택사항) */
+  .custom-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #fff;
+  }
+
+  .custom-dropdown-menu li {
+    margin: 0;
+    padding: 0;
+    display: block;
+    text-align: center;
+  }
+
+  .custom-dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+
+  .custom-dropdown-menu a:hover {
+    background-color: #f5f7fa;
+    color: #000;
+  }
+
+  /* 부모 요소가 hover 되었을 때 드롭다운 표시 */
+  .has-dropdown:hover .custom-dropdown-menu {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+</style>
+
 <script>
-(function() {
-  function createPeopleDropdown() {
-    // 모든 링크를 순회하며 "People" 텍스트 찾기
-    const allLinks = document.querySelectorAll('a');
-    let peopleLink = null;
-    let peopleItem = null;
-    
-    for (let link of allLinks) {
-      const text = link.textContent.trim();
-      if (text === 'People') {
-        peopleLink = link;
-        peopleItem = link.closest('li') || link.parentElement;
-        break;
-      }
-    }
-    
-    if (!peopleLink || !peopleItem) {
-      console.log('People menu not found, retrying...');
-      setTimeout(createPeopleDropdown, 300);
-      return;
-    }
-    
-    console.log('People menu found, creating dropdown...');
-    
-    // People 링크 클릭 완전 차단
-    function blockClick(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      return false;
-    }
-    
-    peopleLink.addEventListener('click', blockClick, true);
-    peopleLink.addEventListener('click', blockClick, false);
-    peopleLink.onclick = blockClick;
-    
-    // href 비활성화
-    peopleLink.setAttribute('href', 'javascript:void(0);');
-    peopleLink.style.pointerEvents = 'none';
-    peopleLink.style.cursor = 'default';
-    
-    // 기존 children이 있는지 확인
-    let peopleChildren = peopleItem.querySelector('ul') ||
-                        peopleItem.querySelector('.nav__children') ||
-                        peopleItem.querySelector('.people-dropdown');
-    
-    // children이 없으면 동적으로 생성
-    if (!peopleChildren) {
-      peopleChildren = document.createElement('ul');
-      peopleChildren.className = 'people-dropdown';
-      peopleChildren.style.cssText = 'display: none; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 150px; z-index: 9999; padding: 8px 0; margin-top: 4px; list-style: none;';
+document.addEventListener('DOMContentLoaded', function() {
+  // 네비게이션의 모든 링크를 확인
+  const navLinks = document.querySelectorAll('a');
+  
+  navLinks.forEach(function(link) {
+    // 1. "People" 텍스트를 가진 링크 찾기
+    if (link.textContent.trim() === 'People') {
       
-      // Professor 링크 생성
-      const professorItem = document.createElement('li');
-      const professorLink = document.createElement('a');
-      professorLink.href = '/mars.github.io/professor/';
-      professorLink.textContent = 'Professor';
-      professorLink.style.cssText = 'display: block; padding: 8px 16px; color: #333; text-decoration: none;';
-      professorItem.appendChild(professorLink);
-      peopleChildren.appendChild(professorItem);
+      // 2. 부모 li 요소 찾기 (테마에 따라 nav__item 등 클래스가 다를 수 있음)
+      const parentLi = link.closest('li');
       
-      // Students 링크 생성
-      const studentsItem = document.createElement('li');
-      const studentsLink = document.createElement('a');
-      studentsLink.href = '/mars.github.io/students/';
-      studentsLink.textContent = 'Students';
-      studentsLink.style.cssText = 'display: block; padding: 8px 16px; color: #333; text-decoration: none;';
-      studentsItem.appendChild(studentsLink);
-      peopleChildren.appendChild(studentsItem);
-      
-      // peopleItem에 추가
-      peopleItem.style.position = 'relative';
-      peopleItem.appendChild(peopleChildren);
-    } else {
-      // 기존 children이 있으면 스타일만 적용
-      peopleChildren.classList.add('people-dropdown');
-      peopleChildren.style.cssText += 'display: none; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 150px; z-index: 9999; padding: 8px 0; margin-top: 4px;';
-      if (peopleItem) {
-        peopleItem.style.position = 'relative';
-      }
-    }
-    
-    // 호버 이벤트
-    function showDropdown() {
-      peopleChildren.style.display = 'block';
-      peopleChildren.style.visibility = 'visible';
-      peopleChildren.style.opacity = '1';
-    }
-    
-    function hideDropdown() {
-      setTimeout(function() {
-        if (!peopleItem.matches(':hover') && !peopleChildren.matches(':hover')) {
-          peopleChildren.style.display = 'none';
-          peopleChildren.style.visibility = 'hidden';
-          peopleChildren.style.opacity = '0';
+      if (parentLi) {
+        // 부모에 클래스 추가 (CSS 호버 용)
+        parentLi.classList.add('has-dropdown');
+        parentLi.style.position = 'relative'; // 위치 기준점 설정
+        
+        // 3. 클릭 이벤트 차단 (완전 무력화)
+        link.href = 'javascript:void(0);';
+        link.style.cursor = 'default';
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          return false;
+        });
+
+        // 4. 드롭다운 메뉴 HTML 생성 및 주입
+        // 기존에 생성된게 없는지 확인 후 생성
+        if (!parentLi.querySelector('.custom-dropdown-menu')) {
+          const dropdownUl = document.createElement('ul');
+          dropdownUl.className = 'custom-dropdown-menu';
+          
+          dropdownUl.innerHTML = `
+            <li><a href="/mars.github.io/professor/">Professor</a></li>
+            <li><a href="/mars.github.io/students/">Students</a></li>
+          `;
+          
+          parentLi.appendChild(dropdownUl);
         }
-      }, 200);
+      }
     }
-    
-    peopleItem.addEventListener('mouseenter', showDropdown);
-    peopleItem.addEventListener('mouseleave', hideDropdown);
-    peopleChildren.addEventListener('mouseenter', showDropdown);
-    peopleChildren.addEventListener('mouseleave', hideDropdown);
-    
-    // children 내부 링크 스타일
-    const childLinks = peopleChildren.querySelectorAll('a');
-    childLinks.forEach(function(link) {
-      link.addEventListener('mouseenter', function() {
-        this.style.backgroundColor = '#f5f5f5';
-      });
-      link.addEventListener('mouseleave', function() {
-        this.style.backgroundColor = 'transparent';
-      });
-    });
-  }
-  
-  // 여러 시점에서 실행
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', createPeopleDropdown);
-  } else {
-    createPeopleDropdown();
-  }
-  
-  setTimeout(createPeopleDropdown, 500);
-  setTimeout(createPeopleDropdown, 1000);
-  setTimeout(createPeopleDropdown, 2000);
-  
-  // MutationObserver로 DOM 변경 감지
-  const observer = new MutationObserver(function(mutations) {
-    createPeopleDropdown();
   });
-  
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-})();
+});
 </script>
