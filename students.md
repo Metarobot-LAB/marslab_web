@@ -149,54 +149,6 @@ sidebar:
   margin-top: 4px; 
 }
 
-/* 대학원생 테이블 스타일 */
-.grad-section {
-  margin-top: 80px;
-  padding-top: 40px;
-  border-top: 2px dashed #ccc;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.grad-table {
-  width: 100%;
-  max-width: 1000px;
-  margin: 30px auto;
-  border-collapse: collapse;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  font-size: 1.1em;
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.grad-table th, .grad-table td {
-  padding: 18px 20px;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-}
-
-.grad-table th {
-  background-color: #333;
-  font-weight: bold;
-  color: #fff;
-  border-top: 2px solid #333;
-  font-size: 1.15em;
-}
-
-.grad-table td {
-  font-size: 1.05em;
-  color: #333;
-}
-
-.grad-table tbody tr:hover {
-  background-color: #f5f5f5;
-}
-
 /* 반응형 처리 */
 @media (max-width: 768px) {
   .leaders-grid {
@@ -204,12 +156,6 @@ sidebar:
     gap: 50px;
   }
   .line-vertical-connector { display: none; }
-  .grad-table {
-    font-size: 0.9em;
-  }
-  .grad-table th, .grad-table td {
-    padding: 12px 10px;
-  }
 }
 </style>
 
@@ -334,51 +280,6 @@ sidebar:
       </div>
     </div>
 
-  </div>
-
-  <div class="grad-section">
-    <h2 style="color: #333; font-weight: bold; margin-bottom: 30px; font-size: 1.8em;">Graduate Students</h2>
-    <table class="grad-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Group</th>
-          <th>Major</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>이승호</td>
-          <td><span style="font-weight:bold;">AI Group</span></td>
-          <td>기계공학</td>
-        </tr>
-        <tr>
-          <td>김중길</td>
-          <td><span style="font-weight:bold;">AI Group</span></td>
-          <td>메카트로닉스공학</td>
-        </tr>
-        <tr>
-          <td>문준서</td>
-          <td><span style="font-weight:bold;">AI Group</span></td>
-          <td>전자공학</td>
-        </tr>
-        <tr>
-          <td>박한솔</td>
-          <td><span style="font-weight:bold;">AI Group</span></td>
-          <td>메카트로닉스공학</td>
-        </tr>
-        <tr>
-          <td>정성조</td>
-          <td><span style="font-weight:bold;">Hardware Group</span></td>
-          <td>기계공학</td>
-        </tr>
-        <tr>
-          <td>배성우</td>
-          <td><span style="font-weight:bold;">Hardware Group</span></td>
-          <td>메카트로닉스공학</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 
 </div>

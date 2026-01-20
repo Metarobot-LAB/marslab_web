@@ -3,8 +3,9 @@ title: "WELCOME TO METAROBOT"
 excerpt: "메타로봇 연구회"
 categories:
   - Project
-participants:
-  - 이강현
+tags:
+  - Intro
+  - Portfolio
 
 header:
   teaser: /assets/images/logo.jpg
@@ -17,7 +18,6 @@ toc: true
 toc_sticky: true
 toc_label: "CONTENTS"
 ---
-
 
 <div class="notice--primary" style="text-align: center;">
   <h2 style="margin-top: 10px;">WE ARE METAROBOT</h2>
