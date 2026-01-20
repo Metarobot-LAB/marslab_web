@@ -3,6 +3,9 @@ main:
   - title: "Home"
     url: /
   
+  - title: "Project"
+    url: /categories/
+  
   - title: "People"
     url: javascript:void(0);
     children:

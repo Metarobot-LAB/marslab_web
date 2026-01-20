@@ -1,15 +1,12 @@
 ---
 layout: archive
-title: "Metarobot Projects"
+title: ""
 author_profile: true
 entries_layout: grid
 classes: wide
-header:
-  teaser: /assets/images/logo.jpg
-  overlay_image: /assets/images/logo.jpg
-  overlay_filter: 0.5
-  caption: "Engineering the Future with **METAROBOT**"
 ---
+
+<img src="{{ site.baseurl }}/main_picture.jpg" alt="Main Picture" style="width: 100%; height: auto; margin-bottom: 30px; border-radius: 8px;">
 
 {% for post in site.posts %}
   {% include archive-single.html type="grid" %}
