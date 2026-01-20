@@ -8,11 +8,6 @@ main:
   
   - title: "People"
     url: javascript:void(0);
-    children:
-      - title: "Professor"
-        url: /professor/
-      - title: "Students"
-        url: /students/
     
   - title: "Awards"
     url: /awards/
