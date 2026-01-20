@@ -6,7 +6,9 @@ entries_layout: grid
 classes: wide
 ---
 
-<img src="{{ site.baseurl }}/main_picture.jpg" alt="Main Picture" style="width: 100%; height: auto; margin-bottom: 30px; border-radius: 8px;">
+<div style="width: 100%; margin-bottom: 40px;">
+  <img src="{{ site.baseurl }}/main_picture.jpg" alt="Main Picture" style="width: 100%; max-width: none; display: block; border-radius: 4px;">
+</div>
 
 {% for post in site.posts %}
   {% include archive-single.html type="grid" %}
