@@ -10,20 +10,20 @@ header:
 ---
 
 <style>
+  /* 헤더 높이 및 배경 설정 */
   .page__hero--overlay {
-    /* 1. 헤더 높이 늘리기 (기본값보다 크게 설정) */
     min-height: 600px !important; 
-    
-    /* 2. 이미지 위치 조정 (얼굴이 위에 있다면 'center top'으로 설정) */
     background-position: center center !important; 
-    
-    /* 3. 이미지 크기 방식 (cover는 꽉 채우기, contain은 다 보여주기) */
-    /* 얼굴이 잘리는 게 싫다면 아래 주석을 풀어 'contain'을 시도해 볼 수 있습니다. 
-       단, 이 경우 좌우 여백이 생길 수 있습니다. */
-    /* background-size: contain !important; */
   }
   
-  /* 모바일 화면에서는 높이를 조금 줄임 */
+  /* 이미지 위의 제목(Title)과 설명(Caption) 아예 안 보이게 숨기기 */
+  .page__hero-title, 
+  .page__hero-caption,
+  .page__title { 
+    display: none !important; 
+  }
+
+  /* 모바일 화면 높이 조정 */
   @media (max-width: 768px) {
     .page__hero--overlay {
       min-height: 400px !important;
