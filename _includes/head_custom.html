@@ -1,9 +1,6 @@
 <style>
-  /* 드롭다운 메뉴 스타일 - 기본적으로 숨김 */
+  /* 드롭다운 메뉴 스타일 */
   .custom-dropdown-menu {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
     position: absolute !important;
     top: 100% !important;
     left: 50% !important;
@@ -18,13 +15,17 @@
     list-style: none !important;
     margin-top: 10px !important;
     margin-left: 0 !important;
-    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, transform 0.2s ease-in-out !important;
   }
 
   .custom-dropdown-menu.show {
-    display: block !important;
-    visibility: visible !important;
     opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateX(-50%) translateY(0) !important;
   }
 
   .custom-dropdown-menu::before {
@@ -64,70 +65,68 @@
     position: relative !important;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translate(-50%, -10px); }
-    to { opacity: 1; transform: translate(-50%, 0); }
-  }
-
-  .custom-dropdown-menu.show {
-    animation: fadeIn 0.2s ease-in-out !important;
-  }
-
   /* [필수] 상단바가 드롭다운을 가리지 않도록 설정 */
   .masthead, 
   .masthead__inner-wrap, 
   .greedy-nav, 
   .greedy-nav .visible-links,
-  .greedy-nav__list {
+  .greedy-nav__list,
+  .greedy-nav__list li {
     overflow: visible !important;
-  }
-  
-  /* 드롭다운 메뉴 z-index 최상위로 보장 */
-  .custom-dropdown-menu {
-    z-index: 999999 !important;
   }
 </style>
 
 <script>
 (function() {
+  let dropdownSetup = false;
+  
   function setupPeopleDropdown() {
-    // 모든 링크를 확인
-    const allLinks = document.querySelectorAll('a');
+    if (dropdownSetup) {
+      return true;
+    }
+    
+    // 네비게이션 영역에서 People 링크 찾기
+    const navLinks = document.querySelectorAll('.greedy-nav a, .masthead a, nav a');
     let peopleLink = null;
     let peopleItem = null;
     
-    // People 링크 찾기
-    for (let link of allLinks) {
+    for (let link of navLinks) {
       const text = link.textContent.trim();
       if (text === 'People') {
         peopleLink = link;
-        // li 요소 찾기 (여러 방법 시도)
+        // li 요소 찾기
         peopleItem = link.closest('li');
         if (!peopleItem) {
+          // li가 없으면 부모 요소 사용
           peopleItem = link.parentElement;
-        }
-        if (!peopleItem) {
-          peopleItem = link.parentNode;
+          // div나 다른 요소면 한 단계 더 올라가기
+          if (peopleItem && peopleItem.tagName !== 'LI') {
+            peopleItem = peopleItem.closest('li') || peopleItem;
+          }
         }
         break;
       }
     }
     
     if (!peopleLink || !peopleItem) {
-      // DOM이 아직 준비되지 않았을 수 있음
       return false;
     }
     
     // 이미 설정되어 있으면 스킵
-    if (peopleItem.classList.contains('has-dropdown') && peopleItem.querySelector('.custom-dropdown-menu')) {
-      return true;
+    if (peopleItem.classList.contains('has-dropdown')) {
+      const existingDropdown = peopleItem.querySelector('.custom-dropdown-menu');
+      if (existingDropdown) {
+        dropdownSetup = true;
+        return true;
+      }
     }
     
     // 클래스 추가
     peopleItem.classList.add('has-dropdown');
     peopleItem.style.position = 'relative';
     
-    // 링크 기능 비활성화 (클릭 시 이동 방지)
+    // 링크 기능 비활성화
+    const originalHref = peopleLink.href;
     peopleLink.href = 'javascript:void(0);';
     peopleLink.style.cursor = 'pointer';
     
@@ -136,88 +135,98 @@
       e.preventDefault();
       e.stopPropagation();
       return false;
-    });
+    }, true);
     
     // 드롭다운 생성
-    let dropdown = peopleItem.querySelector('.custom-dropdown-menu');
-    if (!dropdown) {
-      dropdown = document.createElement('ul');
-      dropdown.className = 'custom-dropdown-menu';
-      // 현재 페이지의 baseurl을 자동으로 감지
-      const currentPath = window.location.pathname;
-      let baseurl = '';
-      if (currentPath.includes('/mars.github.io')) {
-        baseurl = '/mars.github.io';
-      }
-      dropdown.innerHTML = '<li><a href="' + baseurl + '/students/">Students</a></li><li><a href="' + baseurl + '/alumni/">Alumni</a></li>';
-      peopleItem.appendChild(dropdown);
+    let dropdown = document.createElement('ul');
+    dropdown.className = 'custom-dropdown-menu';
+    
+    // baseurl 감지
+    const currentPath = window.location.pathname;
+    let baseurl = '';
+    if (currentPath.includes('/mars.github.io')) {
+      baseurl = '/mars.github.io';
     }
-
+    
+    dropdown.innerHTML = '<li><a href="' + baseurl + '/students/">Students</a></li><li><a href="' + baseurl + '/alumni/">Alumni</a></li>';
+    peopleItem.appendChild(dropdown);
+    
     // 호버 이벤트 처리
     let hoverTimeout = null;
+    let isHovering = false;
     
     function showDropdown() {
       if (hoverTimeout) {
         clearTimeout(hoverTimeout);
         hoverTimeout = null;
       }
-      if (dropdown) {
-        dropdown.classList.add('show');
-      }
+      isHovering = true;
+      dropdown.classList.add('show');
     }
     
     function hideDropdown() {
+      isHovering = false;
       hoverTimeout = setTimeout(function() {
-        if (dropdown) {
+        if (!isHovering) {
           dropdown.classList.remove('show');
         }
-      }, 100); // 약간의 지연을 두어 드롭다운으로 이동할 시간 제공
+      }, 150);
     }
     
     // 이벤트 리스너 추가
-    peopleItem.addEventListener('mouseenter', showDropdown);
-    peopleItem.addEventListener('mouseleave', hideDropdown);
-    peopleLink.addEventListener('mouseenter', showDropdown);
+    peopleItem.addEventListener('mouseenter', showDropdown, true);
+    peopleItem.addEventListener('mouseleave', hideDropdown, true);
+    peopleLink.addEventListener('mouseenter', showDropdown, true);
     
-    if (dropdown) {
-      dropdown.addEventListener('mouseenter', function() {
-        if (hoverTimeout) {
-          clearTimeout(hoverTimeout);
-          hoverTimeout = null;
-        }
-        showDropdown();
-      });
-      dropdown.addEventListener('mouseleave', hideDropdown);
-    }
+    dropdown.addEventListener('mouseenter', function() {
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout);
+        hoverTimeout = null;
+      }
+      showDropdown();
+    }, true);
     
+    dropdown.addEventListener('mouseleave', hideDropdown, true);
+    
+    dropdownSetup = true;
     return true;
   }
   
-  // 여러 시점에서 시도 (DOM이 완전히 로드될 때까지)
-  function initDropdown() {
+  // 여러 시점에서 시도
+  function trySetup() {
     if (setupPeopleDropdown()) {
       return;
     }
-    // 실패하면 잠시 후 재시도
-    setTimeout(function() {
-      if (!setupPeopleDropdown()) {
-        // 최종 재시도
-        setTimeout(setupPeopleDropdown, 500);
+    
+    // MutationObserver로 DOM 변경 감지
+    const observer = new MutationObserver(function(mutations) {
+      if (setupPeopleDropdown()) {
+        observer.disconnect();
       }
-    }, 100);
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    
+    // 일정 시간 후 observer 해제
+    setTimeout(function() {
+      observer.disconnect();
+    }, 5000);
   }
+  
+  // 즉시 시도
+  trySetup();
   
   // DOMContentLoaded에서 실행
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initDropdown);
-  } else {
-    // 이미 로드된 경우 즉시 실행
-    initDropdown();
+    document.addEventListener('DOMContentLoaded', trySetup);
   }
   
-  // window.onload에서도 한 번 더 시도 (모든 리소스 로드 후)
+  // window.onload에서도 시도
   window.addEventListener('load', function() {
-    setTimeout(setupPeopleDropdown, 100);
+    setTimeout(trySetup, 100);
   });
 })();
 </script>
