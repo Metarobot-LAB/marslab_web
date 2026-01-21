@@ -85,30 +85,47 @@
       return true;
     }
     
-    // 네비게이션 영역에서 People 링크 찾기
-    const navLinks = document.querySelectorAll('.greedy-nav a, .masthead a, nav a');
+    // 네비게이션 영역에서 People 링크 찾기 (다양한 선택자 시도)
+    const selectors = [
+      '.greedy-nav a',
+      '.greedy-nav__list a',
+      '.visible-links a',
+      '.masthead a',
+      'nav a',
+      'header nav a',
+      '.site-nav a',
+      'a[href*="javascript:void"]'
+    ];
+    
     let peopleLink = null;
     let peopleItem = null;
     
-    for (let link of navLinks) {
-      const text = link.textContent.trim();
-      if (text === 'People') {
-        peopleLink = link;
-        // li 요소 찾기
-        peopleItem = link.closest('li');
-        if (!peopleItem) {
-          // li가 없으면 부모 요소 사용
-          peopleItem = link.parentElement;
-          // div나 다른 요소면 한 단계 더 올라가기
-          if (peopleItem && peopleItem.tagName !== 'LI') {
-            peopleItem = peopleItem.closest('li') || peopleItem;
+    // 모든 선택자 시도
+    for (const selector of selectors) {
+      const navLinks = document.querySelectorAll(selector);
+      for (let link of navLinks) {
+        const text = link.textContent.trim();
+        // People 텍스트가 정확히 일치하거나 포함되어 있는 경우
+        if (text === 'People' || text.toLowerCase() === 'people') {
+          peopleLink = link;
+          // li 요소 찾기
+          peopleItem = link.closest('li');
+          if (!peopleItem) {
+            // li가 없으면 부모 요소 사용
+            peopleItem = link.parentElement;
+            // div나 다른 요소면 한 단계 더 올라가기
+            if (peopleItem && peopleItem.tagName !== 'LI') {
+              peopleItem = peopleItem.closest('li') || peopleItem;
+            }
           }
+          break;
         }
-        break;
       }
+      if (peopleLink && peopleItem) break;
     }
     
     if (!peopleLink || !peopleItem) {
+      console.log('People dropdown: 링크를 찾을 수 없습니다.');
       return false;
     }
     
@@ -194,6 +211,7 @@
   
   // 여러 시점에서 시도
   function trySetup() {
+    // 즉시 시도
     if (setupPeopleDropdown()) {
       return;
     }
@@ -210,6 +228,16 @@
       subtree: true
     });
     
+    // 여러 시점에 재시도
+    const retryTimes = [100, 300, 500, 1000, 2000];
+    retryTimes.forEach(function(delay) {
+      setTimeout(function() {
+        if (setupPeopleDropdown()) {
+          observer.disconnect();
+        }
+      }, delay);
+    });
+    
     // 일정 시간 후 observer 해제
     setTimeout(function() {
       observer.disconnect();
@@ -217,11 +245,10 @@
   }
   
   // 즉시 시도
-  trySetup();
-  
-  // DOMContentLoaded에서 실행
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', trySetup);
+  } else {
+    trySetup();
   }
   
   // window.onload에서도 시도
