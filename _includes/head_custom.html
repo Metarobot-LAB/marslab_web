@@ -3,17 +3,15 @@
   .people-expand-wrapper {
     position: relative !important;
     display: inline-block !important;
-    min-width: 100px !important; /* People 텍스트와 확장 메뉴가 같은 공간 차지 */
+    min-width: 100px !important;
   }
 
-  /* People 원본 텍스트 */
   .people-original-text {
     display: inline-block !important;
-    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+    transition: opacity 0.2s ease !important;
     white-space: nowrap !important;
   }
 
-  /* Professor | Students 확장 메뉴 */
   .people-expanded-links {
     position: absolute !important;
     top: 0 !important;
@@ -25,7 +23,7 @@
     gap: 0.5rem !important;
     opacity: 0 !important;
     visibility: hidden !important;
-    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+    transition: opacity 0.2s ease !important;
     white-space: nowrap !important;
     pointer-events: none !important;
   }
@@ -36,7 +34,7 @@
     padding: 0 0.5rem !important;
     font-size: inherit !important;
     font-weight: inherit !important;
-    transition: color 0.3s ease !important;
+    transition: color 0.2s ease !important;
     pointer-events: auto !important;
   }
 
@@ -50,7 +48,7 @@
     pointer-events: none !important;
   }
 
-  /* 클릭 시 People 텍스트 숨기고 확장 메뉴 표시 */
+  /* 활성 상태 */
   .people-expand-wrapper.active .people-original-text {
     opacity: 0 !important;
     visibility: hidden !important;
@@ -63,23 +61,11 @@
     pointer-events: auto !important;
     display: flex !important;
   }
-  
-  /* 디버깅: active 클래스 확인용 */
-  .people-expand-wrapper.active {
-    background-color: transparent !important;
-  }
 
-  /* li 요소에 클래스 추가 시 스타일 적용 */
   .has-people-expand {
     position: relative !important;
   }
 
-  /* 다른 메뉴와 겹치지 않도록 z-index 설정 */
-  .has-people-expand {
-    z-index: 10 !important;
-  }
-
-  /* [필수] 상단바가 확장 메뉴를 가리지 않도록 모든 부모 요소의 overflow 해제 */
   .masthead, 
   .masthead__inner-wrap, 
   .greedy-nav, 
@@ -89,19 +75,16 @@
     overflow: visible !important;
   }
 
-  /* 모바일 반응형 */
   @media (max-width: 768px) {
     .people-expand-wrapper {
       min-width: auto !important;
     }
-
     .people-expanded-links {
       position: relative !important;
       flex-direction: column !important;
       gap: 0.3rem !important;
       padding: 0.5rem 0 !important;
     }
-
     .people-expanded-links .divider {
       display: none !important;
     }
@@ -112,99 +95,60 @@
 (function() {
   'use strict';
   
-  let setupComplete = false;
-  let setupAttempts = 0;
-  const MAX_ATTEMPTS = 10;
+  let peopleWrapper = null;
+  let isInitialized = false;
   
-  function setupPeopleExpand() {
-    if (setupComplete) {
-      return true;
-    }
+  function initPeopleMenu() {
+    if (isInitialized) return;
     
-    setupAttempts++;
-    if (setupAttempts > MAX_ATTEMPTS) {
-      console.warn('People expand: 최대 시도 횟수 초과');
-      return false;
-    }
-    
-    // 이미 설정되어 있는지 확인
-    if (document.querySelector('.people-expand-wrapper')) {
-      setupComplete = true;
-      return true;
-    }
-    
-    // 'People' 텍스트를 가진 링크 찾기 (더 광범위하게 검색)
-    console.log('People expand: 링크 검색 시작...');
-    
-    // 모든 링크를 먼저 확인
+    // People 링크 찾기
     const allLinks = document.querySelectorAll('a');
     let peopleLink = null;
     let peopleItem = null;
     
-    console.log('People expand: 전체 링크 개수:', allLinks.length);
-    
     for (let link of allLinks) {
       const text = link.textContent.trim().toLowerCase();
-      console.log('People expand: 링크 텍스트 확인:', text, link);
-      
       if (text === 'people') {
-        // 네비게이션 영역인지 확인
-        const isInNav = link.closest('.greedy-nav') || 
-                       link.closest('.masthead') || 
-                       link.closest('nav') ||
-                       link.closest('.site-nav') ||
-                       link.closest('header');
-        
-        if (isInNav) {
+        const nav = link.closest('.greedy-nav') || link.closest('.masthead') || link.closest('nav');
+        if (nav) {
           peopleLink = link;
-          peopleItem = link.closest('li');
-          if (!peopleItem) {
-            peopleItem = link.parentElement;
-          }
-          console.log('People expand: People 링크 발견!', peopleLink, peopleItem);
+          peopleItem = link.closest('li') || link.parentElement;
           break;
         }
       }
     }
     
     if (!peopleLink || !peopleItem) {
-      console.warn('People expand: People 링크를 찾을 수 없습니다.');
-      console.warn('People expand: 시도 횟수:', setupAttempts);
-      if (setupAttempts === 1) {
-        console.log('People expand: 재시도 중...');
-      }
       return false;
     }
     
     // 이미 설정되어 있으면 스킵
     if (peopleItem.classList.contains('has-people-expand')) {
-      setupComplete = true;
-      return true;
+      peopleWrapper = peopleItem.querySelector('.people-expand-wrapper');
+      if (peopleWrapper) {
+        isInitialized = true;
+        return true;
+      }
     }
     
     try {
-      // 원본 텍스트 저장
       const originalText = peopleLink.textContent.trim();
       
-      // People 링크를 래퍼로 감싸기
+      // 래퍼 생성
       const wrapper = document.createElement('span');
       wrapper.className = 'people-expand-wrapper';
       
-      // 원본 텍스트 요소
-      const originalTextSpan = document.createElement('span');
-      originalTextSpan.className = 'people-original-text';
-      originalTextSpan.textContent = originalText;
+      // 원본 텍스트
+      const originalSpan = document.createElement('span');
+      originalSpan.className = 'people-original-text';
+      originalSpan.textContent = originalText;
       
-      // 확장 메뉴 요소
+      // 확장 메뉴
       const expandedLinks = document.createElement('span');
       expandedLinks.className = 'people-expanded-links';
       
-      // baseurl 동적 감지
       const currentPath = window.location.pathname;
-      let baseurl = '';
-      if (currentPath.includes('/mars.github.io')) {
-        baseurl = '/mars.github.io';
-      }
+      const baseurl = currentPath.includes('/mars.github.io') ? '/mars.github.io' : '';
       
       expandedLinks.innerHTML = `
         <a href="${baseurl}/professor/">Professor</a>
@@ -212,156 +156,91 @@
         <a href="${baseurl}/students/">Students</a>
       `;
       
-      // 링크 내용 교체
+      // DOM 구조 변경
       peopleLink.innerHTML = '';
-      wrapper.appendChild(originalTextSpan);
+      wrapper.appendChild(originalSpan);
       wrapper.appendChild(expandedLinks);
       peopleLink.appendChild(wrapper);
       
-      // 링크 기능 비활성화
       peopleLink.href = 'javascript:void(0);';
       peopleLink.style.cursor = 'pointer';
-      
-      // li에 클래스 추가
       peopleItem.classList.add('has-people-expand');
       
-      // 토글 함수 정의
-      function togglePeopleMenu(e) {
-        if (e) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-        
-        // 확장 메뉴 내부 링크 클릭은 허용 (링크로 이동)
-        if (e && e.target && e.target.tagName === 'A' && e.target.closest('.people-expanded-links')) {
-          console.log('People expand: 링크 클릭됨, 이동 허용');
+      peopleWrapper = wrapper;
+      
+      // 클릭 이벤트 - 이벤트 위임 사용
+      peopleItem.addEventListener('click', function(e) {
+        // 확장 메뉴 내부 링크 클릭은 허용
+        if (e.target.closest('.people-expanded-links') && e.target.tagName === 'A') {
           return true;
         }
         
-        // 토글
+        // People 텍스트나 래퍼 클릭 시 토글
+        e.preventDefault();
+        e.stopPropagation();
+        
         const isActive = wrapper.classList.contains('active');
-        if (isActive) {
-          wrapper.classList.remove('active');
-          console.log('People expand: 닫힘');
-        } else {
-          wrapper.classList.add('active');
-          console.log('People expand: 열림');
-        }
-      }
-      
-      // 클릭 이벤트 바인딩 (여러 방법으로 시도)
-      console.log('People expand: 이벤트 리스너 바인딩 시작...');
-      
-      // 1. peopleLink에 직접 바인딩
-      peopleLink.onclick = function(e) {
-        console.log('People expand: peopleLink 클릭됨!', e);
-        togglePeopleMenu(e);
-        return false;
-      };
-      peopleLink.addEventListener('click', function(e) {
-        console.log('People expand: peopleLink addEventListener 클릭됨!', e);
-        togglePeopleMenu(e);
-      }, false);
-      
-      // 2. wrapper에도 바인딩
-      wrapper.onclick = function(e) {
-        console.log('People expand: wrapper 클릭됨!', e);
-        // 확장 메뉴 내부 링크는 제외
-        if (e.target.closest('.people-expanded-links') && e.target.tagName === 'A') {
-          console.log('People expand: 링크 클릭, 이동 허용');
-          return true;
-        }
-        togglePeopleMenu(e);
-        return false;
-      };
-      wrapper.addEventListener('click', function(e) {
-        console.log('People expand: wrapper addEventListener 클릭됨!', e);
-        // 확장 메뉴 내부 링크는 제외
-        if (e.target.closest('.people-expanded-links') && e.target.tagName === 'A') {
-          return true;
-        }
-        togglePeopleMenu(e);
-      }, false);
-      
-      // 3. 원본 텍스트에도 바인딩
-      originalTextSpan.onclick = function(e) {
-        console.log('People expand: originalTextSpan 클릭됨!', e);
-        togglePeopleMenu(e);
-        return false;
-      };
-      originalTextSpan.addEventListener('click', togglePeopleMenu, false);
-      originalTextSpan.style.cursor = 'pointer';
-      
-      console.log('People expand: 모든 이벤트 리스너 바인딩 완료');
-      
-      // 외부 클릭시 닫기
-      document.addEventListener('click', function(e) {
-        // 확장 메뉴 내부 링크 클릭은 무시 (링크로 이동 허용)
-        if (e.target.closest('.people-expanded-links') && e.target.tagName === 'A') {
-          return;
-        }
+        wrapper.classList.toggle('active');
         
-        // People 영역 외부 클릭 시 닫기
-        if (!peopleItem.contains(e.target)) {
-          wrapper.classList.remove('active');
-        }
-      }, false);
+        console.log('People menu:', isActive ? '닫힘' : '열림');
+      }, true);
       
-      setupComplete = true;
-      console.log('People expand: 성공적으로 설정됨');
-      console.log('People expand: wrapper:', wrapper);
-      console.log('People expand: peopleLink:', peopleLink);
-      console.log('People expand: 이벤트 리스너 바인딩 완료');
+      // 외부 클릭 시 닫기 (약간의 지연)
+      setTimeout(function() {
+        document.addEventListener('click', function(e) {
+          if (!peopleItem.contains(e.target)) {
+            wrapper.classList.remove('active');
+          }
+        }, true);
+      }, 100);
       
-      // 테스트: 클릭 이벤트가 제대로 바인딩되었는지 확인
-      console.log('People expand: 클릭 테스트 - People을 클릭해보세요');
-      
+      isInitialized = true;
+      console.log('People menu: 초기화 완료');
       return true;
       
     } catch (e) {
-      console.error('People expand: 설정 중 오류 발생', e);
+      console.error('People menu: 오류', e);
       return false;
     }
   }
   
-  // 초기화 함수
-  function initPeopleExpand() {
-    if (setupPeopleExpand()) {
+  // 여러 시점에서 초기화 시도
+  function tryInit() {
+    if (initPeopleMenu()) {
       return;
     }
     
     // MutationObserver로 DOM 변경 감지
-    const observer = new MutationObserver(function(mutations) {
-      if (setupPeopleExpand()) {
+    const observer = new MutationObserver(function() {
+      if (initPeopleMenu()) {
         observer.disconnect();
       }
     });
     
-    observer.observe(document.body, { 
-      childList: true, 
-      subtree: true 
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
     });
     
-    // 일정 시간 후 observer 해제
     setTimeout(function() {
       observer.disconnect();
-    }, 10000);
+    }, 5000);
   }
   
-  // 여러 시점에서 실행
+  // 즉시 시도
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPeopleExpand);
+    document.addEventListener('DOMContentLoaded', tryInit);
   } else {
-    initPeopleExpand();
+    tryInit();
   }
   
   window.addEventListener('load', function() {
-    setTimeout(initPeopleExpand, 100);
+    setTimeout(tryInit, 100);
   });
   
   // 추가 재시도
-  setTimeout(initPeopleExpand, 500);
-  setTimeout(initPeopleExpand, 1000);
-  setTimeout(initPeopleExpand, 2000);
+  setTimeout(tryInit, 500);
+  setTimeout(tryInit, 1000);
+  setTimeout(tryInit, 2000);
 })();
 </script>
