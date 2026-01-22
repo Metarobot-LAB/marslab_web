@@ -3,11 +3,11 @@ main:
   - title: "Home"
     url: /
   
-  - title: "Project"
-    url: /categories/
-  
   - title: "People"
     url: /students/
+  
+  - title: "Project"
+    url: /categories/
     
   - title: "Awards"
     url: /awards/
