@@ -10,7 +10,7 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
     border: 1px solid #eee !important;
     border-radius: 8px !important;
-    z-index: 9999 !important; /* z-index 높임 */
+    z-index: 10000 !important; /* z-index를 더 높게 설정 (다른 요소에 가려지지 않도록) */
     padding: 8px 0 !important;
     list-style: none !important;
     
@@ -19,9 +19,11 @@
     border-top: 10px solid transparent !important; /* 투명 다리로 간격 유지 */
     background-clip: padding-box !important; /* 배경이 투명 테두리를 침범하지 않도록 설정 */
     
+    /* 초기 상태: 완전히 숨김 */
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+    display: block !important; /* display: none 대신 opacity/visibility 사용 */
     transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, transform 0.2s ease-in-out !important;
   }
 
@@ -29,6 +31,7 @@
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+    display: block !important; /* 명시적으로 표시 */
     transform: translateX(-50%) translateY(0) !important;
   }
 
@@ -84,95 +87,203 @@
 
 <script>
 (function() {
+  'use strict';
+  
+  let dropdownSetup = false;
+  let setupAttempts = 0;
+  const MAX_ATTEMPTS = 10;
+  
   function setupPeopleDropdown() {
-    // 1. 이미 설정되었는지 확인
-    if (document.querySelector('.custom-dropdown-menu')) {
+    // 이미 설정되었는지 확인
+    if (dropdownSetup) {
       return true;
     }
     
-    // 2. 'People' 텍스트를 가진 링크 찾기
-    const links = document.querySelectorAll('a');
-    let peopleLink = null;
+    setupAttempts++;
+    if (setupAttempts > MAX_ATTEMPTS) {
+      console.warn('People dropdown: 최대 시도 횟수 초과');
+      return false;
+    }
     
-    for (let link of links) {
-      if (link.textContent.trim().toLowerCase() === 'people') {
-        // 네비게이션 영역 안에 있는 링크인지 확인 (사이드바 등 제외)
-        if (link.closest('.greedy-nav') || link.closest('.masthead')) {
-          peopleLink = link;
-          break;
+    // 드롭다운이 이미 존재하는지 확인
+    if (document.querySelector('.custom-dropdown-menu')) {
+      dropdownSetup = true;
+      return true;
+    }
+    
+    // 'People' 텍스트를 가진 링크 찾기 (다양한 방법 시도)
+    const selectors = [
+      '.greedy-nav a',
+      '.greedy-nav__list a',
+      '.visible-links a',
+      '.masthead a',
+      'nav a',
+      'header nav a'
+    ];
+    
+    let peopleLink = null;
+    let peopleItem = null;
+    
+    // 모든 선택자 시도
+    for (const selector of selectors) {
+      try {
+        const links = document.querySelectorAll(selector);
+        for (let link of links) {
+          const text = link.textContent.trim().toLowerCase();
+          if (text === 'people') {
+            // 네비게이션 영역 안에 있는 링크인지 확인 (사이드바 등 제외)
+            if (link.closest('.greedy-nav') || link.closest('.masthead') || link.closest('nav')) {
+              peopleLink = link;
+              peopleItem = link.closest('li');
+              if (!peopleItem) {
+                peopleItem = link.parentElement;
+              }
+              break;
+            }
+          }
         }
+        if (peopleLink && peopleItem) break;
+      } catch (e) {
+        console.warn('People dropdown selector error:', selector, e);
       }
     }
     
-    if (!peopleLink) return false;
-    
-    // 3. 부모 li 찾기
-    const peopleItem = peopleLink.closest('li');
-    if (!peopleItem) return false;
-    
-    // 4. 클래스 및 스타일 설정
-    peopleItem.classList.add('has-dropdown');
-    
-    // 링크 기능 비활성화
-    peopleLink.href = 'javascript:void(0);';
-    peopleLink.style.cursor = 'default'; // 커서 변경
-    
-    // 5. 드롭다운 메뉴 생성
-    const dropdown = document.createElement('ul');
-    dropdown.className = 'custom-dropdown-menu';
-    
-    // baseurl 동적 감지
-    const currentPath = window.location.pathname;
-    let baseurl = '';
-    // GitHub Pages 경로 구조 대응 (/저장소이름)
-    if (currentPath.indexOf('/', 1) !== -1) {
-       // 예: /mars.github.io/index.html -> /mars.github.io 추출
-       // 하지만 로컬 테스트나 루트 도메인일 경우를 대비해 간단히 처리
-       if (currentPath.includes('/mars.github.io')) {
-          baseurl = '/mars.github.io';
-       }
+    if (!peopleLink || !peopleItem) {
+      if (setupAttempts === 1) {
+        console.log('People dropdown: 링크를 찾는 중... (재시도 가능)');
+      }
+      return false;
     }
     
-    dropdown.innerHTML = `
-      <li><a href="${baseurl}/students/">Students</a></li>
-      <li><a href="${baseurl}/alumni/">Alumni</a></li>
-    `;
-    
-    peopleItem.appendChild(dropdown);
-    
-    // 6. 이벤트 핸들링 (타이머 로직 개선)
-    let hoverTimeout;
-    
-    function showMenu() {
-      clearTimeout(hoverTimeout);
-      dropdown.classList.add('show');
+    // 이미 설정되어 있으면 스킵
+    if (peopleItem.classList.contains('has-dropdown')) {
+      const existingDropdown = peopleItem.querySelector('.custom-dropdown-menu');
+      if (existingDropdown) {
+        dropdownSetup = true;
+        return true;
+      }
     }
     
-    function hideMenu() {
-      hoverTimeout = setTimeout(() => {
-        dropdown.classList.remove('show');
-      }, 200); // 0.2초 여유
+    try {
+      // 클래스 및 스타일 설정
+      peopleItem.classList.add('has-dropdown');
+      peopleItem.style.position = 'relative';
+      
+      // 링크 기능 비활성화
+      peopleLink.href = 'javascript:void(0);';
+      peopleLink.style.cursor = 'pointer';
+      
+      // 클릭 이벤트 차단
+      peopleLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+      
+      // 드롭다운 메뉴 생성
+      const dropdown = document.createElement('ul');
+      dropdown.className = 'custom-dropdown-menu';
+      
+      // baseurl 동적 감지
+      const currentPath = window.location.pathname;
+      let baseurl = '';
+      if (currentPath.includes('/mars.github.io')) {
+        baseurl = '/mars.github.io';
+      }
+      
+      dropdown.innerHTML = `
+        <li><a href="${baseurl}/students/">Students</a></li>
+        <li><a href="${baseurl}/alumni/">Alumni</a></li>
+      `;
+      
+      peopleItem.appendChild(dropdown);
+      
+      // 이벤트 핸들링 (타이머 로직 개선)
+      let hoverTimeout = null;
+      let isHovering = false;
+      
+      function showMenu() {
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = null;
+        }
+        isHovering = true;
+        dropdown.classList.add('show');
+      }
+      
+      function hideMenu() {
+        isHovering = false;
+        hoverTimeout = setTimeout(function() {
+          if (!isHovering) {
+            dropdown.classList.remove('show');
+          }
+        }, 200); // 0.2초 여유
+      }
+      
+      // 이벤트 바인딩 (li 전체와 드롭다운 모두에 걸어서 안정성 확보)
+      peopleItem.addEventListener('mouseenter', showMenu, true);
+      peopleItem.addEventListener('mouseleave', hideMenu, true);
+      peopleLink.addEventListener('mouseenter', showMenu, true);
+      
+      // 드롭다운 메뉴 자체에도 이벤트 추가 (중요!)
+      dropdown.addEventListener('mouseenter', function() {
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = null;
+        }
+        showMenu();
+      }, true);
+      
+      dropdown.addEventListener('mouseleave', hideMenu, true);
+      
+      dropdownSetup = true;
+      console.log('People dropdown: 성공적으로 설정됨');
+      return true;
+      
+    } catch (e) {
+      console.error('People dropdown: 설정 중 오류 발생', e);
+      return false;
     }
-    
-    // 이벤트 바인딩 (li 전체에 걸어서 안정성 확보)
-    peopleItem.addEventListener('mouseenter', showMenu);
-    peopleItem.addEventListener('mouseleave', hideMenu);
-    
-    return true;
   }
   
-  // 로드 시점 및 DOM 변경 시점 모두 체크 (Greedy Nav 스크립트와의 충돌 방지)
-  const observer = new MutationObserver(() => {
+  // 로드 시점 및 DOM 변경 시점 모두 체크
+  function initDropdown() {
     if (setupPeopleDropdown()) {
-      // 성공하면 감시 중단 (성능 최적화)
-      // observer.disconnect(); // 상황에 따라 주석 해제 (메뉴가 동적으로 다시 그려진다면 계속 감시 필요)
+      return;
     }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+    
+    // MutationObserver로 DOM 변경 감지
+    const observer = new MutationObserver(function(mutations) {
+      if (setupPeopleDropdown()) {
+        observer.disconnect();
+      }
+    });
+    
+    observer.observe(document.body, { 
+      childList: true, 
+      subtree: true 
+    });
+    
+    // 일정 시간 후 observer 해제 (성능 최적화)
+    setTimeout(function() {
+      observer.disconnect();
+    }, 10000);
+  }
   
-  // 초기 실행
-  document.addEventListener('DOMContentLoaded', setupPeopleDropdown);
-  window.addEventListener('load', setupPeopleDropdown);
+  // 여러 시점에서 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDropdown);
+  } else {
+    initDropdown();
+  }
+  
+  window.addEventListener('load', function() {
+    setTimeout(initDropdown, 100);
+  });
+  
+  // 추가 재시도 (Greedy Nav가 늦게 로드될 수 있음)
+  setTimeout(initDropdown, 500);
+  setTimeout(initDropdown, 1000);
+  setTimeout(initDropdown, 2000);
 })();
 </script>
