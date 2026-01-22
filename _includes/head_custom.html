@@ -1,89 +1,77 @@
 <style>
-  /* 드롭다운 메뉴 스타일 */
-  .custom-dropdown-menu {
+  /* People 확장형 메뉴 스타일 */
+  .people-expand-wrapper {
+    position: relative !important;
+    display: inline-block !important;
+    min-width: 100px !important; /* People 텍스트와 확장 메뉴가 같은 공간 차지 */
+  }
+
+  /* People 원본 텍스트 */
+  .people-original-text {
+    display: inline-block !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+    white-space: nowrap !important;
+  }
+
+  /* Professor | Students 확장 메뉴 */
+  .people-expanded-links {
     position: absolute !important;
-    top: 100% !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background: #fff !important;
-    min-width: 160px !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
-    border: 1px solid #eee !important;
-    border-radius: 8px !important;
-    z-index: 10000 !important; /* z-index를 더 높게 설정 (다른 요소에 가려지지 않도록) */
-    padding: 8px 0 !important;
-    list-style: none !important;
-    
-    /* [핵심 수정 1] 마진 대신 투명한 테두리를 사용하여 물리적 공간 연결 */
-    margin-top: 0 !important; 
-    border-top: 10px solid transparent !important; /* 투명 다리로 간격 유지 */
-    background-clip: padding-box !important; /* 배경이 투명 테두리를 침범하지 않도록 설정 */
-    
-    /* 초기 상태: 완전히 숨김 */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
     opacity: 0 !important;
     visibility: hidden !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+    white-space: nowrap !important;
     pointer-events: none !important;
-    display: block !important; /* display: none 대신 opacity/visibility 사용 */
-    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, transform 0.2s ease-in-out !important;
   }
 
-  .custom-dropdown-menu.show {
+  .people-expanded-links a {
+    color: inherit !important;
+    text-decoration: none !important;
+    padding: 0 0.5rem !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    transition: color 0.3s ease !important;
+    pointer-events: auto !important;
+  }
+
+  .people-expanded-links a:hover {
+    color: #3498db !important;
+  }
+
+  .people-expanded-links .divider {
+    color: rgba(255, 255, 255, 0.5) !important;
+    user-select: none !important;
+    pointer-events: none !important;
+  }
+
+  /* 호버 시 People 텍스트 숨기고 확장 메뉴 표시 */
+  .people-expand-wrapper:hover .people-original-text {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .people-expand-wrapper:hover .people-expanded-links {
     opacity: 1 !important;
     visibility: visible !important;
-    pointer-events: auto !important;
-    display: block !important; /* 명시적으로 표시 */
-    transform: translateX(-50%) translateY(0) !important;
   }
 
-  .custom-dropdown-menu::before {
-    content: '' !important;
-    position: absolute !important;
-    /* [핵심 수정 2] 화살표 위치 조정 (투명 테두리 위로 올림) */
-    top: -16px !important; /* border-top(10px) + 화살표 높이(6px) 고려 */
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    border-left: 6px solid transparent !important;
-    border-right: 6px solid transparent !important;
-    border-bottom: 6px solid #fff !important;
-    z-index: 10000 !important;
-  }
-
-  .custom-dropdown-menu li {
-    margin: 0 !important;
-    padding: 0 !important;
-    display: block !important;
-    text-align: center !important;
-  }
-
-  .custom-dropdown-menu a {
-    display: block !important;
-    padding: 10px 20px !important;
-    color: #333 !important;
-    text-decoration: none !important;
-    font-size: 0.95em !important;
-    font-weight: 500 !important;
-    transition: background 0.2s !important;
-  }
-
-  .custom-dropdown-menu a:hover {
-    background-color: #f5f7fa !important;
-    color: #000 !important;
-  }
-
-  .has-dropdown {
+  /* li 요소에 클래스 추가 시 스타일 적용 */
+  .has-people-expand {
     position: relative !important;
   }
 
-  /* People 링크에 호버 효과 추가 */
-  .has-dropdown > a {
-    transition: background-color 0.3s ease !important;
+  /* 다른 메뉴와 겹치지 않도록 z-index 설정 */
+  .has-people-expand {
+    z-index: 10 !important;
   }
 
-  .has-dropdown:hover > a {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-  }
-
-  /* [필수] 상단바가 드롭다운을 가리지 않도록 모든 부모 요소의 overflow 해제 */
+  /* [필수] 상단바가 확장 메뉴를 가리지 않도록 모든 부모 요소의 overflow 해제 */
   .masthead, 
   .masthead__inner-wrap, 
   .greedy-nav, 
@@ -93,31 +81,32 @@
     overflow: visible !important;
   }
 
-  /* 모바일 반응형 스타일 */
+  /* 모바일 반응형 */
   @media (max-width: 768px) {
-    .custom-dropdown-menu {
-      left: 0 !important;
-      transform: none !important;
-      min-width: 100% !important;
-      border-radius: 4px !important;
+    .people-expand-wrapper {
+      min-width: auto !important;
     }
 
-    .custom-dropdown-menu::before {
-      left: 20px !important;
-      transform: none !important;
+    .people-expanded-links {
+      position: relative !important;
+      flex-direction: column !important;
+      gap: 0.3rem !important;
+      padding: 0.5rem 0 !important;
     }
 
-    /* 터치 디바이스에서 더 큰 터치 영역 */
-    .custom-dropdown-menu a {
-      padding: 12px 20px !important;
-      font-size: 1em !important;
+    .people-expanded-links .divider {
+      display: none !important;
     }
-  }
 
-  /* 작은 화면에서도 드롭다운이 잘 보이도록 */
-  @media (max-width: 480px) {
-    .custom-dropdown-menu {
-      min-width: 180px !important;
+    /* 모바일에서는 클릭으로 토글 */
+    .people-expand-wrapper.active .people-original-text {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    .people-expand-wrapper.active .people-expanded-links {
+      opacity: 1 !important;
+      visibility: visible !important;
     }
   }
 </style>
@@ -126,29 +115,28 @@
 (function() {
   'use strict';
   
-  let dropdownSetup = false;
+  let setupComplete = false;
   let setupAttempts = 0;
   const MAX_ATTEMPTS = 10;
   
-  function setupPeopleDropdown() {
-    // 이미 설정되었는지 확인
-    if (dropdownSetup) {
+  function setupPeopleExpand() {
+    if (setupComplete) {
       return true;
     }
     
     setupAttempts++;
     if (setupAttempts > MAX_ATTEMPTS) {
-      console.warn('People dropdown: 최대 시도 횟수 초과');
+      console.warn('People expand: 최대 시도 횟수 초과');
       return false;
     }
     
-    // 드롭다운이 이미 존재하는지 확인
-    if (document.querySelector('.custom-dropdown-menu')) {
-      dropdownSetup = true;
+    // 이미 설정되어 있는지 확인
+    if (document.querySelector('.people-expand-wrapper')) {
+      setupComplete = true;
       return true;
     }
     
-    // 'People' 텍스트를 가진 링크 찾기 (다양한 방법 시도)
+    // 'People' 텍스트를 가진 링크 찾기
     const selectors = [
       '.greedy-nav a',
       '.greedy-nav__list a',
@@ -161,14 +149,12 @@
     let peopleLink = null;
     let peopleItem = null;
     
-    // 모든 선택자 시도
     for (const selector of selectors) {
       try {
         const links = document.querySelectorAll(selector);
         for (let link of links) {
           const text = link.textContent.trim().toLowerCase();
           if (text === 'people') {
-            // 네비게이션 영역 안에 있는 링크인지 확인 (사이드바 등 제외)
             if (link.closest('.greedy-nav') || link.closest('.masthead') || link.closest('nav')) {
               peopleLink = link;
               peopleItem = link.closest('li');
@@ -181,45 +167,39 @@
         }
         if (peopleLink && peopleItem) break;
       } catch (e) {
-        console.warn('People dropdown selector error:', selector, e);
+        console.warn('People expand selector error:', selector, e);
       }
     }
     
     if (!peopleLink || !peopleItem) {
       if (setupAttempts === 1) {
-        console.log('People dropdown: 링크를 찾는 중... (재시도 가능)');
+        console.log('People expand: 링크를 찾는 중... (재시도 가능)');
       }
       return false;
     }
     
     // 이미 설정되어 있으면 스킵
-    if (peopleItem.classList.contains('has-dropdown')) {
-      const existingDropdown = peopleItem.querySelector('.custom-dropdown-menu');
-      if (existingDropdown) {
-        dropdownSetup = true;
-        return true;
-      }
+    if (peopleItem.classList.contains('has-people-expand')) {
+      setupComplete = true;
+      return true;
     }
     
     try {
-      // 클래스 및 스타일 설정
-      peopleItem.classList.add('has-dropdown');
-      peopleItem.style.position = 'relative';
+      // 원본 텍스트 저장
+      const originalText = peopleLink.textContent.trim();
       
-      // 링크 기능 비활성화
-      peopleLink.href = 'javascript:void(0);';
-      peopleLink.style.cursor = 'pointer';
+      // People 링크를 래퍼로 감싸기
+      const wrapper = document.createElement('span');
+      wrapper.className = 'people-expand-wrapper';
       
-      // 클릭 이벤트 차단
-      peopleLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }, true);
+      // 원본 텍스트 요소
+      const originalTextSpan = document.createElement('span');
+      originalTextSpan.className = 'people-original-text';
+      originalTextSpan.textContent = originalText;
       
-      // 드롭다운 메뉴 생성
-      const dropdown = document.createElement('ul');
-      dropdown.className = 'custom-dropdown-menu';
+      // 확장 메뉴 요소
+      const expandedLinks = document.createElement('span');
+      expandedLinks.className = 'people-expanded-links';
       
       // baseurl 동적 감지
       const currentPath = window.location.pathname;
@@ -228,114 +208,67 @@
         baseurl = '/mars.github.io';
       }
       
-      dropdown.innerHTML = `
-        <li><a href="${baseurl}/students/">Students</a></li>
-        <li><a href="${baseurl}/alumni/">Alumni</a></li>
+      expandedLinks.innerHTML = `
+        <a href="${baseurl}/professor/">Professor</a>
+        <span class="divider">|</span>
+        <a href="${baseurl}/students/">Students</a>
       `;
       
-      peopleItem.appendChild(dropdown);
+      // 링크 내용 교체
+      peopleLink.innerHTML = '';
+      wrapper.appendChild(originalTextSpan);
+      wrapper.appendChild(expandedLinks);
+      peopleLink.appendChild(wrapper);
       
-      // 이벤트 핸들링 (타이머 로직 개선 + 터치 디바이스 지원)
-      let hoverTimeout = null;
-      let isHovering = false;
-      let isOpen = false;
+      // 링크 기능 유지 (클릭 시 아무 동작 안 함)
+      peopleLink.href = 'javascript:void(0);';
+      peopleLink.style.cursor = 'default';
       
-      // 터치 디바이스 감지
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      
-      function showMenu() {
-        if (hoverTimeout) {
-          clearTimeout(hoverTimeout);
-          hoverTimeout = null;
-        }
-        isHovering = true;
-        isOpen = true;
-        dropdown.classList.add('show');
-      }
-      
-      function hideMenu() {
-        isHovering = false;
-        hoverTimeout = setTimeout(function() {
-          if (!isHovering) {
-            isOpen = false;
-            dropdown.classList.remove('show');
-          }
-        }, 200); // 0.2초 여유
-      }
-      
-      function toggleMenu() {
-        if (isOpen) {
-          hideMenu();
-        } else {
-          showMenu();
-        }
-      }
-      
-      // 데스크톱: 호버 이벤트
-      if (!isTouchDevice) {
-        // 이벤트 바인딩 (li 전체와 드롭다운 모두에 걸어서 안정성 확보)
-        peopleItem.addEventListener('mouseenter', showMenu, true);
-        peopleItem.addEventListener('mouseleave', hideMenu, true);
-        peopleLink.addEventListener('mouseenter', showMenu, true);
-        
-        // 드롭다운 메뉴 자체에도 이벤트 추가 (중요!)
-        dropdown.addEventListener('mouseenter', function() {
-          if (hoverTimeout) {
-            clearTimeout(hoverTimeout);
-            hoverTimeout = null;
-          }
-          showMenu();
-        }, true);
-        
-        dropdown.addEventListener('mouseleave', hideMenu, true);
-      }
-      
-      // 터치 디바이스: 클릭 이벤트로 토글
-      if (isTouchDevice) {
-        peopleLink.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          // 다른 드롭다운 닫기 (다른 드롭다운이 있다면)
-          document.querySelectorAll('.custom-dropdown-menu.show').forEach(function(otherDropdown) {
-            if (otherDropdown !== dropdown) {
-              otherDropdown.classList.remove('show');
-            }
-          });
-          
-          toggleMenu();
-        }, true);
-      }
-      
-      // 외부 클릭시 드롭다운 닫기 (모든 디바이스)
-      document.addEventListener('click', function(e) {
-        if (!peopleItem.contains(e.target) && !dropdown.contains(e.target)) {
-          if (isOpen) {
-            isOpen = false;
-            dropdown.classList.remove('show');
-          }
-        }
+      // 클릭 이벤트 차단
+      peopleLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
       }, true);
       
-      dropdownSetup = true;
-      console.log('People dropdown: 성공적으로 설정됨');
+      // li에 클래스 추가
+      peopleItem.classList.add('has-people-expand');
+      
+      // 터치 디바이스 지원 (모바일)
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      if (isTouchDevice && window.innerWidth <= 768) {
+        wrapper.addEventListener('click', function(e) {
+          e.stopPropagation();
+          wrapper.classList.toggle('active');
+        }, true);
+        
+        // 외부 클릭시 닫기
+        document.addEventListener('click', function(e) {
+          if (!wrapper.contains(e.target)) {
+            wrapper.classList.remove('active');
+          }
+        }, true);
+      }
+      
+      setupComplete = true;
+      console.log('People expand: 성공적으로 설정됨');
       return true;
       
     } catch (e) {
-      console.error('People dropdown: 설정 중 오류 발생', e);
+      console.error('People expand: 설정 중 오류 발생', e);
       return false;
     }
   }
   
-  // 로드 시점 및 DOM 변경 시점 모두 체크
-  function initDropdown() {
-    if (setupPeopleDropdown()) {
+  // 초기화 함수
+  function initPeopleExpand() {
+    if (setupPeopleExpand()) {
       return;
     }
     
     // MutationObserver로 DOM 변경 감지
     const observer = new MutationObserver(function(mutations) {
-      if (setupPeopleDropdown()) {
+      if (setupPeopleExpand()) {
         observer.disconnect();
       }
     });
@@ -345,7 +278,7 @@
       subtree: true 
     });
     
-    // 일정 시간 후 observer 해제 (성능 최적화)
+    // 일정 시간 후 observer 해제
     setTimeout(function() {
       observer.disconnect();
     }, 10000);
@@ -353,18 +286,18 @@
   
   // 여러 시점에서 실행
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initDropdown);
+    document.addEventListener('DOMContentLoaded', initPeopleExpand);
   } else {
-    initDropdown();
+    initPeopleExpand();
   }
   
   window.addEventListener('load', function() {
-    setTimeout(initDropdown, 100);
+    setTimeout(initPeopleExpand, 100);
   });
   
-  // 추가 재시도 (Greedy Nav가 늦게 로드될 수 있음)
-  setTimeout(initDropdown, 500);
-  setTimeout(initDropdown, 1000);
-  setTimeout(initDropdown, 2000);
+  // 추가 재시도
+  setTimeout(initPeopleExpand, 500);
+  setTimeout(initPeopleExpand, 1000);
+  setTimeout(initPeopleExpand, 2000);
 })();
 </script>
