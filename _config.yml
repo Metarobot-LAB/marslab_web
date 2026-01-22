@@ -13,7 +13,7 @@ plugins:
 
 # 작성자(연구회) 정보
 author:
-  name   : "Metarobot labotary"  # 동아리 이름
+  name   : "Metarobot laboratory"  # 동아리 이름
   avatar : "https://textnecklee.github.io/mars.github.io/assets/images/logo.jpg" # 아까 올린 로고 사진 경로
   bio    : "로봇 연구회" # 간단한 소개
   location : "KoreaTech, KR" # 학교/지역
