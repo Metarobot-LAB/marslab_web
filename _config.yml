@@ -18,7 +18,7 @@ author:
   bio    : "로봇 연구회" # 간단한 소개
   location : "KoreaTech, KR" # 학교/지역
   links:
-    - label: "Email :  metarobot0710@gmail.com"
+    - label: "metarobot@gmail.com"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:metarobot0710@gmail.com" # 동아리 대표 메일
     - label: "GitHub"
