@@ -7,7 +7,7 @@ main:
     url: /categories/
   
   - title: "People"
-    url: javascript:void(0);
+    url: /students/
     
   - title: "Awards"
     url: /awards/
