@@ -74,6 +74,15 @@
     position: relative !important;
   }
 
+  /* People 링크에 호버 효과 추가 */
+  .has-dropdown > a {
+    transition: background-color 0.3s ease !important;
+  }
+
+  .has-dropdown:hover > a {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
   /* [필수] 상단바가 드롭다운을 가리지 않도록 모든 부모 요소의 overflow 해제 */
   .masthead, 
   .masthead__inner-wrap, 
@@ -82,6 +91,34 @@
   .greedy-nav__list,
   .greedy-nav__list > li {
     overflow: visible !important;
+  }
+
+  /* 모바일 반응형 스타일 */
+  @media (max-width: 768px) {
+    .custom-dropdown-menu {
+      left: 0 !important;
+      transform: none !important;
+      min-width: 100% !important;
+      border-radius: 4px !important;
+    }
+
+    .custom-dropdown-menu::before {
+      left: 20px !important;
+      transform: none !important;
+    }
+
+    /* 터치 디바이스에서 더 큰 터치 영역 */
+    .custom-dropdown-menu a {
+      padding: 12px 20px !important;
+      font-size: 1em !important;
+    }
+  }
+
+  /* 작은 화면에서도 드롭다운이 잘 보이도록 */
+  @media (max-width: 480px) {
+    .custom-dropdown-menu {
+      min-width: 180px !important;
+    }
   }
 </style>
 
@@ -198,9 +235,13 @@
       
       peopleItem.appendChild(dropdown);
       
-      // 이벤트 핸들링 (타이머 로직 개선)
+      // 이벤트 핸들링 (타이머 로직 개선 + 터치 디바이스 지원)
       let hoverTimeout = null;
       let isHovering = false;
+      let isOpen = false;
+      
+      // 터치 디바이스 감지
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
       
       function showMenu() {
         if (hoverTimeout) {
@@ -208,6 +249,7 @@
           hoverTimeout = null;
         }
         isHovering = true;
+        isOpen = true;
         dropdown.classList.add('show');
       }
       
@@ -215,26 +257,65 @@
         isHovering = false;
         hoverTimeout = setTimeout(function() {
           if (!isHovering) {
+            isOpen = false;
             dropdown.classList.remove('show');
           }
         }, 200); // 0.2초 여유
       }
       
-      // 이벤트 바인딩 (li 전체와 드롭다운 모두에 걸어서 안정성 확보)
-      peopleItem.addEventListener('mouseenter', showMenu, true);
-      peopleItem.addEventListener('mouseleave', hideMenu, true);
-      peopleLink.addEventListener('mouseenter', showMenu, true);
-      
-      // 드롭다운 메뉴 자체에도 이벤트 추가 (중요!)
-      dropdown.addEventListener('mouseenter', function() {
-        if (hoverTimeout) {
-          clearTimeout(hoverTimeout);
-          hoverTimeout = null;
+      function toggleMenu() {
+        if (isOpen) {
+          hideMenu();
+        } else {
+          showMenu();
         }
-        showMenu();
-      }, true);
+      }
       
-      dropdown.addEventListener('mouseleave', hideMenu, true);
+      // 데스크톱: 호버 이벤트
+      if (!isTouchDevice) {
+        // 이벤트 바인딩 (li 전체와 드롭다운 모두에 걸어서 안정성 확보)
+        peopleItem.addEventListener('mouseenter', showMenu, true);
+        peopleItem.addEventListener('mouseleave', hideMenu, true);
+        peopleLink.addEventListener('mouseenter', showMenu, true);
+        
+        // 드롭다운 메뉴 자체에도 이벤트 추가 (중요!)
+        dropdown.addEventListener('mouseenter', function() {
+          if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+            hoverTimeout = null;
+          }
+          showMenu();
+        }, true);
+        
+        dropdown.addEventListener('mouseleave', hideMenu, true);
+      }
+      
+      // 터치 디바이스: 클릭 이벤트로 토글
+      if (isTouchDevice) {
+        peopleLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // 다른 드롭다운 닫기 (다른 드롭다운이 있다면)
+          document.querySelectorAll('.custom-dropdown-menu.show').forEach(function(otherDropdown) {
+            if (otherDropdown !== dropdown) {
+              otherDropdown.classList.remove('show');
+            }
+          });
+          
+          toggleMenu();
+        }, true);
+      }
+      
+      // 외부 클릭시 드롭다운 닫기 (모든 디바이스)
+      document.addEventListener('click', function(e) {
+        if (!peopleItem.contains(e.target) && !dropdown.contains(e.target)) {
+          if (isOpen) {
+            isOpen = false;
+            dropdown.classList.remove('show');
+          }
+        }
+      }, true);
       
       dropdownSetup = true;
       console.log('People dropdown: 성공적으로 설정됨');
