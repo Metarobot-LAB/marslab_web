@@ -1,41 +1,40 @@
 <style>
-  /* People 확장형 메뉴 스타일 */
+  /* People 확장형 메뉴 스타일 (개선됨) */
   .people-expand-wrapper {
     position: relative !important;
     display: inline-block !important;
-    min-width: 100px !important;
   }
 
   .people-original-text {
     display: inline-block !important;
-    transition: opacity 0.2s ease !important;
-    white-space: nowrap !important;
+    cursor: pointer !important;
   }
 
   .people-expanded-links {
     position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 0.5rem !important;
+    top: 100% !important; /* 텍스트 바로 아래에 위치 */
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* 중앙 정렬 */
+    background-color: #fff !important; /* 배경색 추가 (글자가 겹치지 않게) */
+    border: 1px solid #ddd !important; /* 테두리 추가 */
+    border-radius: 4px !important;
+    padding: 10px 15px !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    z-index: 9999 !important; /* 가장 위에 표시 */
+    
+    display: none !important; /* 기본적으로 숨김 */
     opacity: 0 !important;
-    visibility: hidden !important;
     transition: opacity 0.2s ease !important;
     white-space: nowrap !important;
-    pointer-events: none !important;
   }
 
   .people-expanded-links a {
-    color: inherit !important;
+    color: #333 !important;
     text-decoration: none !important;
-    padding: 0 0.5rem !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    transition: color 0.2s ease !important;
-    pointer-events: auto !important;
+    padding: 0 5px !important;
+    font-weight: bold !important;
+    font-size: 0.9em !important;
+    display: inline-block !important;
   }
 
   .people-expanded-links a:hover {
@@ -43,29 +42,17 @@
   }
 
   .people-expanded-links .divider {
-    color: rgba(255, 255, 255, 0.5) !important;
-    user-select: none !important;
-    pointer-events: none !important;
+    color: #ccc !important;
+    margin: 0 5px !important;
   }
 
   /* 활성 상태 */
-  .people-expand-wrapper.active .people-original-text {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-  }
-
   .people-expand-wrapper.active .people-expanded-links {
+    display: block !important;
     opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    display: flex !important;
   }
 
-  .has-people-expand {
-    position: relative !important;
-  }
-
+  /* 네비게이션 바가 잘리지 않도록 강제 설정 */
   .masthead, 
   .masthead__inner-wrap, 
   .greedy-nav, 
@@ -74,79 +61,52 @@
   .greedy-nav__list > li {
     overflow: visible !important;
   }
-
-  @media (max-width: 768px) {
-    .people-expand-wrapper {
-      min-width: auto !important;
-    }
-    .people-expanded-links {
-      position: relative !important;
-      flex-direction: column !important;
-      gap: 0.3rem !important;
-      padding: 0.5rem 0 !important;
-    }
-    .people-expanded-links .divider {
-      display: none !important;
-    }
-  }
 </style>
 
 <script>
 (function() {
   'use strict';
   
-  let peopleWrapper = null;
-  let isInitialized = false;
-  
   function initPeopleMenu() {
-    if (isInitialized) return;
-    
-    // People 링크 찾기
-    const allLinks = document.querySelectorAll('a');
+    // 1. 상단 네비게이션 바 안에 있는 링크만 정확히 찾기
+    const navLinks = document.querySelectorAll('.greedy-nav a, .masthead__menu-item a');
     let peopleLink = null;
     let peopleItem = null;
     
-    for (let link of allLinks) {
-      const text = link.textContent.trim().toLowerCase();
-      if (text === 'people') {
-        const nav = link.closest('.greedy-nav') || link.closest('.masthead') || link.closest('nav');
-        if (nav) {
-          peopleLink = link;
-          peopleItem = link.closest('li') || link.parentElement;
-          break;
-        }
+    // People 텍스트를 가진 링크 탐색
+    for (let link of navLinks) {
+      if (link.textContent.trim().toLowerCase() === 'people') {
+        peopleLink = link;
+        // li 태그 찾기
+        peopleItem = link.closest('li');
+        break; 
       }
     }
     
-    if (!peopleLink || !peopleItem) {
+    // 못 찾았거나 이미 초기화 되었다면 종료
+    if (!peopleLink || !peopleItem || peopleItem.classList.contains('has-people-expand')) {
       return false;
     }
     
-    // 이미 설정되어 있으면 스킵
-    if (peopleItem.classList.contains('has-people-expand')) {
-      peopleWrapper = peopleItem.querySelector('.people-expand-wrapper');
-      if (peopleWrapper) {
-        isInitialized = true;
-        return true;
-      }
-    }
-    
+    console.log('People 메뉴를 찾았습니다. 초기화를 시작합니다.');
+
     try {
       const originalText = peopleLink.textContent.trim();
       
-      // 래퍼 생성
+      // 래퍼(Wrapper) 생성
       const wrapper = document.createElement('span');
       wrapper.className = 'people-expand-wrapper';
       
-      // 원본 텍스트
+      // 원본 텍스트 (클릭 대상)
       const originalSpan = document.createElement('span');
       originalSpan.className = 'people-original-text';
       originalSpan.textContent = originalText;
       
-      // 확장 메뉴
+      // 확장 메뉴 (드롭다운)
       const expandedLinks = document.createElement('span');
       expandedLinks.className = 'people-expanded-links';
       
+      // 경로 설정 (저장소 이름 대응)
       const currentPath = window.location.pathname;
       const baseurl = currentPath.includes('/mars.github.io') ? '/mars.github.io' : '';
       
@@ -156,91 +116,54 @@
         <a href="${baseurl}/students/">Students</a>
       `;
       
-      // DOM 구조 변경
+      // 기존 링크 내용 교체
       peopleLink.innerHTML = '';
+      peopleLink.style.pointerEvents = 'auto'; // 클릭 가능하도록 보장
+      
       wrapper.appendChild(originalSpan);
       wrapper.appendChild(expandedLinks);
       peopleLink.appendChild(wrapper);
       
-      peopleLink.href = 'javascript:void(0);';
-      peopleLink.style.cursor = 'pointer';
+      // People 항목에 표식 남기기
       peopleItem.classList.add('has-people-expand');
       
-      peopleWrapper = wrapper;
-      
-      // 클릭 이벤트 - 이벤트 위임 사용
-      peopleItem.addEventListener('click', function(e) {
-        // 확장 메뉴 내부 링크 클릭은 허용
-        if (e.target.closest('.people-expanded-links') && e.target.tagName === 'A') {
-          return true;
+      // 클릭 이벤트 리스너 (토글 기능)
+      // 링크(a태그) 자체에 이벤트를 걸어 버블링 문제를 방지
+      peopleLink.addEventListener('click', function(e) {
+        // 드롭다운 내부 링크 클릭 시에는 닫지 않음
+        if (e.target.closest('.people-expanded-links')) {
+          return;
         }
+
+        e.preventDefault(); // 기본 이동 방지
+        e.stopPropagation(); // 이벤트 전파 방지
         
-        // People 텍스트나 래퍼 클릭 시 토글
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const isActive = wrapper.classList.contains('active');
         wrapper.classList.toggle('active');
-        
-        console.log('People menu:', isActive ? '닫힘' : '열림');
-      }, true);
+        console.log('People 메뉴 클릭됨:', wrapper.classList.contains('active') ? '열림' : '닫힘');
+      });
       
-      // 외부 클릭 시 닫기 (약간의 지연)
-      setTimeout(function() {
-        document.addEventListener('click', function(e) {
-          if (!peopleItem.contains(e.target)) {
-            wrapper.classList.remove('active');
-          }
-        }, true);
-      }, 100);
+      // 외부 클릭 시 닫기
+      document.addEventListener('click', function(e) {
+        if (!peopleItem.contains(e.target)) {
+          wrapper.classList.remove('active');
+        }
+      });
       
-      isInitialized = true;
-      console.log('People menu: 초기화 완료');
       return true;
       
     } catch (e) {
-      console.error('People menu: 오류', e);
+      console.error('People 메뉴 초기화 중 오류 발생:', e);
       return false;
     }
   }
   
-  // 여러 시점에서 초기화 시도
-  function tryInit() {
-    if (initPeopleMenu()) {
-      return;
-    }
-    
-    // MutationObserver로 DOM 변경 감지
-    const observer = new MutationObserver(function() {
-      if (initPeopleMenu()) {
-        observer.disconnect();
-      }
-    });
-    
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-    
-    setTimeout(function() {
-      observer.disconnect();
-    }, 5000);
-  }
+  // DOM 로드 시점과 그 이후에 반복 시도 (타이밍 문제 해결)
+  document.addEventListener('DOMContentLoaded', initPeopleMenu);
+  window.addEventListener('load', initPeopleMenu);
   
-  // 즉시 시도
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', tryInit);
-  } else {
-    tryInit();
-  }
-  
-  window.addEventListener('load', function() {
-    setTimeout(tryInit, 100);
-  });
-  
-  // 추가 재시도
-  setTimeout(tryInit, 500);
-  setTimeout(tryInit, 1000);
-  setTimeout(tryInit, 2000);
+  // 혹시라도 늦게 로딩되는 경우를 대비해 0.5초, 2초 뒤에 재시도
+  setTimeout(initPeopleMenu, 500);
+  setTimeout(initPeopleMenu, 2000);
+
 })();
 </script>
