@@ -50,15 +50,16 @@
     pointer-events: none !important;
   }
 
-  /* 호버 시 People 텍스트 숨기고 확장 메뉴 표시 */
-  .people-expand-wrapper:hover .people-original-text {
+  /* 클릭 시 People 텍스트 숨기고 확장 메뉴 표시 */
+  .people-expand-wrapper.active .people-original-text {
     opacity: 0 !important;
     visibility: hidden !important;
   }
 
-  .people-expand-wrapper:hover .people-expanded-links {
+  .people-expand-wrapper.active .people-expanded-links {
     opacity: 1 !important;
     visibility: visible !important;
+    pointer-events: auto !important;
   }
 
   /* li 요소에 클래스 추가 시 스타일 적용 */
@@ -96,17 +97,6 @@
 
     .people-expanded-links .divider {
       display: none !important;
-    }
-
-    /* 모바일에서는 클릭으로 토글 */
-    .people-expand-wrapper.active .people-original-text {
-      opacity: 0 !important;
-      visibility: hidden !important;
-    }
-
-    .people-expand-wrapper.active .people-expanded-links {
-      opacity: 1 !important;
-      visibility: visible !important;
     }
   }
 </style>
@@ -220,35 +210,39 @@
       wrapper.appendChild(expandedLinks);
       peopleLink.appendChild(wrapper);
       
-      // 링크 기능 유지 (클릭 시 아무 동작 안 함)
+      // 링크 기능 비활성화
       peopleLink.href = 'javascript:void(0);';
-      peopleLink.style.cursor = 'default';
-      
-      // 클릭 이벤트 차단
-      peopleLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }, true);
+      peopleLink.style.cursor = 'pointer';
       
       // li에 클래스 추가
       peopleItem.classList.add('has-people-expand');
       
-      // 터치 디바이스 지원 (모바일)
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      if (isTouchDevice && window.innerWidth <= 768) {
-        wrapper.addEventListener('click', function(e) {
-          e.stopPropagation();
-          wrapper.classList.toggle('active');
-        }, true);
+      // 클릭 이벤트로 토글 (모든 디바이스)
+      peopleLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         
-        // 외부 클릭시 닫기
-        document.addEventListener('click', function(e) {
-          if (!wrapper.contains(e.target)) {
-            wrapper.classList.remove('active');
-          }
-        }, true);
-      }
+        // 확장 메뉴 내부 링크 클릭은 허용
+        if (e.target.tagName === 'A' && e.target.closest('.people-expanded-links')) {
+          return true;
+        }
+        
+        // People 텍스트나 래퍼 클릭 시 토글
+        wrapper.classList.toggle('active');
+      }, true);
+      
+      // 외부 클릭시 닫기
+      document.addEventListener('click', function(e) {
+        // 확장 메뉴 내부 클릭은 무시
+        if (wrapper.contains(e.target) && e.target.closest('.people-expanded-links')) {
+          return;
+        }
+        
+        // People 링크나 래퍼 외부 클릭 시 닫기
+        if (!peopleLink.contains(e.target) && !wrapper.contains(e.target)) {
+          wrapper.classList.remove('active');
+        }
+      }, true);
       
       setupComplete = true;
       console.log('People expand: 성공적으로 설정됨');
