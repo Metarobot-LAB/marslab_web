@@ -54,12 +54,19 @@
   .people-expand-wrapper.active .people-original-text {
     opacity: 0 !important;
     visibility: hidden !important;
+    display: none !important;
   }
 
   .people-expand-wrapper.active .people-expanded-links {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+    display: flex !important;
+  }
+  
+  /* 디버깅: active 클래스 확인용 */
+  .people-expand-wrapper.active {
+    background-color: transparent !important;
   }
 
   /* li 요소에 클래스 추가 시 스타일 적용 */
@@ -217,32 +224,59 @@
       // li에 클래스 추가
       peopleItem.classList.add('has-people-expand');
       
-      // 클릭 이벤트로 토글 (모든 디바이스)
-      peopleLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+      // 토글 함수 정의
+      function togglePeopleMenu(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         
-        // 확장 메뉴 내부 링크 클릭은 허용
-        if (e.target.tagName === 'A' && e.target.closest('.people-expanded-links')) {
+        // 확장 메뉴 내부 링크 클릭은 허용 (링크로 이동)
+        if (e && e.target && e.target.tagName === 'A' && e.target.closest('.people-expanded-links')) {
+          console.log('People expand: 링크 클릭됨, 이동 허용');
           return true;
         }
         
-        // People 텍스트나 래퍼 클릭 시 토글
-        wrapper.classList.toggle('active');
-      }, true);
+        // 토글
+        const isActive = wrapper.classList.contains('active');
+        if (isActive) {
+          wrapper.classList.remove('active');
+          console.log('People expand: 닫힘');
+        } else {
+          wrapper.classList.add('active');
+          console.log('People expand: 열림');
+        }
+      }
+      
+      // 클릭 이벤트 바인딩 (여러 방법으로 시도)
+      // 1. peopleLink에 직접 바인딩
+      peopleLink.addEventListener('click', togglePeopleMenu, false);
+      
+      // 2. wrapper에도 바인딩
+      wrapper.addEventListener('click', function(e) {
+        // 확장 메뉴 내부 링크는 제외
+        if (e.target.closest('.people-expanded-links') && e.target.tagName === 'A') {
+          return true;
+        }
+        togglePeopleMenu(e);
+      }, false);
+      
+      // 3. 원본 텍스트에도 바인딩
+      originalTextSpan.addEventListener('click', togglePeopleMenu, false);
+      originalTextSpan.style.cursor = 'pointer';
       
       // 외부 클릭시 닫기
       document.addEventListener('click', function(e) {
-        // 확장 메뉴 내부 클릭은 무시
-        if (wrapper.contains(e.target) && e.target.closest('.people-expanded-links')) {
+        // 확장 메뉴 내부 링크 클릭은 무시 (링크로 이동 허용)
+        if (e.target.closest('.people-expanded-links') && e.target.tagName === 'A') {
           return;
         }
         
-        // People 링크나 래퍼 외부 클릭 시 닫기
-        if (!peopleLink.contains(e.target) && !wrapper.contains(e.target)) {
+        // People 영역 외부 클릭 시 닫기
+        if (!peopleItem.contains(e.target)) {
           wrapper.classList.remove('active');
         }
-      }, true);
+      }, false);
       
       setupComplete = true;
       console.log('People expand: 성공적으로 설정됨');
