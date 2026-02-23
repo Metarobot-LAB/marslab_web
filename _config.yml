@@ -1,7 +1,7 @@
 title: "METAROBOT 연구회 | MARS"
 description: "로봇 제작 과정 및 포트폴리오 아카이브"
-url: "https://textnecklee.github.io"
-baseurl: "/mars.github.io" # 저장소 이름이 mars.github.io 라면 이게 필요합니다.
+url: "https://metarobot-lab.github.io"
+baseurl: "/marslab_web" # 저장소 이름에 맞춰 설정
 
 # 테마 설정 (Minimal Mistakes 원격 적용)
 remote_theme: mmistakes/minimal-mistakes
@@ -14,7 +14,7 @@ plugins:
 # 작성자(연구회) 정보
 author:
   name   : "Metarobot laboratory"  # 동아리 이름
-  avatar : "https://textnecklee.github.io/mars.github.io/assets/images/logo.jpg" # 아까 올린 로고 사진 경로
+  avatar : "/marslab_web/assets/images/logo.jpg" # 로고 사진 경로
   bio    : "로봇 연구회" # 간단한 소개
   location : "KoreaTech, KR" # 학교/지역
   links:
@@ -30,7 +30,7 @@ search_full_content: true # 글 내용까지 전부 검색할지 여부
 search_provider: lunr # 별도 설치 필요 없는 가벼운 검색 엔진
 
 # 파비콘 설정 (브라우저 탭 아이콘)
-favicon: "/mars.github.io/assets/images/logo.jpg"
+favicon: "/marslab_web/assets/images/logo.jpg"
 
 # 모양 설정
 minimal_mistakes_skin: "air" # 취향에 따라 air, contrast, sunrise 등으로 변경 가능
